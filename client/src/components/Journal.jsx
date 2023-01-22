@@ -1,8 +1,13 @@
+import React from 'react'
 import { useState } from "react";
 import * as xlsx from "xlsx";
 import axios from "axios";
+import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
-const Upload = () => {
+
+function Journal() {
+
   const [jsonData, setJsonData] = useState([]);
   const readUploadFile = (e) => {
     e.preventDefault();
@@ -22,15 +27,21 @@ const Upload = () => {
   };
   const sendDataToServer = () => {
     // console.log(jsonData);
-    axios.post("http://localhost:5000/senddata", jsonData).then((res) => {
-      
+    axios.post("http://localhost:5000/sendjournal", jsonData).then((res) => {
       console.log("Server response for /senddata is " + res.data);
+      
+      toast.success('Journal is uploaded successfuly',{
+        position: toast.POSITION.TOP_RIGHT
+      });
+    }).catch((error)=> {
+      toast.error('Journal is not upload in DB')
     });
   };
+
   return (
-    <div>
+    <>
       <form>
-        <h3>Upload Research Paper</h3>
+        <h3>Upload File</h3>
         <p>Files Supported: XLS or XLSX</p>
         <input
           type="file"
@@ -46,8 +57,9 @@ const Upload = () => {
           onClick={sendDataToServer}
         />
       </form>
-    </div>
-  );
-};
+      
+    </>
+  )
+}
 
-export default Upload;
+export default Journal

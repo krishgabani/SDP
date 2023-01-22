@@ -2,9 +2,10 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import {sendtodb} from "./routes/sendDataroute.js"
+import {sendtodb} from "./Controllers/sendDataroute.js"
 
 import {connectDB} from './confige/db.js'
+import { sendjournal } from "./Controllers/sendJournal.js";
 
 mongoose.set("strictQuery", false);
 connectDB();
@@ -16,6 +17,7 @@ app.use(cors());
 
 
 app.post("/senddata", sendtodb);
+app.post("/sendjournal",sendjournal);
 
 
 app.listen(5000, () => {
