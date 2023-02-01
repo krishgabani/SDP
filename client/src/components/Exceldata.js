@@ -1,6 +1,6 @@
 import React from 'react'
 
-function exceldata() {
+function Exceldata() {
   return (
     <div>
         <h1>Hellow Guys</h1>
@@ -8,4 +8,4 @@ function exceldata() {
   )
 }
 
-export default exceldata
+export default Exceldata
