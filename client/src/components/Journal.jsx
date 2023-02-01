@@ -4,11 +4,13 @@ import * as xlsx from "xlsx";
 import axios from "axios";
 import { ToastContainer,toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import Exceldata from './Exceldata';
 
 
 function Journal() {
 
   const [jsonData, setJsonData] = useState([]);
+  
 
     const excelFileToJSON =(file) => {
       try{
@@ -32,6 +34,7 @@ function Journal() {
                   }
               });
               console.log(result);
+              console.log(result.Journal);
             setJsonData(result);
             
             console.log("hellow");
@@ -59,43 +62,16 @@ function Journal() {
           }
         
       };
-
-  // const readUploadFile = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.files) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       const data = e.target.result;
-  //       console.log(data);
-  //       const workbook = xlsx.read(data, { type: "array" });
-  //       console.log(workbook);
-  //       const sheetName = workbook.SheetNames[0];
-  //       const worksheet = workbook.Sheets[sheetName];
-  //       const json = xlsx.utils.sheet_to_json(worksheet);
-
-
-  //       setJsonData(json);
-  //       console.log(jsonData);
-  //       console.log("hellow");
-  //     };
-  //     reader.readAsArrayBuffer(e.target.files[0]);
-  //   }
-  // };
-
   const sendDataToServer = () => {
      console.log(jsonData);
+     console.log(jsonData.Journal)
     axios.post("http://localhost:5000/sendjournal", jsonData).then((res) => {
       console.log("Server response for /senddata is " + res.data);
       
       toast.success('Journal is uploaded successfuly',{
         position: toast.POSITION.TOP_RIGHT
       });
-
-      return (
-        <>
-          <h1>Hellow world</h1>
-        </>
-      )
+      
     })
   };
 
@@ -118,6 +94,16 @@ function Journal() {
           onClick={sendDataToServer}
         />
       </form>
+
+      <h2>Title</h2>
+            <p>
+             {
+                jsonData.Journal && 
+                jsonData.Journal?.map((data) => (
+                    <tr>{data["Title of Research Paper"]}</tr>
+                ))
+              }
+            </p>
     </>
   );
 };
