@@ -1,12 +1,11 @@
-import express from "express";
-import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const {sendtodb} = require('./Controllers/sendDataroute')
+const {connectDB} = require('./config/db');
+const {sendjournal} = require('./Controllers/sendJournal.js')
 
-import {sendtodb} from "./Controllers/sendDataroute.js"
-
-import {connectDB} from './confige/db.js'
-import { sendjournal } from "./Controllers/sendJournal.js";
 
 mongoose.set("strictQuery", false);
 dotenv.config();
@@ -15,12 +14,14 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+//app.use(express.urlencoded());
 app.use(cors());
 
 
 app.post("/senddata", sendtodb);
 app.post("/sendjournal",sendjournal);
+app.use("/api/user",require('./routes/userRoutes'));
+
 
 
 app.listen(5000, () => {

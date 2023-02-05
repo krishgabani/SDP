@@ -1,7 +1,10 @@
-import express from "express"
-var router = express.Router()
-import ExcelDataModel from "../models/exceldata.js";
-import cors from "cors";
+
+const express = require('express')
+const router = express.Router()
+
+const ExcelDataModel = require('../models/exceldata');
+
+const cors = require('cors')
 
 const sendtodb = (req, res) => {
     // console.log(req);
@@ -22,4 +25,4 @@ const sendtodb = (req, res) => {
     res.send("Received.");
   }
 
-  export {sendtodb}
+  module.exports = {sendtodb}

@@ -1,8 +1,10 @@
-import express from "express"
-var router = express.Router();
-import JournalDataModel from "../models/journal.js";
-import cors from "cors"
+const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
+const JournalDataModel = require('../models/journal.js')
+
+const cors = require('cors');
 
 const sendjournal = (req,res) => {
     let vect = req.body;
@@ -56,4 +58,4 @@ const sendjournal = (req,res) => {
     res.send("Data is Received");
 }
 
-export {sendjournal}
+module.exports =  {sendjournal}
