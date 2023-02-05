@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 import {sendtodb} from "./Controllers/sendDataroute.js"
 
@@ -8,6 +9,8 @@ import {connectDB} from './confige/db.js'
 import { sendjournal } from "./Controllers/sendJournal.js";
 
 mongoose.set("strictQuery", false);
+dotenv.config();
+
 connectDB();
 
 const app = express();
