@@ -7,15 +7,9 @@ const connectDB = async () => {
         useUnifiedTopology: true,
     };
     try {
-        //console.log(process.env.MONGO_URI);
-         mongoose.connect("mongodb+srv://meetgami:meet123@projectsdp.ki8nnlb.mongodb.net/?retryWrites=true&w=majority",
-        connectOption)
-        .then(()=> {
-            console.log('Connected to MonogoDB');
-        })
-        .catch((e)=> {
-            console.log("not connected");
-        });
+        //console.log("test dh");
+        console.log(process.env.MONGO_URI);
+         mongoose.connect(process.env.MONGO_URI,connectOption);
         //console.log(`mongoDB Connected : ${conn.connection.host}`);
     }catch(error) {
         console.log(`Error : ${error.message}`);
