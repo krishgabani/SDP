@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+const mongoose = require('mongoose');
 
 const JournalDataShema = new mongoose.Schema({
     Sr_No :String,
@@ -46,4 +46,4 @@ const JournalDataShema = new mongoose.Schema({
 
 const JournalDataModel = new mongoose.model("journalData", JournalDataShema);
 
-export default JournalDataModel;
+module.exports ={ JournalDataModel };

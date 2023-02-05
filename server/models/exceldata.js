@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const ExcelDataSchema = new mongoose.Schema({
   Title: String,
@@ -14,4 +14,4 @@ const ExcelDataSchema = new mongoose.Schema({
 
 const ExcelDataModel = new mongoose.model("ExcelData", ExcelDataSchema);
 
-export default ExcelDataModel;
+module.exports = { ExcelDataModel };
