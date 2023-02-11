@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import EmailVerify from './components/EmailVerify'
+import VerifyEmail from "./components/VerifyEmail";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/journal' element={<Journal/>} />
             <Route path='/register' element={<Register/>}/>
             <Route path="/user/:id/verify/:token" element={<EmailVerify />} />
+            <Route path='/user/:id/adminverify/:token' element={<VerifyEmail />}/>
         </Routes>
       </Router>
       <ToastContainer/>
