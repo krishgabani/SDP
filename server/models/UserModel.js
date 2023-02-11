@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     Designation:{type:String},
     Department : {type:String},
     verified : {type : Boolean,default:false},
+    emailsent:{type:Boolean,defalut:false},
 })
 
 const UserModel = mongoose.model("user",userSchema);

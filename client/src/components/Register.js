@@ -19,7 +19,7 @@ function Register() {
       ...user,
       [name]: value,
     });
-    console.log(user);
+    //console.log(user);
   };
 
   const myregister = () => {
