@@ -35,7 +35,7 @@ exports.registerUser = async (req,res) => {
 
     console.log(token);
 
-    const url = `http://localhost:3000/users/${user.id}/verify/${token.token}`;
+    const url = `http://localhost:3000/user/${user.id}/verify/${token.token}`;
     console.log(url);
 
     await sendEmail(user.email, "Verify Email", url);
