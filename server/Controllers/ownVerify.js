@@ -4,7 +4,7 @@ const {UserModel} = require('../models/UserModel')
 const sendEmail = require('../utils/sendEmail')
 
 
-exports.owenVerify = async (req,res) => {
+exports.ownVerify = async (req,res) => {
     try{
         const user = await UserModel.findOne({_id:req.params.id});
         console.log("hello");
@@ -24,15 +24,6 @@ exports.owenVerify = async (req,res) => {
         }else{
             return res.send({message:"Invalid Link 22"})
         }
-        // if(!token) {
-        //     return res.send({message : "Invalid Link2"});
-        // }
-
-        // await UserModel.updateOne({_id:user._id,verified:true});
-
-        // await token.remove();
-
-        // res.send({message:"Email Verifyed Succefully"});
         const url = `http://localhost:3000/user/${user.id}/adminverify/${token.token}`;
 
         await sendEmail(user.email, "Verify Email", url);
