@@ -19,7 +19,7 @@ exports.adminVerify = async (req,res) => {
     }
 
     await UserModel.updateOne({_id:user._id,verified:true});
-
+    
     await token.remove();
 
     res.send({message:"Admin Allowed Permission Succefully"}); 
