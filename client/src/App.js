@@ -9,12 +9,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import EmailVerify from './components/EmailVerify'
 import VerifyEmail from "./components/VerifyEmail";
+import { useSelector } from 'react-redux';
+import Spinner from './components/Spinner';
 
 function App() {
+  const {loading} = useSelector(state=>state.alerts)
   return (
     <>
       <Router>
-        <Routes>
+      {loading ? <Spinner/> :
+      <Routes>
             <Route path='/login' element={<Login/>} />   
             <Route path='/senddata' element={<Upload/>} />
             <Route path='/journal' element={<Journal/>} />
@@ -22,6 +26,8 @@ function App() {
             <Route path="/user/:id/verify/:token" element={<EmailVerify />} />
             <Route path='/user/:id/adminverify/:token' element={<VerifyEmail />}/>
         </Routes>
+      }
+
       </Router>
       <ToastContainer/>
     </>

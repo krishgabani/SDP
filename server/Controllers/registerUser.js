@@ -8,14 +8,26 @@ const sendEmail = require('../utils/sendEmail')
 exports.registerUser = async (req,res) => {
     console.log(req.body);
     console.log(req.body.email);
-    
+    //req.body.Designation === 'faculty' || req.body.Designation === 'hod'
     let user = await UserModel.findOne({email : req.body.email});
+    if(user)  {
+        // let role = await UserModel.findOne({Department:req.body.Department,Designation:'coordinator'});
+        // console.log(role);
+        return res.status(200).send({
+            message:'coordinati found',
+        })
+    }
+    else{
+        return res.status(200).send({
+            message:'coordinate is not found',
+        })
+    }
+    
     //console.log(user);
     if(user) {
         console.log("User is Already Exist");
-        return res.json({
+        return res.status(200).send({
             message:'user is already exist',
-            status:300,
         })
     }
     
@@ -41,9 +53,9 @@ exports.registerUser = async (req,res) => {
     await sendEmail(user.email, "Verify Email", url);
 
     //res.status(201).send({ message: "An Email sent to your account please verify" });
-    return res.json({
-        message:'dontrt4rge',
-        status:'res',
+    return res.status(200).send({
+        message:'Email sent Succefully',
+        status:true,
     });
 
 }
