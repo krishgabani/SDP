@@ -18,16 +18,32 @@ exports.ownVerify = async (req,res) => {
         });
 
         console.log(user.emailsent);
+
+        const url = `http://localhost:3000/user/${user.id}/adminverify/${token.token}`;
+        //console.log(user.Department);
+        let role = await UserModel.findOne({Department:user.Department,Designation:'coordinator'});
+        if(user.Designation === 'faculty' || user.Designation === 'hod') {
+            if(!role) {
+                return res.status(200).send({
+                    message:'coordinate is not found',
+                })
+            }
+        }
+
         if(!user.emailsent) {
             console.log("in  emailsent");
             await UserModel.updateOne({_id:user._id,emailsent:true});
         }else{
             return res.send({message:"Invalid Link 22"})
         }
-        const url = `http://localhost:3000/user/${user.id}/adminverify/${token.token}`;
-
-        await sendEmail(user.email, "Verify Email", url);
-
+        
+        console.log(role);
+        // if(role){
+        //     await sendEmail(role.email, "Verify Email", url);
+        // }else{
+        //     await sendEmail("flys21634@gmail.com", "Verify Email", url);
+        // }
+        
         return res.json({
             message:'dontrt4rge',
             status:'res',

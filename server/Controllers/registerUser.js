@@ -8,28 +8,42 @@ const sendEmail = require('../utils/sendEmail')
 exports.registerUser = async (req,res) => {
     console.log(req.body);
     console.log(req.body.email);
-    //req.body.Designation === 'faculty' || req.body.Designation === 'hod'
+    
     let user = await UserModel.findOne({email : req.body.email});
+    let role = await UserModel.findOne({Department:req.body.Department,Designation:'coordinator'});
     if(user)  {
-        // let role = await UserModel.findOne({Department:req.body.Department,Designation:'coordinator'});
-        // console.log(role);
         return res.status(200).send({
-            message:'coordinati found',
+            message:'Email is Already Exist',
         })
     }
     else{
-        return res.status(200).send({
-            message:'coordinate is not found',
-        })
+        if(req.body.Designation === 'faculty' || req.body.Designation === 'hod') {
+            //role = await UserModel.findOne({Department:req.body.Department,Designation:'coordinator'});
+            //console.log(role.email);
+            if(!role) {
+                return res.status(200).send({
+                    message:'coordinate is not found',
+                })
+            }
+        }else{
+            if(role) {
+                return res.status(200).send({
+                    message:'Departement Coordinate Already there',
+                })
+            }
+        }
     }
-    
-    //console.log(user);
-    if(user) {
-        console.log("User is Already Exist");
-        return res.status(200).send({
-            message:'user is already exist',
-        })
-    }
+    //console.log(role.email);
+    // return res.status(200).send({
+    //     message:'is Found',
+    // })
+    // //console.log(user);
+    // if(user) {
+    //     console.log("User is Already Exist");
+    //     return res.status(200).send({
+    //         message:'user is already exist',
+    //     })
+    // }
     
     //console.log("hii ");
     console.log(user);
@@ -49,7 +63,7 @@ exports.registerUser = async (req,res) => {
 
     const url = `http://localhost:3000/user/${user.id}/verify/${token.token}`;
     console.log(url);
-
+    console.log(role.email);
     await sendEmail(user.email, "Verify Email", url);
 
     //res.status(201).send({ message: "An Email sent to your account please verify" });

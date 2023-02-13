@@ -26,9 +26,10 @@ const EmailVerify = () => {
 				setValidUrl(false);
 			}
 		};
-		// if(validUrl) {
+		if(validUrl) {
 			verifyEmailUrl();
-		
+		}
+
 	}, []);
 
 	return (
