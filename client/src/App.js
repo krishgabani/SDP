@@ -11,6 +11,7 @@ import EmailVerify from './components/EmailVerify'
 import VerifyEmail from "./components/VerifyEmail";
 import { useSelector } from 'react-redux';
 import Spinner from './components/Spinner';
+import Home from "./pages/Home";
 
 function App() {
   const {loading} = useSelector(state=>state.alerts)
@@ -19,6 +20,7 @@ function App() {
       <Router>
       {loading ? <Spinner/> :
       <Routes>
+            <Route path='/' element={<Home/>} />
             <Route path='/login' element={<Login/>} />   
             <Route path='/senddata' element={<Upload/>} />
             <Route path='/journal' element={<Journal/>} />

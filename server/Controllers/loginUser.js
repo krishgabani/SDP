@@ -8,15 +8,22 @@ exports.loginUser = async (req,res) => {
     console.log(req.body.email);
 
     let user = await UserModel.findOne({email : req.body.email});
-    if(user) {
+    if(!user) {
         return res.status(200).send({
-            message:'Login Successfull',
+            message:'Invalid Email or Password',
         });        
-    }else{
-        return res.status(200).send({
-            message:'Wrong Data is passed',
-        }); 
     }
-
-
+    const validPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+    );
+    if (!validPassword){
+        return res.status(401).send({ message: "Invalid Email or Password" });
+    }
+    if (!user.verified) {
+        return res.status(200).send({ message: "Email is not verified" });
+    }
+    return res.status(200).send({
+        message:'Login succefully',
+    })
 }

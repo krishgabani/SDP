@@ -11,14 +11,21 @@ exports.ownVerify = async (req,res) => {
         if(!user) {
             return res.send({message: "Invalid Link1"});
         }
-
+        //console.log(req);
         const token = await Token.findOne({
             userId: user._id,
             token:req.params.token,
         });
 
         console.log(user.emailsent);
+        console.log(user);
+        await UserModel.updateOne({_id:user._id,emailsent:true});
+        if(user.emailsent) {
+            return res.send({message:"Invalid Link 22"})
+        }
+        
 
+        console.log(token.token);
         const url = `http://localhost:3000/user/${user.id}/adminverify/${token.token}`;
         //console.log(user.Department);
         let role = await UserModel.findOne({Department:user.Department,Designation:'coordinator'});
@@ -28,15 +35,7 @@ exports.ownVerify = async (req,res) => {
                     message:'coordinate is not found',
                 })
             }
-        }
-
-        if(!user.emailsent) {
-            console.log("in  emailsent");
-            await UserModel.updateOne({_id:user._id,emailsent:true});
-        }else{
-            return res.send({message:"Invalid Link 22"})
-        }
-        
+        }  
         console.log(role);
         // if(role){
         //     await sendEmail(role.email, "Verify Email", url);
