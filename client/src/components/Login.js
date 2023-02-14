@@ -32,8 +32,10 @@ const Login = () => {
           console.log(res.data.message);
           toast.success(""+res.data.message, {
             position: toast.POSITION.TOP_RIGHT
-        });
-        navigate('/');
+          });
+          if(res.data.success) {
+            navigate('/');
+          }
       }catch(error) {
           toast.error("Incurrect data",{
             position: toast.POSITION.TOP_RIGHT
