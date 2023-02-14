@@ -25,7 +25,7 @@ function Layout() {
         <div className="layout">
             <div className="sidebar">
                 <div className="logo">
-                    <h6>DOC APP</h6>
+                    <h6>RPMS</h6>
                 </div>
                 <hr />
                 <div className="menu">
