@@ -4,6 +4,7 @@ const {UserModel} = require('../models/UserModel')
 const sendEmail = require('../utils/sendEmail')
 
 
+
 exports.ownVerify = async (req,res) => {
     try{
         const user = await UserModel.findOne({_id:req.params.id});
@@ -19,12 +20,15 @@ exports.ownVerify = async (req,res) => {
 
         console.log(user.emailsent);
         console.log(user);
-        await UserModel.updateOne({_id:user._id,emailsent:true});
+        
         if(user.emailsent) {
             return res.send({message:"Invalid Link 22"})
         }
-        
+        await UserModel.updateOne({_id:user._id},{emailsent:true});
 
+        if(!token.token) {
+            return res.send({message:"Token is Not Founded"});
+        }
         console.log(token.token);
         const url = `http://localhost:3000/user/${user.id}/adminverify/${token.token}`;
         //console.log(user.Department);
@@ -37,11 +41,11 @@ exports.ownVerify = async (req,res) => {
             }
         }  
         console.log(role);
-        // if(role){
-        //     await sendEmail(role.email, "Verify Email", url);
-        // }else{
-        //     await sendEmail("flys21634@gmail.com", "Verify Email", url);
-        // }
+        if(role){
+            await sendEmail(role.email, "Verify Email", url);
+        }else{
+            await sendEmail("flys21634@gmail.com", "Verify Email", url);
+        }
         
         return res.json({
             message:'dontrt4rge',

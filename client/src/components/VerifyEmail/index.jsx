@@ -26,9 +26,9 @@ const VerifyEmail = () => {
 				setValidUrl(false);
 			}
 		};
-		// if(validUrl) {
+		if(validUrl) {
 			verifyEmailUrl();
-		
+		}
 	}, []);
 
 	return (

@@ -2,6 +2,7 @@ const express = require('express');
 const {UserModel} = require('../models/UserModel')
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
 
 exports.loginUser = async (req,res) => {
     //console.log(req.body);
@@ -18,12 +19,13 @@ exports.loginUser = async (req,res) => {
         user.password
     );
     if (!validPassword){
-        return res.status(401).send({ message: "Invalid Email or Password" });
+        return res.status(401).send({ message: "Invalid Email or Password",success:false });
     }
     if (!user.verified) {
-        return res.status(200).send({ message: "Email is not verified" });
+        return res.status(200).send({ message: "Email is not verified",success:false });
     }
     return res.status(200).send({
         message:'Login succefully',
+        success:true
     })
 }

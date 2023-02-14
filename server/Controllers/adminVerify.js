@@ -1,9 +1,11 @@
 const Token = require('../models/token')
 const express = require('express');
 const {UserModel} = require('../models/UserModel')
+const mongoose = require('mongoose');
 
 exports.adminVerify = async (req,res) => {
     const user = await UserModel.findOne({_id:req.params.id});
+    console.log(user);
     console.log("hello");
     if(!user) {
         return res.send({message: "Invalid ALink1"});
@@ -13,12 +15,12 @@ exports.adminVerify = async (req,res) => {
         userId: user._id,
         token:req.params.token,
     });
-
+    
     if(!token) {
         return res.send({message : "Invalid ALink2"});
     }
 
-    await UserModel.updateOne({_id:user._id,verified:true});
+    await UserModel.updateOne({_id:user._id},{verified:true});    
     
     await token.remove();
 
