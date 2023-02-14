@@ -26,6 +26,7 @@ exports.loginUser = async (req,res) => {
     }
     return res.status(200).send({
         message:'Login succefully',
-        success:true
+        success:true,
+        data:user
     })
 }

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { React , useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
+import { setUser } from '../redux/features/userSlice'
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -34,7 +34,10 @@ const Login = () => {
             position: toast.POSITION.TOP_RIGHT
           });
           if(res.data.success) {
+            console.log(res.data.data);
+            setUser(res.data.data);
             navigate('/');
+
           }
       }catch(error) {
           toast.error("Incurrect data",{

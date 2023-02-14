@@ -60,7 +60,7 @@ function Register() {
         {/* Department : <input type="text" name="Department" onChange={handleChange}/><br/> */}
           Department :
           <select name="Department" id="Department" onChange={handleChange}>
-            <option value="it">IT</option>
+            <option value="it">IT</option>  
             <option value="ce">CE</option>
             <option value="ec">EC</option>
             <option value="ic">IC</option>
