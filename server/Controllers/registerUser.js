@@ -33,19 +33,7 @@ exports.registerUser = async (req,res) => {
             }
         }
     }
-    //console.log(role.email);
-    // return res.status(200).send({
-    //     message:'is Found',
-    // })
-    // //console.log(user);
-    // if(user) {
-    //     console.log("User is Already Exist");
-    //     return res.status(200).send({
-    //         message:'user is already exist',
-    //     })
-    // }
-    
-    //console.log("hii ");
+
     console.log(user);
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     console.log(req.body.password);
