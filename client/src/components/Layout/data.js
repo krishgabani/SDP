@@ -7,7 +7,7 @@ export const userMenu = [
 
     {
         name: "Journal",
-        path: "/appointments",
+        path: "/user/Journal",
         icon: "fa-solid fa-list",
     },
     {
@@ -41,39 +41,39 @@ export const adminMenu = [
     },
     {
         name: "Journal",
-        path: "/admin/doctors",
-        icon: "fa-solid fa-user-doctor",
+        path: "/admin/Jounal",
+        icon: "",
     },
     {
         name: "Conference",
         path: "/admin/users",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Book",
         path: "/profile",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Book-chapter",
         path: "/profile",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Profile",
         path: "/profile",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
 ];
 
-export const doctorMenu = [
+export const controllerMenu = [
     {
         name: "Home",
         path: "/",
         icon: "fa-solid fa-house",
     },
     {
-        name: "Appointments",
+        name: "journl",
         path: "/doctor-appointments",
         icon: "fa-solid fa-list",
     },

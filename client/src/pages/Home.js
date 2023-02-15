@@ -1,13 +1,17 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Layout from '../components/Layout/Layout'
 
 const Home = () => {
-  return (
+ 
+  useEffect(()=> {
+    console.log("hiithere")
+  },[]);
+  return ( 
     <Layout>
-    <>
-    <h1 className='text-center'>Home page</h1>
-    </>
-    </Layout>
+      <>
+        <h1 className='text-center'>Home page</h1>
+      </>
+    </Layout> 
   )
 }
 

@@ -43,18 +43,7 @@ const sendjournal = (req,res) => {
             F_Agency:vect["Journal"][prop]["Impact Factor Agency"],
         });        
     }
-    // vect.forEach((obj) => {
-    //     console.log(obj);
-    //     console.log(obj["Journal"][1].__EMPTY);
-        // JournalDataModel.create({
-        //     Sr_No : obj.Sr_No,
-        //     Acadamic_Year : obj.Acadamic_Year,
-        //     AuthorName : obj.AuthorName,
-        //     Department : obj.Department,
-        //     Organization:obj.Organization,
-        //     Title:obj.Title,
-        // });
-    // });
+    
     res.send("Data is Received");
 }
 

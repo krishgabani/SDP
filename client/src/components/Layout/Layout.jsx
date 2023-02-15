@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import "../../styles/LayoutStyles.css"
 import {Link,useNavigate,useLocation} from "react-router-dom";
 import { useSelector,useDispatch } from 'react-redux';
-import {setUser} from "../../redux/features/userSlice"
+
 import { Badge } from 'antd';
-import { adminMenu, doctorMenu , userMenu } from './data';
+import { adminMenu, controllerMenu , userMenu } from './data';
 
 import {message} from 'antd'
 
-function Layout() {
+function Layout({children}) {
   const {user} = useSelector(state => state.user)
-  console.log(user);
+  //console.log(user);
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -20,8 +20,11 @@ function Layout() {
     navigate('/login')
   }
   const SidebarMenu = adminMenu;
+
+  //  console.log(user.Designation);
+
   return (
-    <div className="main">
+    <div className="main">                                                
         <div className="layout">
             <div className="sidebar">
                 <div className="logo">
@@ -50,11 +53,11 @@ function Layout() {
             <div className="content">
                 <div className="header">
                   <div className="header-content">
-                    <i className="fa-solid fa-bell"></i>
+                    {/* <i className="fa-solid fa-bell"></i> */}
                     {/* <Link to='/profile'>{user?.name}</Link> */}
                   </div>
                 </div>   
-                <div className="body"></div>
+                <div className="body">{children}</div>
             </div>
         </div>
     </div>
