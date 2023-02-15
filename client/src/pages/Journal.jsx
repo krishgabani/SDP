@@ -4,14 +4,14 @@ import * as xlsx from "xlsx";
 import axios from "axios";
 import { ToastContainer,toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import Exceldata from './Exceldata';
-
+import Layout from '../components/Layout/Layout';
+import { Col ,Row,Form,Input,TimePicker} from 'antd';
 
 function Journal() {
 
   const [jsonData, setJsonData] = useState([]);
   
-
+    console.log("heeloe");
     const excelFileToJSON =(file) => {
       try{
           
@@ -76,9 +76,14 @@ function Journal() {
   };
 
   return (
-    <>
-      <form>
-        <h3>Upload File</h3>
+    <Layout>
+      <h1 className='text-center'>Upload File</h1>
+
+      {/* <Form layout='vertical' className='m-3'>
+      <Row gutter={20}>
+        <h1>Helloe world</h1>
+      </Row> */}
+{/*        
         <p>Files Supported: XLS or XLSX</p>
         <input
           type="file"
@@ -93,7 +98,7 @@ function Journal() {
           value="Submit"
           onClick={sendDataToServer}
         />
-      </form>
+      </Form>
 
       <h2>Title</h2>
             <p>
@@ -103,8 +108,8 @@ function Journal() {
                     <tr>{data["Title of Research Paper"]}</tr>
                 ))
               }
-            </p>
-    </>
+            </p> */}
+    </Layout>
   );
 };
 

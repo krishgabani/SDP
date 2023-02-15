@@ -1,4 +1,5 @@
 const express = require('express');
+var bodyParser = require("body-parser");
 const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -13,7 +14,13 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
 app.use(express.json());
+
+//For-API Testing in PostMan:
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 //app.use(express.urlencoded());
 app.use(cors());
 
