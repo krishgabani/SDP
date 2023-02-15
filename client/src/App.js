@@ -32,10 +32,26 @@ function App() {
       <BrowserRouter>
       {loading ? <Spinner/> :
       <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/login' element={<Login/>} />   
+          <Route path='/' element={
+                <ProtectedRoute cookies={cookies} removeCookies={handleRemoveCookies}>
+                  <Home cookies={cookies} removeCookies={handleRemoveCookies}/>
+                </ProtectedRoute>
+            } />
+
+            <Route path='/login' element={
+            <PublicRoute cookies={cookies}>
+                <Login setCookies={handleSetCookies}/>
+            </PublicRoute>
+            } />
+
+            
+            <Route path='/register' element={
+              <PublicRoute cookies={cookies} >
+                  <Register/>
+              </PublicRoute>
+            } />
             <Route path='/senddata' element={<Upload/>} />
-            <Route path='/admin/Jounal' element={<Journal/>} />
+            <Route path='/coordinator/Journal' element={<Journal/>} />
             <Route path='/register' element={<Register/>}/>
             <Route path="/user/:id/verify/:token" element={<EmailVerify />} />
             <Route path='/user/:id/adminverify/:token' element={<VerifyEmail />}/>

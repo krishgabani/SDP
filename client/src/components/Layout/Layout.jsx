@@ -5,24 +5,28 @@ import {Link,useNavigate,useLocation} from "react-router-dom";
 import { useSelector,useDispatch } from 'react-redux';
 
 import { Badge } from 'antd';
-import { adminMenu, controllerMenu , userMenu } from './data';
+import { adminMenu, coordinatorMenu , userMenu } from './data';
 
 import {message} from 'antd'
 
-function Layout({children}) {
+function Layout({children,removeCookies}) {
   const {user} = useSelector(state => state.user)
   //console.log(user);
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogout = () => {
-    //removeCookies('token');
+    console.log("hellow");
+    removeCookies('token');
     message.success('logout successfully');
     navigate('/login')
   }
-  const SidebarMenu = adminMenu;
+  let SidebarMenu = coordinatorMenu;
 
-  //  console.log(user.Designation);
-
+  //console.log(user.data.Designation);
+  // if(user.Designation === 'coordinator') {
+  //   console.log("hii");
+  //    SidebarMenu = coordinatorMenu;
+  // }
   return (
     <div className="main">                                                
         <div className="layout">
@@ -54,7 +58,7 @@ function Layout({children}) {
                 <div className="header">
                   <div className="header-content">
                     {/* <i className="fa-solid fa-bell"></i> */}
-                    {/* <Link to='/profile'>{user?.name}</Link> */}
+                    <Link to='/profile'>{user?.name}</Link>
                   </div>
                 </div>   
                 <div className="body">{children}</div>

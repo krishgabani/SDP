@@ -1,4 +1,4 @@
-export const userMenu = [
+export const facultyMenu = [
     {
         name: "Home",
         path: "/",
@@ -7,31 +7,63 @@ export const userMenu = [
 
     {
         name: "Journal",
-        path: "/user/Journal",
+        path: "/faculty/Journal",
         icon: "fa-solid fa-list",
     },
     {
         name: "Conference",
-        path: "/appointments",
+        path: "/faculty/conference",
         icon: "fa-solid fa-list",
     },
     {
         name: "Book",
-        path: "/apply-doctor",
+        path: "/faculty/book",
         icon: "fa-solid fa-user-doctor",
     },
     {
         name: "Book-chapter",
-        path: "/profile",
+        path: "/faculty/book-chapter",
         icon: "fa-solid fa-user",
     },
     {
         name: "Profile",
-        path: "/profile",
+        path: "/faculty/profile",
         icon: "fa-solid fa-user",
     },
 ];
+export const hodMenu = [
+    {
+        name: "Home",
+        path: "/",
+        icon: "fa-solid fa-house",
+    },
 
+    {
+        name: "Journal",
+        path: "/hod/Journal",
+        icon: "fa-solid fa-list",
+    },
+    {
+        name: "Conference",
+        path: "/hod/conference",
+        icon: "fa-solid fa-list",
+    },
+    {
+        name: "Book",
+        path: "/hod/book",
+        icon: "fa-solid fa-user-doctor",
+    },
+    {
+        name: "Book-chapter",
+        path: "/hod/book-chapter",
+        icon: "fa-solid fa-user",
+    },
+    {
+        name: "Profile",
+        path: "/hod/profile",
+        icon: "fa-solid fa-user",
+    },
+];
 // admin menu
 export const adminMenu = [
     {
@@ -40,46 +72,41 @@ export const adminMenu = [
         icon: "fa-solid fa-house",
     },
     {
-        name: "Journal",
-        path: "/admin/Jounal",
-        icon: "",
-    },
-    {
-        name: "Conference",
-        path: "/admin/users",
-        icon: "",
-    },
-    {
-        name: "Book",
-        path: "/profile",
-        icon: "",
-    },
-    {
-        name: "Book-chapter",
-        path: "/profile",
-        icon: "",
-    },
-    {
-        name: "Profile",
-        path: "/profile",
+        name: "Departments",
+        path: "/admin/departments",
         icon: "",
     },
 ];
 
-export const controllerMenu = [
+export const coordinatorMenu = [
     {
         name: "Home",
         path: "/",
         icon: "fa-solid fa-house",
     },
     {
-        name: "journl",
-        path: "/doctor-appointments",
+        name: "Journal",
+        path: "/coordinator/Journal",
         icon: "fa-solid fa-list",
     },
     {
+        name: "Conference",
+        path: "/coordinator/conference",
+        icon: "fa-solid fa-list",
+    },
+    {
+        name: "Book",
+        path: "/coordinator/book",
+        icon: "fa-solid fa-user-doctor",
+    },
+    {
+        name: "Book-chapter",
+        path: "/coordinator/book-chapter",
+        icon: "fa-solid fa-user",
+    },
+    {
         name: "Profile",
-        path: `/doctor/profile`,
+        path: "/coordinator/profile",
         icon: "fa-solid fa-user",
     },
 ];
