@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from '../components/Layout/Layout';
 import { Col ,Row,Form,Input,TimePicker} from 'antd';
 
-function Journal() {
+function Journal({cookies ,removeCookies}) {
 
   const [jsonData, setJsonData] = useState([]);
   
@@ -79,11 +79,11 @@ function Journal() {
     <Layout>
       <h1 className='text-center'>Upload File</h1>
 
-      {/* <Form layout='vertical' className='m-3'>
-      <Row gutter={20}>
+      <Form layout='vertical' className='m-3'>
+      {/* <Row>
         <h1>Helloe world</h1>
       </Row> */}
-{/*        
+       
         <p>Files Supported: XLS or XLSX</p>
         <input
           type="file"
@@ -108,7 +108,7 @@ function Journal() {
                     <tr>{data["Title of Research Paper"]}</tr>
                 ))
               }
-            </p> */}
+            </p>
     </Layout>
   );
 };

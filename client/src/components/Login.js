@@ -25,7 +25,7 @@ const Login = ({setCookies}) => {
       ...user,
       [name]: value,
     });
-    console.log(user);
+    //console.log(user);
   };
   
     const onSubmit = async (e) => {
@@ -57,6 +57,7 @@ const Login = ({setCookies}) => {
               });
           }
       }catch(error) {
+          dispatch(hideLoading());
           toast.error("Incurrect data",{
             position: toast.POSITION.TOP_RIGHT
           })
@@ -73,7 +74,7 @@ const Login = ({setCookies}) => {
                   <Input type="email" name="email" value={user.email} onChange={handleChange} required/>
               </Form.Item>
               <Form.Item label="Enter Your Password : ">
-                  <Input type="text" name="password" value={user.password} onChange={handleChange} required/>
+                  <Input type="password" name="password" value={user.password} onChange={handleChange} required/>
               </Form.Item>
               <Link to='/register' className='m-2'>
                       Not a User Register here
