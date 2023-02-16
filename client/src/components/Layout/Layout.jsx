@@ -5,7 +5,7 @@ import {Link,useNavigate,useLocation} from "react-router-dom";
 import { useSelector,useDispatch } from 'react-redux';
 
 import { Badge } from 'antd';
-import { adminMenu, coordinatorMenu , userMenu } from './data';
+import { adminMenu, coordinatorMenu , hodMenu,facultyMenu } from './data';
 
 import {message} from 'antd'
 
@@ -20,13 +20,17 @@ function Layout({children,removeCookies}) {
     message.success('logout successfully');
     navigate('/login')
   }
-  let SidebarMenu = coordinatorMenu;
-
-  //console.log(user.data.Designation);
-  // if(user.Designation === 'coordinator') {
-  //   console.log("hii");
-  //    SidebarMenu = coordinatorMenu;
-  // }
+  let SidebarMenu = adminMenu;
+  // console.log(user);
+  console.log(user?.Designation);
+  if(user?.Designation === 'coordinator') {
+    console.log("hii");
+     SidebarMenu = coordinatorMenu;
+  }else if(user?.Designation === 'faculty') {
+    SidebarMenu = facultyMenu;
+  }else if(user?.Designation === 'hod') {
+    SidebarMenu = hodMenu;
+  }
   return (
     <div className="main">                                                
         <div className="layout">
@@ -59,6 +63,7 @@ function Layout({children,removeCookies}) {
                   <div className="header-content">
                     {/* <i className="fa-solid fa-bell"></i> */}
                     <Link to='/profile'>{user?.name}</Link>
+                    <span>{user?.Designation}</span>
                   </div>
                 </div>   
                 <div className="body">{children}</div>

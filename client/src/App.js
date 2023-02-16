@@ -51,7 +51,7 @@ function App() {
               </PublicRoute>
             } />
             <Route path='/senddata' element={<Upload/>} />
-            <Route path='/coordinator/Journal' element={<Journal/>} />
+            <Route path='/coordinator/journal' element={<Journal/>} />
             <Route path='/register' element={<Register/>}/>
             <Route path="/user/:id/verify/:token" element={<EmailVerify />} />
             <Route path='/user/:id/adminverify/:token' element={<VerifyEmail />}/>

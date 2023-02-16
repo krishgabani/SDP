@@ -8,22 +8,22 @@ export const facultyMenu = [
     {
         name: "Journal",
         path: "/faculty/Journal",
-        icon: "fa-solid fa-list",
+        icon: "",
     },
     {
         name: "Conference",
         path: "/faculty/conference",
-        icon: "fa-solid fa-list",
+        icon: "",
     },
     {
         name: "Book",
         path: "/faculty/book",
-        icon: "fa-solid fa-user-doctor",
+        icon: "",
     },
     {
         name: "Book-chapter",
         path: "/faculty/book-chapter",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Profile",
@@ -41,27 +41,27 @@ export const hodMenu = [
     {
         name: "Journal",
         path: "/hod/Journal",
-        icon: "fa-solid fa-list",
+        icon: "",
     },
     {
         name: "Conference",
         path: "/hod/conference",
-        icon: "fa-solid fa-list",
+        icon: "",
     },
     {
         name: "Book",
         path: "/hod/book",
-        icon: "fa-solid fa-user-doctor",
+        icon: "",
     },
     {
         name: "Book-chapter",
         path: "/hod/book-chapter",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Profile",
         path: "/hod/profile",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
 ];
 // admin menu
@@ -86,23 +86,23 @@ export const coordinatorMenu = [
     },
     {
         name: "Journal",
-        path: "/coordinator/Journal",
-        icon: "fa-solid fa-list",
+        path: "/coordinator/journal",
+        icon: "",
     },
     {
         name: "Conference",
         path: "/coordinator/conference",
-        icon: "fa-solid fa-list",
+        icon: "",
     },
     {
         name: "Book",
         path: "/coordinator/book",
-        icon: "fa-solid fa-user-doctor",
+        icon: "",
     },
     {
         name: "Book-chapter",
         path: "/coordinator/book-chapter",
-        icon: "fa-solid fa-user",
+        icon: "",
     },
     {
         name: "Profile",
