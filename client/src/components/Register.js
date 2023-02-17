@@ -1,3 +1,4 @@
+import "../styles/Login.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { React, useState } from "react";
@@ -46,40 +47,6 @@ function Register() {
   };
 
   return (
-    // <>
-    //   <form action="">
-    //     Name : <input type="text" name="name" onChange={handleChange} />
-    //     <br />
-    //     Email : <input type="email" name="email" onChange={handleChange} />
-    //     <br />
-    //     password :{" "}
-    //     <input type="password" name="password" onChange={handleChange} />
-    //     <br />
-    //     {/* Designation : <input type="text" name="Designation" onChange={handleChange}/><br/>
-    //         Department : <input type="text" name="Department" onChange={handleChange}/><br/> */}
-        // Designation :
-        // <span onChange={handleChange}>
-        //   <input type="radio" value="faculty" name="Designation" /> Faculty
-        //   <input type="radio" value="hod" name="Designation" /> HOD
-        //   <input type="radio" value="coordinator" name="Designation" />{" "}
-        //   Coordinator
-        // </span>
-    //     <br />
-    //     {/* Department : <input type="text" name="Department" onChange={handleChange}/><br/> */}
-    //     Department :
-    //     <select name="Department" id="Department" onChange={handleChange}>
-    //       <option value="it">IT</option>
-    //       <option value="ce">CE</option>
-    //       <option value="ec">EC</option>
-    //       <option value="ic">IC</option>
-    //     </select>
-    //     <br />
-    //     <button type="submit" onClick={myregister}>
-    //       Submit
-    //     </button>
-    //   </form>
-    // </>
-
     <>
       <div className="login-root">
         <div
@@ -87,76 +54,146 @@ function Register() {
           style={{ minHeight: "100vh", flexGrow: 1 }}
         >
           <div
-            className="box-root padding-top--24 flex-flex flex-direction--column"
+            className="box-root  flex-flex flex-direction--column"
             style={{ flexGrow: 1, zIndex: 9 }}
           >
-            <div className="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+            <div className="box-root padding-top--24 padding-bottom--12 flex-flex flex-justifyContent--center">
               <h2>
-                <a>Sing Up to your account</a>
+                <a>Create a new account</a>
               </h2>
             </div>
             <div className="formbg-outer">
               <div className="formbg">
                 <div className="formbg-inner padding-horizontal--48">
                   {/* <span className="padding-bottom--15">Sign in to your account</span>  */}
-                  <form id="stripe-login">
-                  <div className="field padding-bottom--24">
-                      <label for="email">Name</label>
+                  <form id="stripe-login" onSubmit={myregister}>
+                    <div className="form-group padding-bottom--24">
+                      <label htmlFor="name">Name</label>
                       <input
                         type="text"
+                        className="form-control"
                         name="name"
+                        id="name"
                         onChange={handleChange}
+                        // placeholder="Your professional name here"
                         required
                       />
                     </div>
-                    <div className="field padding-bottom--24">
-                      <label for="email">Email</label>
+                    <div className="form-group padding-bottom--24">
+                      <label htmlFor="email">Email</label>
                       <input
                         type="email"
                         name="email"
+                        id="email"
+                        className="form-control"
                         onChange={handleChange}
                         required
                       />
                     </div>
-                    <div className="field padding-bottom--24">
-                      <div className="grid--50-50">
-                        <label for="password">Password</label>
-                      </div>
+                    <div className="form-group padding-bottom--24">
+                      <label htmlFor="password">Password</label>
                       <input
                         type="password"
+                        className="form-control"
                         name="password"
+                        id="password"
                         onChange={handleChange}
                         required
                       />
                     </div>
-                    <div  >
-                      Designation :
-                      <span onChange={handleChange}>
-                        <input type="radio" value="faculty" name="Designation" /> Faculty
-                        <input type="radio" value="hod" name="Designation" /> HOD
-                        <input type="radio" value="coordinator" name="Designation" />{" "}
-                        Coordinator
-                      </span>
+                    <div className="form-group padding-bottom--24">
+                      <label htmlFor="Designation">Designation</label>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          value="faculty"
+                          name="Designation"
+                          id="faculty"
+                          // checked
+                        />
+                        <label className="form-check-label" htmlFor="faculty">
+                          Faculty
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          value="hod"
+                          id="hod"
+                          name="Designation"
+                        />
+                        <label className="form-check-label" htmlFor="hod">
+                          HOD
+                        </label>
+                      </div>
+                      <div className="form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          value="coordinator"
+                          id="coordinator"
+                          name="Designation"
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="coordinator"
+                        >
+                          Coordinator
+                        </label>
+                      </div>
                     </div>
-                    <div className="field padding-bottom--24">
-                        {/* <div for="password"></div>  */}
-                        Department : 
-                        <select name="Department" id="Department" onChange={handleChange}>
-                          <option value="it">IT</option>
-                          <option value="ce">CE</option>
-                          <option value="ec">EC</option>
-                          <option value="ic">IC</option>
-                        </select>
+
+                    <div className="form-group padding-bottom--24">
+                      <label htmlFor="Department">Department</label>
+                      <select
+                        name="Department"
+                        id="Department"
+                        onChange={handleChange}
+                        className="form-select"
+                        defaultValue={"Information Technology"}
+                      >
+                        <option value="Information Technology">
+                          Information Technology
+                        </option>
+                        <option value="Computer Engineering">
+                          Computer Engineering
+                        </option>
+                        <option value="Mechanical Engineering">
+                          Mechanical Engineering
+                        </option>
+                        <option value="Electrical Engineering">
+                          Electrical Engineering
+                        </option>
+                        <option value="Chemical Engineering">
+                          Chemical Engineering
+                        </option>
+                        <option value="Civil Engineering">
+                          Civil Engineering
+                        </option>
+                      </select>
                     </div>
-                    <div className="field padding-bottom--24">
-                      <input type="submit" name="submit" value="LOGIN" onClick={myregister}/>
+
+                    <div>
+                      <input
+                        type="submit"
+                        name="submit"
+                        value="SIGNUP"
+                        onClick={myregister}
+                        className="btn btn-primary"
+                        style={{
+                          width: "100%",
+                          backgroundColor: "rgb(84, 105, 212)",
+                        }}
+                      />
                     </div>
                   </form>
                 </div>
               </div>
-              <div className="footer-link padding-top--24">
+              <div className="footer-link padding-top--12 padding-bottom--12">
                 <span>
-                  Have an account? <a href="/login">Login</a>
+                  Already have an account? <a href="/login">Login</a>
                 </span>
               </div>
             </div>

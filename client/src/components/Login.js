@@ -66,73 +66,78 @@ const Login = ({ setCookies }) => {
   };
 
   return (
-    // <div className="form-container">
-    //   <form layout="vertical" onSubmit={onSubmit} className="register-form">
-    //     <h3 className="text-center">Login From</h3>
-    //     <Form.Item label="Enter Your Email: " className="form-outline mb-4">
-    //       <Input
-    //         type="email"
-    //         name="email"
-    //         value={user.email}
-    //         onChange={handleChange}
-    //         required
-    //       />
-    //     </Form.Item>
-    //     <Form.Item label="Enter Your Password : ">
-    //       <Input
-    //         type="password"
-    //         name="password"
-    //         value={user.password}
-    //         onChange={handleChange}  
-    //         required
-    //       />
-    //     </Form.Item>
-    //     <Link to="/register" className="m-2">
-    //       Not a User Register here
-    //     </Link>
-    //     <button className="btn btn-primary" type="submit">
-    //       Login
-    //     </button>
-    //   </form>
-    // </div>
     <>
-    <div className="login-root">
-        <div className="box-root flex-flex flex-direction--column" style={{ minHeight: "100vh", flexGrow: 1 }}>
-            <div className="box-root padding-top--24 flex-flex flex-direction--column" style={{ flexGrow: 1, zIndex: 9 }}>
-                <div className="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-                    <h1><a>Login to your account</a></h1>
-                </div>
-                <div className="formbg-outer">
-                    <div className="formbg">
-                        <div className="formbg-inner padding-horizontal--48">
-                             {/* <span className="padding-bottom--15">Sign in to your account</span>  */}
-                            <form id="stripe-login" onSubmit={onSubmit}>
-                                <div className="field padding-bottom--24">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email"  value={user.email} onChange={handleChange} required/>
-                                </div>
-                                <div className="field padding-bottom--24">
-                                    <div className="grid--50-50">
-                                        <label for="password">Password</label>
-                                        <div className="reset-pass">
-                                            <a href="#">Forgot your password?</a>
-                                        </div>
-                                    </div>
-                                    <input type="password" name="password" value={user.password} onChange={handleChange} required/>
-                                </div>
-                                <div className="field padding-bottom--24">
-                                    <input type="submit" name="submit" value="LOGIN"/>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className="footer-link padding-top--24">
-                        <span>Don't have an account? <a href="/register">Sign up</a></span>
-                    </div>
-                </div>
+      <div className="login-root">
+        <div
+          className="box-root flex-flex flex-direction--column"
+          style={{ minHeight: "100vh", flexGrow: 1 }}
+        >
+          <div
+            className="box-root padding-top--24 flex-flex flex-direction--column"
+            style={{ flexGrow: 1, zIndex: 9 }}
+          >
+            <div className="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+              <h2>
+                <a>Login to your account</a>
+              </h2>
             </div>
+            <div className="formbg-outer">
+              <div className="formbg">
+                <div className="formbg-inner padding-horizontal--48">
+                  {/* <span className="padding-bottom--15">Sign in to your account</span>  */}
+                  <form id="stripe-login" onSubmit={onSubmit}>
+                    <div class="form-group padding-bottom--24">
+                      <label for="email">Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value={user.email}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+
+                    <div class="form-group padding-bottom--24">
+                      <label for="password">Password</label>
+
+                      <input
+                        type="password"
+                        name="password"
+                        className="form-control"
+                        value={user.password}
+                        onChange={handleChange}
+                        required
+                      />
+                      <div className="reset-pass">
+                        <a href="#">Forgot your password?</a>
+                      </div>
+                    </div>
+
+                    <div>
+                      <input
+                        type="submit"
+                        name="submit"
+                        value="LOGIN"
+                        className="btn btn-primary"
+                        style={{
+                          width: "100%",
+                          "background-color": "rgb(84, 105, 212)",
+                        }}
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div className="footer-link padding-top--24">
+                <span>
+                  Don't have an account? <a href="/register">Sign up</a>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
     </>
   );
 };

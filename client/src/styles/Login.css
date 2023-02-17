@@ -11,7 +11,9 @@ body {
   min-height: 100%;
   background-color: #ffffff;
 }
-h1 {
+h1,
+h2 {
+  color: #5469d4;
   letter-spacing: -1px;
 }
 a {
@@ -48,11 +50,17 @@ a {
 .padding-top--24 {
   padding-top: 24px;
 }
+.padding-top--12 {
+  padding-top: 12px;
+}
 .padding-top--48 {
   padding-top: 48px;
 }
 .padding-bottom--24 {
   padding-bottom: 24px;
+}
+.padding-bottom--12 {
+  padding-bottom: 12px;
 }
 .padding-horizontal--48 {
   padding: 48px;
@@ -92,6 +100,7 @@ label {
 }
 .reset-pass > a {
   text-align: right;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 .grid--50-50 {
@@ -100,57 +109,7 @@ label {
   align-items: center;
 }
 
-.field input {
-  font-size: 16px;
-  line-height: 28px;
-  padding: 8px 16px;
-  width: 100%;
-  min-height: 44px;
-  border: unset;
-  border-radius: 4px;
-  outline-color: rgb(84 105 212 / 0.5);
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px;
-}
-
-input[type="submit"] {
-  background-color: rgb(84, 105, 212);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgb(84, 105, 212) 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-.field-checkbox input {
-  width: 20px;
-  height: 15px;
-  margin-right: 5px;
-  box-shadow: unset;
-  min-height: unset;
-}
-.field-checkbox label {
-  display: flex;
-  align-items: center;
-  margin: 0;
-}
-a.ssolink {
-  display: block;
-  text-align: center;
-  font-weight: 600;
-}
 .footer-link span {
   font-size: 14px;
   text-align: center;
 }
-.listing a {
-  color: #697386;
-  font-weight: 600;
-  margin: 0 10px;
-}
-
-  
