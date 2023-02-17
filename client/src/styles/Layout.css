@@ -10,8 +10,8 @@
   min-height: 100%;
   width: 300px;
   border-radius: 5px;
-  background-color: rgb(51, 1, 1);
-  box-shadow: 0 0 2px gray;
+  background-color: rgb(52, 50, 50);
+  box-shadow: 0 0 2px rgb(91, 125, 245);
   margin-right: 20px;
   color: white;
 }
@@ -24,19 +24,20 @@
 .header {
   height: 10vh;
   margin-bottom: 20px;
-  box-shadow: 0 0 2px gray;
+  box-shadow: 0 0 2px rgb(42, 83, 234);
   background-color: white;
 }
 .body {
   height: 85vh;
   margin-bottom: 20px;
-  box-shadow: 0 0 2px gray;
+  box-shadow: 0 0 2px rgb(91, 125, 245);
   background-color: white;
 }
 .logo h6 {
   font-size: 1.5rem;
   text-align: center;
   margin: 20px 0px;
+  color: white;
 }
 .menu {
   margin-top: 50px;
@@ -52,6 +53,7 @@
 .menu-item i {
   font-size: 1.2rem;
   margin: 0 15px;
+  color: aliceblue;
 }
 .active {
   background-color: white;

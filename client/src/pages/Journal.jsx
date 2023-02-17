@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "../components/Layout/Layout";
 import { Col, Row, Form, Input, TimePicker } from "antd";
+import {journalData} from "../components/Layout/data"
 
 function Journal({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
@@ -69,9 +70,22 @@ function Journal({ cookies, removeCookies }) {
     });
   };
 
+  const downloadExcel = (data, filename) => {
+    const worksheet = xlsx.utils.json_to_sheet(data);
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    xlsx.writeFile(workbook, filename);
+  };
+
   return (
     <Layout>
-      <h1 className="text-center">Upload File</h1>
+      <h2 className="text-center">Download Template</h2>
+      <br />
+      <button onClick={() => downloadExcel(journalData, "Journal.xlsx")} className="m-3">
+        Download  
+      </button>
+      <br />
+      <h2 className="text-center">Upload File</h2>
 
       <Form layout="vertical" className="m-3">
         {/* <Row>
@@ -94,14 +108,6 @@ function Journal({ cookies, removeCookies }) {
           onClick={sendDataToServer}
         />
       </Form>
-
-      <h2 style={{ padding: 10 }}>Title</h2>
-      <p style={{ padding: 10 }}>
-        {jsonData.Sheet1 &&
-          jsonData.Sheet1?.map((data) => (
-            <tr>{data["Title_of_Research_Paper"]}</tr>
-          ))}
-      </p>
     </Layout>
   );
 }
