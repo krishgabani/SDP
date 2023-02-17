@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from "../components/Layout/Layout";
 import { Col, Row, Form, Input, TimePicker } from "antd";
 
-function Journal({ cookies, removeCookies }) {
+function Conference({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
 
   console.log("heeloe");
@@ -45,13 +45,13 @@ function Journal({ cookies, removeCookies }) {
   const readUploadFile = (e) => {
     e.preventDefault();
     var files = document.getElementById("upload").files;
-    if (files.length === 0) {
+    if (files.length == 0) {
       alert("Please choose any file...");
       return;
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension === ".XLS" || extension === ".XLSX") {
+    if (extension == ".XLS" || extension == ".XLSX") {
       console.log(files[0]);
       excelFileToJSON(files[0]);
     } else {
@@ -60,13 +60,19 @@ function Journal({ cookies, removeCookies }) {
   };
   const sendDataToServer = () => {
     console.log(jsonData.Sheet1);
-    axios.post("http://localhost:5000/sendjournal", jsonData).then((res) => {
-      console.log("Server response for /sendjournal is " + res.data);
+    axios
+      .post("http://localhost:5000/sendconference", jsonData)
+      .then((res) => {
+        console.log("Server response for /sendconference is " + res.data);
 
-      toast.success("Journal is uploaded successfuly", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    });
+        toast.success("Conference is uploaded successfuly", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+    //   .catch((error) => {
+    //     console.log("error.response.data");
+    //     console.log(error.response.data);
+    //   });
   };
 
   return (
@@ -106,4 +112,4 @@ function Journal({ cookies, removeCookies }) {
   );
 }
 
-export default Journal;
+export default Conference;

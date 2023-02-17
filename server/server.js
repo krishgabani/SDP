@@ -1,11 +1,12 @@
 const express = require('express');
-var bodyParser = require("body-parser");
-const cors = require('cors');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
 const {sendtodb} = require('./Controllers/sendDataroute')
 const {connectDB} = require('./config/db');
 const {sendjournal} = require('./Controllers/sendJournal.js')
+const {sendconference} = require('./Controllers/sendconference.js')
 
 
 mongoose.set("strictQuery", false);
@@ -27,6 +28,7 @@ app.use(cors());
 
 app.post("/senddata", sendtodb);
 app.post("/sendjournal",sendjournal);
+app.post("/sendconference",sendconference);
 app.use("/api/user",require('./routes/userRoutes'));
 
 

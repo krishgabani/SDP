@@ -31,4 +31,4 @@ const JournalDataShema = new mongoose.Schema({
 
 const JournalDataModel = new mongoose.model("journalData", JournalDataShema);
 
-module.exports ={ JournalDataModel };
+module.exports = JournalDataModel ;

@@ -3,9 +3,9 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-}
-.register-form {
+  }
+  .register-form {
     border: 1px solid gray;
     padding: 30px;
-    
-}
+  }
+  
