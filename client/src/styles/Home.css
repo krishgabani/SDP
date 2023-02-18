@@ -1,12 +1,30 @@
 .scrollit {
-    overflow:scroll;
-    height:20rem;
-
-}
-
-.table-mymodify {
+    overflow-y: scroll;
+    height: 60vh;
+  }
+  
+  .table-mymodify {
     table-layout: 2rem;
-    background-color: rgb(193, 192, 193);
+    /* background-color: rgb(193, 192, 193); */
     border-radius: 2rem;
-}
-
+  }
+  
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

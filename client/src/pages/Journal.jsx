@@ -6,12 +6,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "../components/Layout/Layout";
 import { Col, Row, Form, Input, TimePicker } from "antd";
-import {journalData} from "../components/Layout/data"
+import { journalData } from "../components/Layout/data";
+import "../styles/Journal.css"
 
 function Journal({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
 
-  console.log("heeloe");
+  //console.log("heeloe");
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();
@@ -27,17 +28,17 @@ function Journal({ cookies, removeCookies }) {
           var roa = xlsx.utils.sheet_to_row_object_array(
             workbook.Sheets[sheetName]
           );
-          console.log(roa);
+          //console.log(roa);
           if (roa.length > 0) {
             //console.log(roa);
             result[sheetName] = roa;
           }
         });
-        console.log(result);
-        console.log(result.Sheet1);
+       // console.log(result);
+        //console.log(result.Sheet1);
         setJsonData(result);
 
-        console.log("hellow");
+        //console.log("hellow");
       };
     } catch (error) {
       console.log(error);
@@ -79,20 +80,19 @@ function Journal({ cookies, removeCookies }) {
 
   return (
     <Layout removeCookies={removeCookies}>
-      <h2 className="text-center">Download Template</h2>
-      <br />
-      <button onClick={() => downloadExcel(journalData, "Journal.xlsx")} className="m-3">
-        Download  
-      </button>
-      <br />
-      <h2 className="text-center">Upload File</h2>
+    <div>Journal</div>
+    
+      <div className="mychange">    
+        Download Template :
+        <button onClick={() => downloadExcel(journalData, "Journal.xlsx")}>
+          Download
+        </button>
+      </div>
 
-      <Form layout="vertical" className="m-3">
-        {/* <Row>
-        <h1>Helloe world</h1>
-      </Row> */}
+      {/* <h2 className="text-center">Upload File</h2> */}
 
-        <p>Files Supported: XLS or XLSX</p>
+      <div className="upload">
+        Files Supported: XLS or XLSX : 
         <input
           type="file"
           accept=".xls, .xlsx"
@@ -100,14 +100,13 @@ function Journal({ cookies, removeCookies }) {
           name="upload"
           onChange={readUploadFile}
         />
-        <br />
         <input
           type="button"
           name="submit"
           value="Submit"
           onClick={sendDataToServer}
         />
-      </Form>
+      </div>
     </Layout>
   );
 }
