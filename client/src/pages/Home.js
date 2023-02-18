@@ -6,9 +6,15 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { userAll } from "../redux/features/userSlice";
 import "../styles/Home.css";
+import ViewModal from "../components/ViewModal";
+import EditModal from "../components/EditModal";
 
 const Home = ({ cookies, removeCookies }) => {
   const [jsonData, setJsonData] = useState([]);
+  const [viewModalShow, setViewModalShow] = React.useState(false);
+  const [editModalShow, setEditModalShow] = React.useState(false);
+  const [currentItem, setCurrentItem] = React.useState(false);
+
   const { user } = useSelector((state) => state.user);
   console.log("hoiehroie");
   console.log(user);
@@ -21,14 +27,22 @@ const Home = ({ cookies, removeCookies }) => {
     getdatajournal();
   }, []);
 
+  console.log("currentItem");
+  console.log(currentItem);
+
   // if (user["Designation"] == "coordinator") {
   //   console.log("coordinator here");
   // } else if (user["Designation"] == "faculty") {
   //   console.log("faculty here");
   // }
 
-  console.log("jsonData");
-  console.log(jsonData);
+  // console.log("jsonData");
+  // console.log(jsonData);
+
+  const saveChanges = (newItem) => {
+    console.log("Save changes called with sr_no : " + newItem.Sr_No);
+    console.log("Title : " + newItem.Title_of_Research_Paper);
+  };
 
   const listItems = jsonData.map((item) => (
     <tr>
@@ -38,12 +52,23 @@ const Home = ({ cookies, removeCookies }) => {
       <td>{item.Title_of_Research_Paper}</td>
       <th
         scope="col"
-        onClick={() => alert(JSON.stringify(item, null, 4))}
+        // onClick={() => alert(JSON.stringify(item, null, 4))}
+        onClick={() => {
+          setViewModalShow(true);
+          setCurrentItem(item);
+        }}
         style={{ cursor: "pointer" }}
       >
         VIEW
       </th>
-      <th scope="col" style={{ cursor: "pointer" }}>
+      <th
+        scope="col"
+        onClick={() => {
+          setEditModalShow(true);
+          setCurrentItem(item);
+        }}
+        style={{ cursor: "pointer" }}
+      >
         EDIT
       </th>
       {/* <th scope="col">EDIT</th> */}
@@ -55,7 +80,7 @@ const Home = ({ cookies, removeCookies }) => {
       <>
         <h1 className="text-center">Home page</h1>
         <div className="scrollit">
-          <table class="table table-hover table-bordered table-mymodify">
+          <table className="table table-hover table-bordered table-mymodify">
             <thead>
               <tr>
                 <th scope="col">Sr No.</th>
@@ -67,6 +92,18 @@ const Home = ({ cookies, removeCookies }) => {
             <tbody>{listItems}</tbody>
           </table>
         </div>
+
+        <ViewModal
+          show={viewModalShow}
+          onHide={() => setViewModalShow(false)}
+          data={currentItem}
+        />
+        <EditModal
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          saveChanges={saveChanges}
+          data={currentItem}
+        />
       </>
     </Layout>
   );

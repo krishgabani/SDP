@@ -11,8 +11,8 @@ body {
   min-height: 100%;
   background-color: #ffffff;
 }
-h1,
-h2 {
+.box-root h1,
+.box-root {
   color: #5469d4;
   letter-spacing: -1px;
 }
@@ -83,12 +83,12 @@ a {
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px,
     rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
 }
-span {
+/* span {
   display: block;
   font-size: 20px;
   line-height: 28px;
   color: #1a1f36;
-}
+} */
 label {
   margin-bottom: 10px;
 }
@@ -110,6 +110,9 @@ label {
 }
 
 .footer-link span {
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
+  display: block;
+  line-height: 28px;
+  color: #1a1f36;
 }

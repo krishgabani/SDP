@@ -13,12 +13,12 @@ exports.getjournal = async (req, res) => {
     });
   } else if (req.body.Designation === "faculty") {
     let asFirstAuthor = await JournalDataModel.find({
-      First_Author_name: "Harshadkumar B. Prajapati",
+      First_Author_name: req.body.name,
     });
 
     let asOtherAuthor = await JournalDataModel.find({
       Names_of_Other_Author_From_DDU: new RegExp(
-        ".*" + "Harshadkumar B. Prajapati" + ".*"
+        ".*" + req.body.name + ".*"
       ),
     });
 

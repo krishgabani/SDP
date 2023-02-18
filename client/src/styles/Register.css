@@ -75,12 +75,7 @@ a {
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px,
     rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
 }
-span {
-  display: block;
-  font-size: 20px;
-  line-height: 28px;
-  color: #1a1f36;
-}
+
 label {
   margin-bottom: 10px;
 }
@@ -138,19 +133,11 @@ input[type="submit"] {
   align-items: center;
   margin: 0;
 }
-a.ssolink {
-  display: block;
-  text-align: center;
-  font-weight: 600;
-}
-.footer-link span {
-  font-size: 14px;
-  text-align: center;
-}
-.listing a {
-  color: #697386;
-  font-weight: 600;
-  margin: 0 10px;
-}
 
-  
+.footer-link span {
+  font-size: 16px;
+  text-align: center;
+  display: block;
+  line-height: 28px;
+  color: #1a1f36;
+}
