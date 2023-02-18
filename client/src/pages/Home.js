@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { userAll } from "../redux/features/userSlice";
+import '../styles/Home.css'
 
 const Home = ({ cookies, removeCookies }) => {
   const [jsonData, setJsonData] = useState([]);
@@ -30,7 +31,7 @@ const Home = ({ cookies, removeCookies }) => {
       <td>{item.First_Author_name}</td>
       <td>{item.Title_of_Research_Paper}</td>
       <th scope="col" onClick={()=>alert(JSON.stringify(item,null,4))} style={{cursor : 'pointer'}}>VIEW</th>
-      <th scope="col" style={{cursor : 'pointer'}}>EDIT</th>
+      <th  scope="col" style={{cursor : 'pointer'}}>EDIT</th>
       {/* <th scope="col">EDIT</th> */}
     </tr>
   ));
@@ -39,8 +40,9 @@ const Home = ({ cookies, removeCookies }) => {
   return (
     <Layout removeCookies={removeCookies}>
       <>
+      <div className="scrollit ">
         <h1 className="text-center">Home page</h1>
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered table-mymodify">
           <thead>
             <tr>
               <th scope="col">Sr No.</th>
@@ -51,6 +53,7 @@ const Home = ({ cookies, removeCookies }) => {
           </thead>
           <tbody>{listItems}</tbody>
         </table>
+        </div>
       </>
     </Layout>
   );

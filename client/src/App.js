@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Upload from "./components/Upload";
 import Login from "./components/Login";
 import Journal from "./pages/Journal";
+import Profile from "./pages/Profile";
 import Conference from "./pages/Conference";
 import Register from "./components/Register";
 import { ToastContainer, toast } from "react-toastify";
@@ -62,6 +63,17 @@ function App() {
                 <PublicRoute cookies={cookies}>
                   <Register />
                 </PublicRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Profile cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
               }
             />
             <Route path="/senddata" element={<Upload />} />

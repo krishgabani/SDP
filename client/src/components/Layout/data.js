@@ -106,7 +106,7 @@ export const coordinatorMenu = [
     },
     {
         name: "Profile",
-        path: "/coordinator/profile",
+        path: "/profile",
         icon: "fa-solid fa-user",
     },
 ];
