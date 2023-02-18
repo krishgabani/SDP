@@ -5,6 +5,8 @@ import Login from "./components/Login";
 import Journal from "./pages/Journal";
 import Profile from "./pages/Profile";
 import Conference from "./pages/Conference";
+import Bookchapter from "./pages/Bookchapter";
+import Book from "./pages/Book";
 import Register from "./components/Register";
 import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
@@ -76,9 +78,52 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/journal"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Journal cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/conference"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Conference cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/book"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Book cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/book-chapter"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Bookchapter cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/senddata" element={<Upload />} />
-            <Route path="/coordinator/journal" element={<Journal />} />
-            <Route path="/coordinator/conference" element={<Conference />} />
+            <Route path="/conference" element={<Conference />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user/:id/verify/:token" element={<EmailVerify />} />
             <Route

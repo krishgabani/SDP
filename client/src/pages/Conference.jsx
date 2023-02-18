@@ -76,7 +76,7 @@ function Conference({ cookies, removeCookies }) {
   };
 
   return (
-    <Layout>
+    <Layout removeCookies={removeCookies}>
       <h1 className="text-center">Upload File</h1>
 
       <Form layout="vertical" className="m-3">

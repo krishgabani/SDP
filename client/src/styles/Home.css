@@ -1,10 +1,12 @@
 .scrollit {
     overflow:scroll;
-    height:33rem;
+    height:20rem;
 
 }
 
 .table-mymodify {
     table-layout: 2rem;
     background-color: rgb(193, 192, 193);
+    border-radius: 2rem;
 }
+

@@ -86,22 +86,22 @@ export const coordinatorMenu = [
     },
     {
         name: "Journal",
-        path: "/coordinator/journal",
+        path: "/journal",
         icon: "",
     },
     {
         name: "Conference",
-        path: "/coordinator/conference",
+        path: "/conference",
         icon: "",
     },
     {
         name: "Book",
-        path: "/coordinator/book",
+        path: "/book",
         icon: "",
     },
     {
         name: "Book-chapter",
-        path: "/coordinator/book-chapter",
+        path: "/book-chapter",
         icon: "",
     },
     {

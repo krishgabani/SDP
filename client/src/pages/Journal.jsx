@@ -78,7 +78,7 @@ function Journal({ cookies, removeCookies }) {
   };
 
   return (
-    <Layout>
+    <Layout removeCookies={removeCookies}>
       <h2 className="text-center">Download Template</h2>
       <br />
       <button onClick={() => downloadExcel(journalData, "Journal.xlsx")} className="m-3">
