@@ -7,27 +7,27 @@ export const facultyMenu = [
 
     {
         name: "Journal",
-        path: "/faculty/Journal",
+        path: "/Journal",
         icon: "",
     },
     {
         name: "Conference",
-        path: "/faculty/conference",
+        path: "/conference",
         icon: "",
     },
     {
         name: "Book",
-        path: "/faculty/book",
+        path: "/book",
         icon: "",
     },
     {
         name: "Book-chapter",
-        path: "/faculty/book-chapter",
+        path: "/book-chapter",
         icon: "",
     },
     {
         name: "Profile",
-        path: "/faculty/profile",
+        path: "/profile",
         icon: "fa-solid fa-user",
     },
 ];
@@ -40,27 +40,27 @@ export const hodMenu = [
 
     {
         name: "Journal",
-        path: "/hod/Journal",
+        path: "/Journal",
         icon: "",
     },
     {
         name: "Conference",
-        path: "/hod/conference",
+        path: "/conference",
         icon: "",
     },
     {
         name: "Book",
-        path: "/hod/book",
+        path: "/book",
         icon: "",
     },
     {
         name: "Book-chapter",
-        path: "/hod/book-chapter",
+        path: "/book-chapter",
         icon: "",
     },
     {
         name: "Profile",
-        path: "/hod/profile",
+        path: "/profile",
         icon: "",
     },
 ];
