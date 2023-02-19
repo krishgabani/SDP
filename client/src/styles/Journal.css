@@ -3,14 +3,14 @@
     height: 3rem;
     width: 35rem;
     margin-left: 24rem;
-    margin-top: 10rem;
-    
+    margin-top: -2rem;
     border: 1px solid black;
 }
 
 .mychange {
     height : 3rem;
     width: 15rem;
-    margin-top: 10rem;
+    margin-left: 3rem;
+    justify-content: center;
     border: 1px solid black;
 }

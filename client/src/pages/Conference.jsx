@@ -61,7 +61,7 @@ function Conference({ cookies, removeCookies }) {
   const sendDataToServer = () => {
     console.log(jsonData.Sheet1);
     axios
-      .post("http://localhost:5000/sendconference", jsonData)
+      .post("http://localhost:5000/info/sendconference", jsonData)
       .then((res) => {
         console.log("Server response for /sendconference is " + res.data);
 

@@ -22,7 +22,7 @@ const Upload = () => {
   };
   const sendDataToServer = () => {
     // console.log(jsonData);
-    axios.post("http://localhost:5000/senddata", jsonData).then((res) => {
+    axios.post("http://localhost:5000/info/senddata", jsonData).then((res) => {
       console.log("Server response for /senddata is " + res.data);
     });
   };

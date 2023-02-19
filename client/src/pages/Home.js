@@ -16,19 +16,19 @@ const Home = ({ cookies, removeCookies }) => {
   const [currentItem, setCurrentItem] = React.useState(false);
 
   const { user } = useSelector((state) => state.user);
-  console.log("hoiehroie");
-  console.log(user);
+  //console.log("hoiehroie");
+  //console.log(user);
   useEffect(() => {
     const getdatajournal = async () => {
-      const res = await axios.post("http://localhost:5000/getjournal", user);
+      const res = await axios.post("http://localhost:5000/info/getjournal", user);
       console.log(res.data.data);
       setJsonData(res.data.data);
     };
     getdatajournal();
   }, []);
 
-  console.log("currentItem");
-  console.log(currentItem);
+  //console.log("currentItem");
+  //console.log(currentItem);
 
   // if (user["Designation"] == "coordinator") {
   //   console.log("coordinator here");
@@ -40,8 +40,11 @@ const Home = ({ cookies, removeCookies }) => {
   // console.log(jsonData);
 
   const saveChanges = (newItem) => {
+    console.log(newItem);
     console.log("Save changes called with sr_no : " + newItem.Sr_No);
     console.log("Title : " + newItem.Title_of_Research_Paper);
+    console.log(newItem.Data_Submitting_Author_department);
+    console.log(newItem.Academic_Year);
   };
 
   const listItems = jsonData.map((item) => (
