@@ -1,19 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { useState } from "react";
 import * as xlsx from "xlsx";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Layout from "../components/Layout/Layout";
-import { Col, Row, Form, Input, TimePicker } from "antd";
-import { journalData } from "../components/Layout/data";
 import "../styles/Journal.css";
-import { useDispatch, useSelector } from "react-redux";
+import { journalData } from "../components/Layout/data";
+import Layout from "../components/Layout/Layout";
+import ViewModal from "../components/ViewModal";
+import EditModal from "../components/EditModal";
 
 function Journal({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
+  const [jsontableData, setJsontableData] = useState([]);
+  const [viewModalShow, setViewModalShow] = React.useState(false);
+  const [editModalShow, setEditModalShow] = React.useState(false);
+  const [currentItem, setCurrentItem] = React.useState([]);
+  const { user } = useSelector((state) => state.user);
+  const downloadData = jsontableData;
+  downloadData.forEach((it,index) => {
+    delete it._id;
+    delete it.__v;
+  })
 
-  //console.log("heeloe");
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();
@@ -71,17 +80,15 @@ function Journal({ cookies, removeCookies }) {
       });
     });
   };
-
   const downloadExcel = (data, filename) => {
     const worksheet = xlsx.utils.json_to_sheet(data);
     const workbook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     xlsx.writeFile(workbook, filename);
   };
-  const [jsontableData, setJsontableData] = useState([]);
-  const { user } = useSelector((state) => state.user);
-  console.log("hoiehroie");
+
   console.log(user);
+  
   useEffect(() => {
     const getdatajournal = async () => {
       const res = await axios.post("http://localhost:5000/info/getjournal", user);
@@ -91,13 +98,11 @@ function Journal({ cookies, removeCookies }) {
     getdatajournal();
   }, []);
 
-  // if (user["Designation"] == "coordinator") {
-  //   console.log("coordinator here");
-  // } else if (user["Designation"] == "faculty") {
-  //   console.log("faculty here");
-  // }
+  const savechanges = async (newItem) => {
+    const res = await axios.post("http://localhost:5000/info/editjournal", newItem);
+    console.log(res.data);
+  };
 
-  console.log("jsonData");
   console.log(jsontableData);
 
   const listItems = jsontableData.map((item) => (
@@ -108,12 +113,23 @@ function Journal({ cookies, removeCookies }) {
       <td>{item.Title_of_Research_Paper}</td>
       <th
         scope="col"
-        onClick={() => alert(JSON.stringify(item, null, 4))}
+        // onClick={() => alert(JSON.stringify(item, null, 4))}
+        onClick={() => {
+          setViewModalShow(true);
+          setCurrentItem(item);
+        }}
         style={{ cursor: "pointer" }}
       >
         VIEW
       </th>
-      <th scope="col" style={{ cursor: "pointer" }}>
+      <th
+        scope="col"
+        onClick={() => {
+          setEditModalShow(true);
+          setCurrentItem(item);
+        }}
+        style={{ cursor: "pointer" }}
+      >
         EDIT
       </th>
       {/* <th scope="col">EDIT</th> */}
@@ -136,11 +152,22 @@ function Journal({ cookies, removeCookies }) {
             <tbody>{listItems}</tbody>
           </table>
         </div>
+        <ViewModal
+          show={viewModalShow}
+          onHide={() => setViewModalShow(false)}
+          data={currentItem}
+        />
+        <EditModal
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          savechanges={savechanges}
+          data={currentItem}
+        />
       </>
 
       <div className="mychange">
         Download Template :
-        <button onClick={() => downloadExcel(journalData, "Journal.xlsx")}>
+        <button onClick={() => downloadExcel(journalData, "Journal-Template.xlsx")}>
           Download
         </button>
       </div>
@@ -160,6 +187,13 @@ function Journal({ cookies, removeCookies }) {
           value="Submit"
           onClick={sendDataToServer}
         />
+      </div>
+
+      <div className="mychange">
+        Download :
+        <button onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}>
+          Download
+        </button>
       </div>
     </Layout>
   );

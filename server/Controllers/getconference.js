@@ -1,34 +1,37 @@
 const express = require("express");
-const JournalDataModel = require("../models/journal");
+const ConferenceDataModel = require("../models/conference");
 
-exports.getjournal = async (req, res) => {
-  let jou = [];
+exports.getconference = async (req, res) => {
+  let con = [];
   console.log(req.body);
   if (
     req.body.Designation === "coordinator" ||
     req.body.Designation === "hod"
   ) {
-    jou = await JournalDataModel.find({
+    con = await ConferenceDataModel.find({
       Data_Submitting_Author_department: req.body.Department,
+      Publication_Type: req.body.currentPage
     });
   } else if (req.body.Designation === "faculty") {
-    let asFirstAuthor = await JournalDataModel.find({
+    let asFirstAuthor = await ConferenceDataModel.find({
       Data_Submitting_Author_department: req.body.Department,
       First_Author_name: req.body.name,
+      Publication_Type: req.body.currentPage
     });
 
-    let asOtherAuthor = await JournalDataModel.find({
+    let asOtherAuthor = await ConferenceDataModel.find({
       Data_Submitting_Author_department: req.body.Department,
+      Publication_Type: req.body.currentPage,
       Names_of_Other_Author_From_DDU: new RegExp(
-        ".*" + req.body.name + ".*"
-      ),
+        ".*" + req.body.name + ".*",
+        ),
     });
 
-    jou = [].concat(asFirstAuthor, asOtherAuthor);
+    con = [].concat(asFirstAuthor, asOtherAuthor);
   }
 
   res.send({
     message: "user is valid",
-    data: jou,
+    data: con,
   });
 };

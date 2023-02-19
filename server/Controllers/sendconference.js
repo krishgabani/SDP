@@ -9,8 +9,6 @@ const sendconference = (req, res) => {
   console.log("sendconference called");
   for (let prop in vect["Sheet1"]) {
     const data = vect["Sheet1"][prop];
-    console.log("----------");
-    console.log(data);
 
     const conferenceData = {
       Sr_No: data["Sr_No"],

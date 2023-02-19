@@ -16,8 +16,8 @@ const Home = ({ cookies, removeCookies }) => {
   const [currentItem, setCurrentItem] = React.useState([]);
 
   const { user } = useSelector((state) => state.user);
-  //console.log("hoiehroie");
-  //console.log(user);
+  console.log(user);
+
   useEffect(() => {
     const getdatajournal = async () => {
       const res = await axios.post(
@@ -29,18 +29,6 @@ const Home = ({ cookies, removeCookies }) => {
     };
     getdatajournal();
   }, []);
-
-  //console.log("currentItem");
-  //console.log(currentItem);
-
-  // if (user["Designation"] == "coordinator") {
-  //   console.log("coordinator here");
-  // } else if (user["Designation"] == "faculty") {
-  //   console.log("faculty here");
-  // }
-
-  // console.log("jsonData");
-  // console.log(jsonData);
 
   const savechanges = async (newItem) => {
     console.log(newItem);
