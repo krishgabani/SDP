@@ -13,14 +13,17 @@ const Home = ({ cookies, removeCookies }) => {
   const [jsonData, setJsonData] = useState([]);
   const [viewModalShow, setViewModalShow] = React.useState(false);
   const [editModalShow, setEditModalShow] = React.useState(false);
-  const [currentItem, setCurrentItem] = React.useState(false);
+  const [currentItem, setCurrentItem] = React.useState([]);
 
   const { user } = useSelector((state) => state.user);
   //console.log("hoiehroie");
   //console.log(user);
   useEffect(() => {
     const getdatajournal = async () => {
-      const res = await axios.post("http://localhost:5000/info/getjournal", user);
+      const res = await axios.post(
+        "http://localhost:5000/info/getjournal",
+        user
+      );
       console.log(res.data.data);
       setJsonData(res.data.data);
     };
@@ -39,12 +42,12 @@ const Home = ({ cookies, removeCookies }) => {
   // console.log("jsonData");
   // console.log(jsonData);
 
-  const saveChanges = (newItem) => {
+  const savechanges = async (newItem) => {
     console.log(newItem);
-    console.log("Save changes called with sr_no : " + newItem.Sr_No);
-    console.log("Title : " + newItem.Title_of_Research_Paper);
-    console.log(newItem.Data_Submitting_Author_department);
-    console.log(newItem.Academic_Year);
+    console.log("hiierer");
+     const res = await axios.post("http://localhost:5000/info/editjournal", newItem);
+
+    console.log(res.data);
   };
 
   const listItems = jsonData.map((item) => (
@@ -104,7 +107,7 @@ const Home = ({ cookies, removeCookies }) => {
         <EditModal
           show={editModalShow}
           onHide={() => setEditModalShow(false)}
-          saveChanges={saveChanges}
+          savechanges={savechanges}
           data={currentItem}
         />
       </>

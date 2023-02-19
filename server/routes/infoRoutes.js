@@ -14,6 +14,7 @@ router.post("/sendconference",sendconference);
 
 router.post("/senddata", sendtodb);
 
-router.patch("/editjournal",editjournal);
+router.post("/editjournal",editjournal);
+
 module.exports = router;
   
