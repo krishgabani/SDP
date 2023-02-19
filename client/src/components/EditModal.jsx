@@ -74,11 +74,10 @@ const EditModal = (props) => {
   //       </p>
   //     );
   // });
-
+  if(!user)  return(<></>);
 
   return (
     <>
-      {" "}
       {(props.data.First_Author_name === user.name || user.Designation === "coordinator") ? 
       <Modal
         {...props}

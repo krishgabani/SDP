@@ -1,18 +1,32 @@
+body {
+  /* overflow: hidden; */
+}
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 15px;
+}
+
 .upload {
-    margin: 10px;
-    /* justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  /* justify-content: center;
     height: 3rem;
     width: 35rem;
     margin-left: 24rem;
     margin-top: -2rem; */
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
-.mychange {
-    margin: 10px;
-    /* height : 3rem;
+.template {
+  margin: 10px;
+  padding: 10px;
+  /* height : 3rem;
     width: 15rem;
     margin-left: 3rem;
     justify-content: center; */
-    border: 1px solid black;
+  border: 1px solid black;
 }

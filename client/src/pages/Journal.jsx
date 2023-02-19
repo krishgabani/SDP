@@ -18,10 +18,10 @@ function Journal({ cookies, removeCookies }) {
   const [currentItem, setCurrentItem] = React.useState([]);
   const { user } = useSelector((state) => state.user);
   const downloadData = jsontableData;
-  downloadData.forEach((it,index) => {
+  downloadData.forEach((it, index) => {
     delete it._id;
     delete it.__v;
-  })
+  });
 
   const excelFileToJSON = (file) => {
     try {
@@ -72,13 +72,15 @@ function Journal({ cookies, removeCookies }) {
   };
   const sendDataToServer = () => {
     console.log(jsonData.Sheet1);
-    axios.post("http://localhost:5000/info/sendjournal", jsonData).then((res) => {
-      console.log("Server response for /sendjournal is " + res.data);
+    axios
+      .post("http://localhost:5000/info/sendjournal", jsonData)
+      .then((res) => {
+        console.log("Server response for /sendjournal is " + res.data);
 
-      toast.success("Journal is uploaded successfuly", {
-        position: toast.POSITION.TOP_RIGHT,
+        toast.success("Journal is uploaded successfuly", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
-    });
   };
   const downloadExcel = (data, filename) => {
     const worksheet = xlsx.utils.json_to_sheet(data);
@@ -88,10 +90,13 @@ function Journal({ cookies, removeCookies }) {
   };
 
   console.log(user);
-  
+
   useEffect(() => {
     const getdatajournal = async () => {
-      const res = await axios.post("http://localhost:5000/info/getjournal", user);
+      const res = await axios.post(
+        "http://localhost:5000/info/getjournal",
+        user
+      );
       console.log(res.data.data);
       setJsontableData(res.data.data);
     };
@@ -99,7 +104,10 @@ function Journal({ cookies, removeCookies }) {
   }, []);
 
   const savechanges = async (newItem) => {
-    const res = await axios.post("http://localhost:5000/info/editjournal", newItem);
+    const res = await axios.post(
+      "http://localhost:5000/info/editjournal",
+      newItem
+    );
     console.log(res.data);
   };
 
@@ -135,6 +143,7 @@ function Journal({ cookies, removeCookies }) {
       {/* <th scope="col">EDIT</th> */}
     </tr>
   ));
+  if(!user) return(<></>);
   return (
     <Layout removeCookies={removeCookies}>
       <>
@@ -164,37 +173,58 @@ function Journal({ cookies, removeCookies }) {
           data={currentItem}
         />
       </>
+      {user.Designation === "coordinator" && (
+        <div className="btns">
+          <div className="download">
+            <div className="template">
+              <span style={{ fontSize: "18px", fontWeight: "600" }}>
+                Download Template : &nbsp;
+              </span>
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  downloadExcel(journalData, "Journal-Template.xlsx")
+                }
+              >
+                Download
+              </button>
+            </div>
+            <div className="template">
+              <span style={{ fontSize: "18px", fontWeight: "600" }}>
+                {" "}
+                Download Data : &nbsp;{" "}
+              </span>
+              <button
+                className="btn btn-primary"
+                onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}
+              >
+                Download
+              </button>
+            </div>
+          </div>
 
-      <div className="mychange">
-        Download Template :
-        <button onClick={() => downloadExcel(journalData, "Journal-Template.xlsx")}>
-          Download
-        </button>
-      </div>
-
-      <div className="upload">
-        Files Supported: XLS or XLSX :
-        <input
-          type="file"
-          accept=".xls, .xlsx"
-          id="upload"
-          name="upload"
-          onChange={readUploadFile}
-        />
-        <input
-          type="button"
-          name="submit"
-          value="Submit"
-          onClick={sendDataToServer}
-        />
-      </div>
-
-      <div className="mychange">
-        Download :
-        <button onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}>
-          Download
-        </button>
-      </div>
+          <div className="upload">
+            <span style={{ fontSize: "18px", fontWeight: "600" }}>
+              {" "}
+              Files Supported (xls or xlsx) : &nbsp;
+            </span>
+            <input
+              type="file"
+              accept=".xls, .xlsx"
+              id="upload"
+              name="upload"
+              onChange={readUploadFile}
+            />
+            <input
+              className="btn btn-primary"
+              type="button"
+              name="submit"
+              value="Upload"
+              onClick={sendDataToServer}
+            />
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }

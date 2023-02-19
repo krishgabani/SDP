@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import * as xlsx from "xlsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/Journal.css";
 import { conferenceData } from "../components/Layout/data";
 import Layout from "../components/Layout/Layout";
 import ViewModal from "../components/ViewModal";
@@ -173,38 +174,56 @@ function Conference({ cookies, removeCookies }) {
         />
       </>
       {user.Designation === "coordinator" && (
-        <div>
-          <div className="mychange">
-            Download Template :
-            <button onClick={() => downloadExcel(conferenceData, "Conference-Template.xlsx")} >
+        <div className="btns">
+        <div className="download">
+          <div className="template">
+            <span style={{ fontSize: "18px", fontWeight: "600" }}>
+              Download Template : &nbsp;
+            </span>
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                downloadExcel(conferenceData, "Conference-Template.xlsx")
+              }
+            >
               Download
             </button>
           </div>
-
-          <div className="upload">
-            Files Supported: XLS or XLSX :
-            <input
-              type="file"
-              accept=".xls, .xlsx"
-              id="upload"
-              name="upload"
-              onChange={readUploadFile}
-            />
-            <input
-              type="button"
-              name="submit"
-              value="Submit"
-              onClick={sendDataToServer}
-            />
-          </div>
-
-          <div className="mychange">
-            Download Template :
-            <button onClick={() => downloadExcel(jsontableData, "Conference.xlsx")} >
+          <div className="template">
+            <span style={{ fontSize: "18px", fontWeight: "600" }}>
+              {" "}
+              Download Data : &nbsp;{" "}
+            </span>
+            <button
+              className="btn btn-primary"
+              onClick={() => downloadExcel(jsontableData, "Conference.xlsx")}
+            >
               Download
             </button>
           </div>
         </div>
+
+        <div className="upload">
+          <span style={{ fontSize: "18px", fontWeight: "600" }}>
+            {" "}
+            Files Supported (xls or xlsx) : &nbsp;
+          </span>
+          <input
+            type="file"
+            accept=".xls, .xlsx"
+            id="upload"
+            name="upload"
+            onChange={readUploadFile}
+          />
+          <input
+            className="btn btn-primary"
+            type="button"
+            name="submit"
+            value="Upload"
+            onClick={sendDataToServer}
+          />
+        </div>
+      </div>
       )}
 
       {/* 
