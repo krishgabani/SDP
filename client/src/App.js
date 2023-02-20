@@ -19,6 +19,7 @@ import Spinner from "./components/Spinner";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Department from "./pages/Department";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -119,6 +120,17 @@ function App() {
                   removeCookies={handleRemoveCookies}
                 >
                   <Bookchapter cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/departments"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Department cookies={cookies} removeCookies={handleRemoveCookies} />
                 </ProtectedRoute>
               }
             />

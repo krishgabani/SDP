@@ -76,6 +76,11 @@ export const adminMenu = [
     path: "/admin/departments",
     icon: "",
   },
+  {
+    name: "Profile",
+    path: "/profile",
+    icon: "",
+  },
 ];
 
 export const coordinatorMenu = [

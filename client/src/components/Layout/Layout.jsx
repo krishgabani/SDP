@@ -23,7 +23,10 @@ function Layout({ children, removeCookies }) {
   let SidebarMenu = adminMenu;
   // console.log(user);
   console.log(user?.Designation);
-  if (user?.Designation === "coordinator") {
+  if(user?.isAdmin === true) {
+    SidebarMenu = adminMenu;
+  }
+  else if (user?.Designation === "coordinator") {
     console.log("hii");
     SidebarMenu = coordinatorMenu;
   } else if (user?.Designation === "faculty") {
