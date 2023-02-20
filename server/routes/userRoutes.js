@@ -6,6 +6,7 @@ const { adminVerify } = require('../Controllers/adminVerify');
 const { loginUser } = require('../Controllers/loginUser');
 const { authController } = require('../Controllers/userController');
 const authMiddlewar = require('../middlerwares/authMiddlewar');
+const {editDepartment} = require('../Controllers/editDepartment')
 
 
 router.post('/register',registerUser);
@@ -17,5 +18,7 @@ router.get('/:id/verify/:token/',ownVerify)
 router.get('/:id/adminverify/:token/',adminVerify);
 
 router.get('/getUserData',authMiddlewar,authController)
+
+router.post('/editdepartment',editDepartment);
 
 module.exports = router;
