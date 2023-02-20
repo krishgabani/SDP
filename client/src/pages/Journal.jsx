@@ -64,14 +64,14 @@ function Journal({ cookies, removeCookies }) {
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
     if (extension === ".XLS" || extension === ".XLSX") {
-      console.log(files[0]);
+      // console.log(files[0]);
       excelFileToJSON(files[0]);
     } else {
       alert("Please select a valid excel file.");
     }
   };
   const sendDataToServer = () => {
-    console.log(jsonData.Sheet1);
+    // console.log(jsonData.Sheet1);
     axios
       .post("http://localhost:5000/info/sendjournal", jsonData)
       .then((res) => {
@@ -97,7 +97,7 @@ function Journal({ cookies, removeCookies }) {
         "http://localhost:5000/info/getjournal",
         user
       );
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setJsontableData(res.data.data);
     };
     getdatajournal();
@@ -108,10 +108,10 @@ function Journal({ cookies, removeCookies }) {
       "http://localhost:5000/info/editjournal",
       newItem
     );
-    console.log(res.data);
+    // console.log(res.data);
   };
 
-  console.log(jsontableData);
+  // console.log(jsontableData);
 
   const listItems = jsontableData.map((item) => (
     <tr>
@@ -158,6 +158,14 @@ function Journal({ cookies, removeCookies }) {
                 <th scope="col">Title of Research Paper</th>
               </tr>
             </thead>
+            {/* <thead>
+              <tr>
+                <th></th>
+                <th><select><option>abc</option><option>pqr</option></select></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead> */}
             <tbody>{listItems}</tbody>
           </table>
         </div>

@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { conferenceData } from "../components/Layout/data";
 import Layout from "../components/Layout/Layout";
 import ViewModal from "../components/ViewModal";
-import EditModal from "../components/EditModal";
+import EditModalConference from "../components/EditModalConference";
 
 function Conference({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
@@ -33,20 +33,20 @@ function Conference({ cookies, removeCookies }) {
           var roa = xlsx.utils.sheet_to_row_object_array(
             workbook.Sheets[sheetName]
           );
-          console.log(roa);
+          // console.log(roa);
           if (roa.length > 0) {
             //console.log(roa);
             result[sheetName] = roa;
           }
         });
-        console.log(result);
-        console.log(result.Sheet1);
+        // console.log(result);
+        // console.log(result.Sheet1);
         setJsonData(result);
 
-        console.log("hellow");
+        // console.log("hellow");
       };
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   const readUploadFile = (e) => {
@@ -59,14 +59,14 @@ function Conference({ cookies, removeCookies }) {
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
     if (extension == ".XLS" || extension == ".XLSX") {
-      console.log(files[0]);
+      // console.log(files[0]);
       excelFileToJSON(files[0]);
     } else {
       alert("Please select a valid excel file.");
     }
   };
   const sendDataToServer = () => {
-    console.log(jsonData.Sheet1);
+    // console.log(jsonData.Sheet1);
     axios
       .post("http://localhost:5000/info/sendconference", jsonData)
       .then((res) => {
@@ -90,7 +90,7 @@ function Conference({ cookies, removeCookies }) {
         "http://localhost:5000/info/getconference",
         user
       );
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setJsontableData(res.data.data);
     };
     getdataconference();
@@ -101,10 +101,10 @@ function Conference({ cookies, removeCookies }) {
       "http://localhost:5000/info/editconference",
       newItem
     );
-    console.log(res.data);
+    // console.log(res.data);
   };
 
-  console.log(jsontableData);
+  // console.log(jsontableData);
 
   const listItems = jsontableData.map((item) => (
     <tr>
@@ -160,7 +160,7 @@ function Conference({ cookies, removeCookies }) {
           onHide={() => setViewModalShow(false)}
           data={currentItem}
         />
-        <EditModal
+        <EditModalConference
           show={editModalShow}
           onHide={() => setEditModalShow(false)}
           savechanges={savechanges}
