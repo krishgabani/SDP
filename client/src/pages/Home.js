@@ -14,6 +14,7 @@ const Home = ({ cookies, removeCookies }) => {
       </>
     </Layout>
   );
+
 };
 
 export default Home;

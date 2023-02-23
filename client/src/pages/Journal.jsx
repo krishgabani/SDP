@@ -23,6 +23,11 @@ function Journal({ cookies, removeCookies }) {
     delete it.__v;
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  function handleSearch(event) {
+    setSearchQuery(event.target.value);
+  }  
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();
@@ -148,6 +153,9 @@ function Journal({ cookies, removeCookies }) {
     <Layout removeCookies={removeCookies}>
       <>
         <h3 className="text-center">Journal</h3>
+        <div className="form-group">
+            Search: <input type="text" id="searchInput" placeholder="Enter search query" value={searchQuery} onChange={handleSearch} />
+          </div>
         <div className="scrollit">
           <table class="table table-hover table-bordered table-mymodify">
             <thead>
@@ -158,15 +166,15 @@ function Journal({ cookies, removeCookies }) {
                 <th scope="col">Title of Research Paper</th>
               </tr>
             </thead>
-            {/* <thead>
-              <tr>
-                <th></th>
-                <th><select><option>abc</option><option>pqr</option></select></th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead> */}
-            <tbody>{listItems}</tbody>
+            {/* <tbody>{listItems}</tbody> */}
+            <tbody>
+              {listItems.filter(item => {
+                const academicYear = item.props.children[1].props.children.toLowerCase();
+                const firstAuthor = item.props.children[2].props.children.toLowerCase();
+                const title = item.props.children[3].props.children.toLowerCase();
+                return academicYear.includes(searchQuery.toLowerCase()) || firstAuthor.includes(searchQuery.toLowerCase()) || title.includes(searchQuery.toLowerCase());
+              }).map((item, index) => React.cloneElement(item, { key: index }))}
+            </tbody>
           </table>
         </div>
         <ViewModal
