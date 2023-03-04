@@ -16,44 +16,35 @@ function Journal({ cookies, removeCookies }) {
   const [viewModalShow, setViewModalShow] = React.useState(false);
   const [editModalShow, setEditModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
+  const [selectedAuthor, setSelectedAuthor] = useState('');
   const { user } = useSelector((state) => state.user);
+  const [authorList,setAuthorList] = useState([]);
   const downloadData = jsontableData;
   downloadData.forEach((it, index) => {
     delete it._id;
     delete it.__v;
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
-  function handleSearch(event) {
-    setSearchQuery(event.target.value);
-  }  
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();
       reader.readAsBinaryString(file);
       reader.onload = (e) => {
         const data = e.target.result;
-        //console.log(data);
         const workbook = xlsx.read(data, { type: "binary" });
         var result = {};
 
-        //console.log(workbook);
         workbook.SheetNames.forEach(function (sheetName) {
           var roa = xlsx.utils.sheet_to_row_object_array(
             workbook.Sheets[sheetName]
           );
-          //console.log(roa);
           if (roa.length > 0) {
-            //console.log(roa);
             result[sheetName] = roa;
           }
         });
-        // console.log(result);
-        //console.log(result.Sheet1);
         setJsonData(result);
-
-        //console.log("hellow");
       };
     } catch (error) {
       console.log(error);
@@ -108,6 +99,29 @@ function Journal({ cookies, removeCookies }) {
     getdatajournal();
   }, []);
 
+  useEffect(()=>{
+    const getauthorlist = async () => {
+      const res = await axios.post(
+        "http://localhost:5000/info/getfacultynames"
+      );
+      // console.log("Author List");
+      // console.log(res.data.data);
+      setAuthorList(res.data.data);
+    };
+    getauthorlist();
+  },[])
+
+  useEffect(()=>{
+    const filterJournal = async (key,value) => {
+      const res = await axios.post(
+        `http://localhost:5000/info/getjournal?${key}=${value}`,
+        user
+      );
+      setJsontableData(res.data.data);
+    };
+    filterJournal("First_Author_name",selectedAuthor);
+  },[selectedAuthor])
+
   const savechanges = async (newItem) => {
     const res = await axios.post(
       "http://localhost:5000/info/editjournal",
@@ -117,6 +131,8 @@ function Journal({ cookies, removeCookies }) {
   };
 
   // console.log(jsontableData);
+
+  const authorListOptions = authorList.map(name => <option value={name}>{name}</option>)
 
   const listItems = jsontableData.map((item) => (
     <tr>
@@ -148,14 +164,42 @@ function Journal({ cookies, removeCookies }) {
       {/* <th scope="col">EDIT</th> */}
     </tr>
   ));
-  if(!user) return(<></>);
+  if (!user) return <></>;
   return (
     <Layout removeCookies={removeCookies}>
-      <>
-        <h3 className="text-center">Journal</h3>
-        <div className="form-group">
-            Search: <input type="text" id="searchInput" placeholder="Enter search query" value={searchQuery} onChange={handleSearch} />
+      <div className="main-container">
+        {/* <h3 className="text-center">Journal</h3> */}
+        <div className="input-group mb-4 border rounded-pill p-1">
+          <button type="button" className="btn btn-link">
+            <i className="fa fa-search"></i>
+          </button>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="What are you searching for?"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="form-control bg-none border-0 shadow-none"
+          />
+        </div>
+
+        <div className="filter-group">
+          <div className="filter-group-label">First Author:</div>
+          <div className="filter-group-select">
+            <select
+              className="form-select shadow-none"
+              value={selectedAuthor}
+              onChange={e => setSelectedAuthor(e.target.value)}
+            >
+              <option value="All">All</option>
+              {authorListOptions}
+              <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
+              <option value="Nikita P. Desai">Nikita P. Desai</option>
+              <option value="	Ragini V. Oza">Ragini V. Oza</option>
+            </select>
           </div>
+        </div>
+
         <div className="scrollit">
           <table class="table table-hover table-bordered table-mymodify">
             <thead>
@@ -168,12 +212,21 @@ function Journal({ cookies, removeCookies }) {
             </thead>
             {/* <tbody>{listItems}</tbody> */}
             <tbody>
-              {listItems.filter(item => {
-                const academicYear = item.props.children[1].props.children.toLowerCase();
-                const firstAuthor = item.props.children[2].props.children.toLowerCase();
-                const title = item.props.children[3].props.children.toLowerCase();
-                return academicYear.includes(searchQuery.toLowerCase()) || firstAuthor.includes(searchQuery.toLowerCase()) || title.includes(searchQuery.toLowerCase());
-              }).map((item, index) => React.cloneElement(item, { key: index }))}
+              {listItems
+                .filter((item) => {
+                  const academicYear =
+                    item.props.children[1].props.children.toLowerCase();
+                  const firstAuthor =
+                    item.props.children[2].props.children.toLowerCase();
+                  const title =
+                    item.props.children[3].props.children.toLowerCase();
+                  return (
+                    academicYear.includes(searchQuery.toLowerCase()) ||
+                    firstAuthor.includes(searchQuery.toLowerCase()) ||
+                    title.includes(searchQuery.toLowerCase())
+                  );
+                })
+                .map((item, index) => React.cloneElement(item, { key: index }))}
             </tbody>
           </table>
         </div>
@@ -188,59 +241,53 @@ function Journal({ cookies, removeCookies }) {
           savechanges={savechanges}
           data={currentItem}
         />
-      </>
-      {user.Designation === "coordinator" && (
-        <div className="btns">
-          <div className="download">
-            <div className="template">
-              <span style={{ fontSize: "18px", fontWeight: "600" }}>
-                Download Template : &nbsp;
-              </span>
-              <button
-                className="btn btn-primary"
-                onClick={() =>
-                  downloadExcel(journalData, "Journal-Template.xlsx")
-                }
-              >
-                Download
-              </button>
+
+        {user.Designation === "coordinator" && (
+          <div className="btns">
+            <div className="download">
+              <div className="template">
+                <button
+                  className="btn btn-primary"
+                  onClick={() =>
+                    downloadExcel(journalData, "Journal-Template.xlsx")
+                  }
+                >
+                  Download Template
+                </button>
+              </div>
+              <div className="template">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}
+                >
+                  Download
+                </button>
+              </div>
             </div>
-            <div className="template">
+
+            <div className="upload">
               <span style={{ fontSize: "18px", fontWeight: "600" }}>
                 {" "}
-                Download Data : &nbsp;{" "}
+                Files Supported (xls or xlsx) : &nbsp;
               </span>
-              <button
+              <input
+                type="file"
+                accept=".xls, .xlsx"
+                id="upload"
+                name="upload"
+                onChange={readUploadFile}
+              />
+              <input
                 className="btn btn-primary"
-                onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}
-              >
-                Download
-              </button>
+                type="button"
+                name="submit"
+                value="Upload"
+                onClick={sendDataToServer}
+              />
             </div>
           </div>
-
-          <div className="upload">
-            <span style={{ fontSize: "18px", fontWeight: "600" }}>
-              {" "}
-              Files Supported (xls or xlsx) : &nbsp;
-            </span>
-            <input
-              type="file"
-              accept=".xls, .xlsx"
-              id="upload"
-              name="upload"
-              onChange={readUploadFile}
-            />
-            <input
-              className="btn btn-primary"
-              type="button"
-              name="submit"
-              value="Upload"
-              onClick={sendDataToServer}
-            />
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </Layout>
   );
 }

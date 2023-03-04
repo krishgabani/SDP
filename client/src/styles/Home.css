@@ -1,6 +1,8 @@
 .scrollit {
     overflow-y: scroll;
-    height: 50vh;
+    /* height: calc(100% -10vh -100px); */
+    height: 66vh;
+    /* border: 1px solid black; */
   }
   
   .table-mymodify {

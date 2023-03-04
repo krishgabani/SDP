@@ -1,3 +1,9 @@
+.body {
+  height: 85vh;
+  /* margin-bottom: 20px; */
+  box-shadow: 0 0 2px rgb(91, 125, 245);
+  background-color: white;
+}
 .main {
   padding: 10px;
   height: 100vh;
@@ -25,12 +31,6 @@
   height: 10vh;
   margin-bottom: 20px;
   box-shadow: 0 0 2px rgb(42, 83, 234);
-  background-color: white;
-}
-.body {
-  height: 85vh;
-  margin-bottom: 20px;
-  box-shadow: 0 0 2px rgb(91, 125, 245);
   background-color: white;
 }
 .logo h6 {
