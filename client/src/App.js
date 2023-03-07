@@ -20,6 +20,7 @@ import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Department from "./pages/Department";
+import Allfaculty from "./pages/Allfaculty"
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -131,6 +132,17 @@ function App() {
                   removeCookies={handleRemoveCookies}
                 >
                   <Department cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/allfaculty/:coordinatId"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Allfaculty cookies={cookies} removeCookies={handleRemoveCookies} />
                 </ProtectedRoute>
               }
             />

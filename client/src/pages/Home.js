@@ -27,7 +27,7 @@ const Home = ({ cookies, removeCookies }) => {
   return (
     <Layout removeCookies={removeCookies}>
       <>
-      <h1 className="text-center">Home page</h1>
+      <h1 className="text-center">All Coordinators</h1>
       <Row>
           {coordinatorList && coordinatorList.map((coordinator) => <CoordinatorList coordinator={coordinator} />)}
       </Row>

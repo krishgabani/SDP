@@ -1,11 +1,12 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
+
 const CoordinatorList = ({coordinator}) => {
     const navigate  = useNavigate();
   return (
     <>
-        <div className="card m-4" style={{cursor:"pointer"}} onClick={() => navigate(`/doctor/book-appointment`)}> 
+        <div className="card m-4" style={{cursor:"pointer"}} onClick={() => navigate(`/allfaculty/${coordinator._id}`)}> 
             <div className="card-header" >
                 Department : <b>{coordinator.Department}</b>     
             </div>
