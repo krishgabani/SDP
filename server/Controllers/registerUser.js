@@ -14,6 +14,10 @@ exports.registerUser = async (req, res) => {
     Department: req.body.Department,
     Designation: "coordinator",
   });
+  // return res.status(200).send({
+  //   message: "Email is Already Exist",
+  // });
+  
   if (user) {
     return res.status(200).send({
       message: "Email is Already Exist",

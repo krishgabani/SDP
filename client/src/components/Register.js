@@ -110,6 +110,7 @@ function Register() {
                           value="faculty"
                           name="Designation"
                           id="faculty"
+                          onChange={handleChange}
                           // checked
                         />
                         <label className="form-check-label" htmlFor="faculty">
@@ -123,6 +124,7 @@ function Register() {
                           value="hod"
                           id="hod"
                           name="Designation"
+                          onChange={handleChange}
                         />
                         <label className="form-check-label" htmlFor="hod">
                           HOD
@@ -135,6 +137,7 @@ function Register() {
                           value="coordinator"
                           id="coordinator"
                           name="Designation"
+                          onChange={handleChange}
                         />
                         <label
                           className="form-check-label"
@@ -152,9 +155,12 @@ function Register() {
                         id="Department"
                         onChange={handleChange}
                         className="form-select"
-                        defaultValue={"Information Technology"}
+                        // defaultValue={"Information Technology"}
                       >
-                        <option value="Information Technology">
+                        <option value="department" onChange={handleChange}>
+                          Department
+                        </option>
+                        <option value="Information Technology" onChange={handleChange}>
                           Information Technology
                         </option>
                         <option value="Computer Engineering">

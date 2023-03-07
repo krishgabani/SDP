@@ -39,14 +39,13 @@ exports.ownVerify = async (req,res) => {
                     message:'coordinate is not found',
                 })
             }
-        }  
+        }else if(user.Designation === 'coordinator') {
+            await sendEmail("flys21634@gmail.com", "Verify Email", url);
+        }
         console.log(role);
         if(role){
             await sendEmail(role.email, "Verify Email", url);
-        }else{
-            await sendEmail("flys21634@gmail.com", "Verify Email", url);
         }
-        
         return res.json({
             message:'dontrt4rge',
             status:'res',

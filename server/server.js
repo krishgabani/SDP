@@ -27,6 +27,7 @@ app.use(cors());
 
 app.use("/info",require('./routes/infoRoutes'));
 app.use("/api/user",require('./routes/userRoutes'));
+app.use("/api/admin",require("./routes/adminRoutes"));
 
 
 
