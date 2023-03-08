@@ -118,9 +118,31 @@ function Conference({ cookies, removeCookies }) {
       <td>{item.Academic_Year}</td>
       <td>{item.First_Author_name}</td>
       <td>{item.Title_of_Research_Paper}</td>
+      <td>{item.Data_Submitting_Author_name}</td>
+      <td>{item.Data_Submitting_Author_department}</td>
+      <td>{item.Publication_Level}</td>
+      <td>{item.First_Author_organization}</td>
+      <td>{item.Names_of_Other_Author_From_DDU}</td>
+      <td>{item.Names_of_Other_Author_From_other_Organization}</td>
+      <td>{item.Publication_Type}</td>
+      <td>{item.Publication_Level}</td>
+      <td>{item.Title_of_the_conference}</td>
+      <td>{item.Start_Date_DD_MM_YYYY}</td>
+      <td>{item.End_Date_DD_MM_YYYY}</td>
+      <td>{item.Conference_Name}</td>
+      <td>{item.Conference_Organizer}</td>
+      <td>{item.Conference_City}</td>
+      <td>{item.Conference_State}</td>
+      <td>{item.Conference_Country}</td>
+      <td>{item.Name_of_the_Publisher}</td>
+      <td>{item.Publication_Date_DD_MM_YYYY}</td>
+      <td>{item.Pages_xx_yy}</td>
+      <td>{item.DOI}</td>
+      <td>{item.ISBN_or_ISSN}</td>
+      <td>{item.Affiliating_Institute_at_the_time_of_publication}</td>
       <th
+        className="myb fixed-right-view"
         scope="col"
-        // onClick={() => alert(JSON.stringify(item, null, 4))}
         onClick={() => {
           setViewModalShow(true);
           setCurrentItem(item);
@@ -130,6 +152,7 @@ function Conference({ cookies, removeCookies }) {
         VIEW
       </th>
       <th
+        className="myb fixed-right-edit"
         scope="col"
         onClick={() => {
           setEditModalShow(true);
@@ -139,23 +162,43 @@ function Conference({ cookies, removeCookies }) {
       >
         EDIT
       </th>
-      {/* <th scope="col">EDIT</th> */}
     </tr>
   ));
 
   return (
     <Layout removeCookies={removeCookies}>
-      {/* <h2 className="text-center">Upload File</h2> */}
       <>
         <h3 className="text-center">Conference</h3>
-        <div className="scrollit">
-          <table class="table table-hover table-bordered table-mymodify">
+        <div class="scrollit">
+          <table class="table table-hover table-bordered table-mymodify-confo">
             <thead>
               <tr>
                 <th scope="col">Sr No.</th>
                 <th scope="col">Academic Year</th>
                 <th scope="col">First Author</th>
                 <th scope="col">Title of Research Paper</th>
+                <th scope="col">Data Submitting Author name</th>
+                <th scope="col">Data Submitting Author department</th>
+                <th scope="col">Publication Level</th>
+                <th scope="col">First Author organization</th>
+                <th scope="col">Names of Other Author From DDU</th>
+                <th scope="col">Names of Other Author From other Organization</th>
+                <th scope="col">Publication Type</th>
+                <th scope="col">Publication Level</th>
+                <th scope="col">Title of the conference</th>
+                <th scope="col">Start Date (DD-MM-YYYY)</th>
+                <th scope="col">End Date (DD-MM-YYYY)</th>
+                <th scope="col">Conference Name</th>
+                <th scope="col">Conference Organizer</th>
+                <th scope="col">Conference City</th>
+                <th scope="col">Conference State</th>
+                <th scope="col">Conference Country</th>
+                <th scope="col">Name of the Publisher</th>
+                <th scope="col">Publication Date (DD-MM-YYYY)</th>
+                <th scope="col">Pages xx yy</th>
+                <th scope="col">DOI</th>
+                <th scope="col">ISBN or ISSN</th>
+                <th scope="col">Affiliating Institute </th>
               </tr>
             </thead>
             <tbody>{listItems}</tbody>
