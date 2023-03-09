@@ -1,32 +1,32 @@
 const mongoose = require("mongoose");
 
 const ConferenceDataShema = new mongoose.Schema({
-  Sr_No: String,
-  Academic_Year: String,
-  Data_Submitting_Author_department: String,
-  Data_Submitting_Author_name: String,
-  First_Author_name: String,
-  First_Author_department: String,
-  First_Author_organization: String,
-  Names_of_Other_Author_From_DDU: String,
-  Names_of_Other_Author_From_other_Organization: String,
-  Publication_Type: String,
-  Title_of_Research_Paper: String,
-  Publication_Level: String,
-  Title_of_the_conference: String,
-  Start_Date_DD_MM_YYYY: String,
-  End_Date_DD_MM_YYYY: String,
-  Conference_Name: String,
-  Conference_Organizer: String,
-  Conference_City: String,
-  Conference_State: String,
-  Conference_Country: String,
-  Name_of_the_Publisher: String,
-  Publication_Date_DD_MM_YYYY: String,
-  Pages_xx_yy: String,
-  DOI: String,
-  ISBN_or_ISSN: String,
-  Affiliating_Institute_at_the_time_of_publication: String,
+  Sr_No: {type : String},
+  Academic_Year: {type : String},
+  Data_Submitting_Author_department: {type : String},
+  Data_Submitting_Author_name: {type : String},
+  First_Author_name: {type : String},
+  First_Author_department: {type : String},
+  First_Author_organization: {type : String},
+  Names_of_Other_Author_From_DDU: {type : String},
+  Names_of_Other_Author_From_other_Organization: {type : String},
+  Publication_Type: {type : String},
+  Title_of_Research_Paper: {type : String},
+  Publication_Level: {type : String},
+  Title_of_the_conference: {type : String},
+  Start_Date_DD_MM_YYYY: {type : String},
+  End_Date_DD_MM_YYYY: {type : String},
+  Conference_Name: {type : String},
+  Conference_Organizer: {type : String},
+  Conference_City: {type : String},
+  Conference_State: {type : String},
+  Conference_Country: {type : String},
+  Name_of_the_Publisher: {type : String},
+  Publication_Date_DD_MM_YYYY: {type : String},
+  Pages_xx_yy: {type : String},
+  DOI: {type : String},
+  ISBN_or_ISSN: {type : String},
+  Affiliating_Institute_at_the_time_of_publication: {type : String},
 });
 
 const ConferenceDataModel = new mongoose.model(
@@ -34,4 +34,4 @@ const ConferenceDataModel = new mongoose.model(
   ConferenceDataShema
 );
 
-module.exports = ConferenceDataModel;
+module.exports = {ConferenceDataModel};

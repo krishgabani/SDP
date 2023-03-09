@@ -17,8 +17,10 @@ function Journal({ cookies, removeCookies }) {
   const [editModalShow, setEditModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
   const [selectedAuthor, setSelectedAuthor] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
   const { user } = useSelector((state) => state.user);
   const [authorList,setAuthorList] = useState([]);
+  const [yearList,setYearList] = useState([]);
   const downloadData = jsontableData;
   downloadData.forEach((it, index) => {
     delete it._id;
@@ -85,7 +87,7 @@ function Journal({ cookies, removeCookies }) {
     xlsx.writeFile(workbook, filename);
   };
 
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     const getdatajournal = async () => {
@@ -104,23 +106,49 @@ function Journal({ cookies, removeCookies }) {
       const res = await axios.post(
         "http://localhost:5000/info/getfacultynames"
       );
-      // console.log("Author List");
-      // console.log(res.data.data);
       setAuthorList(res.data.data);
+      console.log(authorList);
     };
     getauthorlist();
   },[])
 
   useEffect(()=>{
-    const filterJournal = async (key,value) => {
+    const getyearslist = async () => {
       const res = await axios.post(
-        `http://localhost:5000/info/getjournal?${key}=${value}`,
-        user
+        "http://localhost:5000/info/getyearslist"
       );
+      setYearList(res.data.data);
+      console.log(yearList);
+    };
+    getyearslist();
+  },[])
+
+  useEffect(()=>{
+    const filterJournal = async (authorKey,authorValue,yearKey,yearValue) => {
+      let res;
+      if(authorValue == "" && yearValue == "") {
+        res = await axios.post(
+          `http://localhost:5000/info/getjournal`,
+          user
+        );
+      } else {
+          let filterQuery = "";
+          if(authorValue != ""){
+            filterQuery += `${authorKey}=${authorValue}`;
+          }
+          if(yearValue != "") {
+            if(filterQuery != "") filterQuery += "&";
+            filterQuery += `${yearKey}=${yearValue}`;
+          }
+          res = await axios.post(
+            `http://localhost:5000/info/getjournal?${filterQuery}`,
+            user
+          );
+      }
       setJsontableData(res.data.data);
     };
-    filterJournal("First_Author_name",selectedAuthor);
-  },[selectedAuthor])
+    filterJournal("First_Author_name",selectedAuthor,"Academic_Year",selectedYear);
+  },[selectedAuthor,selectedYear])
 
   const savechanges = async (newItem) => {
     const res = await axios.post(
@@ -133,6 +161,7 @@ function Journal({ cookies, removeCookies }) {
   // console.log(jsontableData);
 
   const authorListOptions = authorList.map(name => <option value={name}>{name}</option>)
+  const yearListOptions = yearList.map(year => <option value={year}>{year}</option>)
 
   const listItems = jsontableData.map((item) => (
     <tr>
@@ -140,35 +169,14 @@ function Journal({ cookies, removeCookies }) {
       <td>{item.Academic_Year}</td>
       <td>{item.First_Author_name}</td>
       <td>{item.Title_of_Research_Paper}</td>
-      <th
-        scope="col"
-        // onClick={() => alert(JSON.stringify(item, null, 4))}
-        onClick={() => {
-          setViewModalShow(true);
-          setCurrentItem(item);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        VIEW
-      </th>
-      <th
-        scope="col"
-        onClick={() => {
-          setEditModalShow(true);
-          setCurrentItem(item);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        EDIT
-      </th>
-      {/* <th scope="col">EDIT</th> */}
+      <th scope="col" style={{ cursor: "pointer" }} onClick={() => { setViewModalShow(true); setCurrentItem(item); }} > VIEW </th>
+      <th scope="col" onClick={() => { setEditModalShow(true); setCurrentItem(item); }} style={{ cursor: "pointer" }} > EDIT </th>
     </tr>
   ));
   if (!user) return <></>;
   return (
     <Layout removeCookies={removeCookies}>
       <div className="main-container">
-        {/* <h3 className="text-center">Journal</h3> */}
         <div className="input-group mb-4 border rounded-pill p-1">
           <button type="button" className="btn btn-link">
             <i className="fa fa-search"></i>
@@ -183,7 +191,7 @@ function Journal({ cookies, removeCookies }) {
           />
         </div>
 
-        <div className="filter-group">
+        {/* <div className="filter-group">
           <div className="filter-group-label">First Author:</div>
           <div className="filter-group-select">
             <select
@@ -195,10 +203,10 @@ function Journal({ cookies, removeCookies }) {
               {authorListOptions}
               <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
               <option value="Nikita P. Desai">Nikita P. Desai</option>
-              <option value="	Ragini V. Oza">Ragini V. Oza</option>
+              <option value="Ragini V. Oza">Ragini V. Oza</option>
             </select>
           </div>
-        </div>
+        </div> */}
 
         <div className="scrollit">
           <table class="table table-hover table-bordered table-mymodify">
@@ -208,6 +216,41 @@ function Journal({ cookies, removeCookies }) {
                 <th scope="col">Academic Year</th>
                 <th scope="col">First Author</th>
                 <th scope="col">Title of Research Paper</th>
+              </tr>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none"
+                        value={selectedYear}
+                        onChange={e => setSelectedYear(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {yearListOptions}
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none"
+                        value={selectedAuthor}
+                        onChange={e => setSelectedAuthor(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {authorListOptions}
+                        <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
+                        <option value="Nikita P. Desai">Nikita P. Desai</option>
+                        <option value="Ragini V. Oza">Ragini V. Oza</option>
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col"></th>
               </tr>
             </thead>
             {/* <tbody>{listItems}</tbody> */}
@@ -230,38 +273,18 @@ function Journal({ cookies, removeCookies }) {
             </tbody>
           </table>
         </div>
-        <ViewModal
-          show={viewModalShow}
-          onHide={() => setViewModalShow(false)}
-          data={currentItem}
-        />
-        <EditModal
-          show={editModalShow}
-          onHide={() => setEditModalShow(false)}
-          savechanges={savechanges}
-          data={currentItem}
-        />
+
+        <ViewModal show={viewModalShow} onHide={() => setViewModalShow(false)} data={currentItem} />
+        <EditModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges={savechanges} data={currentItem} />
 
         {user.Designation === "coordinator" && (
           <div className="btns">
             <div className="download">
               <div className="template">
-                <button
-                  className="btn btn-primary"
-                  onClick={() =>
-                    downloadExcel(journalData, "Journal-Template.xlsx")
-                  }
-                >
-                  Download Template
-                </button>
+                <button className="btn btn-primary" onClick={() => downloadExcel(journalData, "Journal-Template.xlsx")} > Download Template </button>
               </div>
               <div className="template">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}
-                >
-                  Download
-                </button>
+                <button className="btn btn-primary" onClick={() => downloadExcel(jsontableData, "Journal.xlsx")} > Download </button>
               </div>
             </div>
 
@@ -270,20 +293,8 @@ function Journal({ cookies, removeCookies }) {
                 {" "}
                 Files Supported (xls or xlsx) : &nbsp;
               </span>
-              <input
-                type="file"
-                accept=".xls, .xlsx"
-                id="upload"
-                name="upload"
-                onChange={readUploadFile}
-              />
-              <input
-                className="btn btn-primary"
-                type="button"
-                name="submit"
-                value="Upload"
-                onClick={sendDataToServer}
-              />
+              <input type="file" accept=".xls, .xlsx" id="upload" name="upload" onChange={readUploadFile} />
+              <input className="btn btn-primary" type="button" name="submit" value="Upload" onClick={sendDataToServer} />
             </div>
           </div>
         )}

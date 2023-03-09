@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-const ConferenceDataModel = require("../models/conference.js");
+const {ConferenceDataModel} = require("../models/conference.js");
 
 const sendconference = (req, res) => {
   let vect = req.body;

@@ -8,6 +8,7 @@ const {sendtodb} = require('../Controllers/sendDataroute')
 const {editjournal} = require('../Controllers/editjournal')
 const {editconference} = require('../Controllers/editconference')
 const {getfacultynames} = require('../Controllers/getfacultynames')
+const {getyearslist} = require('../Controllers/getyearslist')
 
 router.post("/sendjournal",sendjournal);
 router.post("/getjournal",getjournal);
@@ -18,6 +19,7 @@ router.post("/getconference",getconference);
 router.post("/editconference",editconference);
 
 router.post("/getfacultynames",getfacultynames);
+router.post("/getyearslist",getyearslist);
 
 router.post("/senddata", sendtodb);
 
