@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const { UserModel } = require("../models/UserModel");
+const { UserModel } = require("../../models/UserModel");
 const mongoose = require("mongoose");
 
 const authController = async (req, res) => {

@@ -1,9 +1,9 @@
 const express = require("express");
-const { UserModel } = require("../models/UserModel");
-const Token = require("../models/token");
+const { UserModel } = require("../../models/UserModel");
+const Token = require("../../models/token");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../../utils/sendEmail");
 
 exports.registerUser = async (req, res) => {
   console.log(req.body);
@@ -17,7 +17,7 @@ exports.registerUser = async (req, res) => {
   // return res.status(200).send({
   //   message: "Email is Already Exist",
   // });
-  
+
   if (user) {
     return res.status(200).send({
       message: "Email is Already Exist",

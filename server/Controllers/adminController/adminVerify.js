@@ -1,6 +1,6 @@
-const Token = require('../models/token')
+const Token = require('../../models/token')
 const express = require('express');
-const {UserModel} = require('../models/UserModel')
+const {UserModel} = require('../../models/UserModel')
 const mongoose = require('mongoose');
 
 exports.adminVerify = async (req,res) => {

@@ -76,29 +76,40 @@ const Home = ({ cookies, removeCookies }) => {
     }
 
   };
-
-  return (
-    <Layout removeCookies={removeCookies}>
-      <>
+  if (user?.Designation === "Admin") {
+    return (
+      <Layout removeCookies={removeCookies}>
+        <>
+        <div className="container coordinator-container">
         <h2 className="text-center">All Coordinators</h2>
-        Add Department{" "}
-        <input
-          type="text"
-          name="department"
-          value={depart.department}
-          onChange={sethandler}
-          required
-        />
-        <input type="submit" onClick={editdepartment} />
-        <Row>
-          {coordinatorList &&
-            coordinatorList.map((coordinator) => (
-              <CoordinatorList coordinator={coordinator} />
-            ))}
-        </Row>
-      </>
-    </Layout>
-  );
+          Add Department{" "}
+          <input
+            type="text"
+            name="department"
+            value={depart.department}
+            onChange={sethandler}
+            required
+          />
+          <input type="submit" onClick={editdepartment} />
+          <Row>
+            {coordinatorList &&
+              coordinatorList.map((coordinator) => (
+                <CoordinatorList coordinator={coordinator} />
+              ))}
+          </Row>
+        </div>
+
+        </>
+      </Layout>
+    );
+  }else{
+    return(
+      <Layout removeCookies={removeCookies}>
+        <h1>Home</h1>
+      </Layout>
+    );
+  }
+
 };
 
 export default Home;

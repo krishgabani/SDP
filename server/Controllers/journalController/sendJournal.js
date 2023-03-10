@@ -2,15 +2,17 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-const {ConferenceDataModel} = require("../models/conference.js");
+const JournalDataModel = require("../../models/journal.js");
 
-const sendconference = (req, res) => {
+const sendjournal = (req, res) => {
   let vect = req.body;
-  console.log("sendconference called");
+  //   console.log(vect);
   for (let prop in vect["Sheet1"]) {
     const data = vect["Sheet1"][prop];
+    console.log("----------");
+    console.log(data);
 
-    const conferenceData = {
+    const journalData = {
       Sr_No: data["Sr_No"],
       Academic_Year: data["Academic_Year"],
       Data_Submitting_Author_department:
@@ -22,27 +24,26 @@ const sendconference = (req, res) => {
       Names_of_Other_Author_From_DDU: data["Names_of_Other_Author_From_DDU"],
       Names_of_Other_Author_From_other_Organization:
         data["Names_of_Other_Author_From_other_Organization"],
-      Publication_Type: data["Publication_Type"],
       Title_of_Research_Paper: data["Title_of_Research_Paper"],
       Publication_Level: data["Publication_Level"],
-      Title_of_the_conference: data["Title_of_the_conference"],
-      Start_Date_DD_MM_YYYY: data["Start_Date_DD_MM_YYYY"],
-      End_Date_DD_MM_YYYY: data["End_Date_DD_MM_YYYY"],
-      Conference_Name: data["Conference_Name"],
-      Conference_Organizer: data["Conference_Organizer"],
-      Conference_City: data["Conference_City"],
-      Conference_State: data["Conference_State"],
-      Conference_Country: data["Conference_Country"],
-      Name_of_the_Publisher: data["Name_of_the_Publisher"],
+      Journal_title: data["Journal_title"],
+      Journal_publisher: data["Journal_publisher"],
+      Link: data["Link"],
       Publication_Date_DD_MM_YYYY: data["Publication_Date_DD_MM_YYYY"],
+      Month_Number: data["Month_Number"],
+      Year: data["Year"],
+      Volume: data["Volume"],
+      Number: data["Number"],
       Pages_xx_yy: data["Pages_xx_yy"],
       DOI: data["DOI"],
-      ISBN_or_ISSN: data["ISBN_or_ISSN"],
-      Affiliating_Institute_at_the_time_of_publication:
-        data["Affiliating_Institute_at_the_time_of_publication"],
+      ISSN_Print: data["ISSN_Print"],
+      ISSN_Online: data["ISSN_Online"],
+      Impact_Factor_Value: data["Impact_Factor_Value"],
+      Impact_Factor_Year: data["Impact_Factor_Year"],
+      Impact_Factor_Agency: data["Impact_Factor_Agency"],
     };
 
-    ConferenceDataModel.create(conferenceData, (err, data) => {
+    JournalDataModel.create(journalData, (err, data) => {
       if (err) {
         console.log("Failed");
       } else {
@@ -55,4 +56,4 @@ const sendconference = (req, res) => {
   res.send("Data is Received");
 };
 
-module.exports = { sendconference };
+module.exports = { sendjournal };

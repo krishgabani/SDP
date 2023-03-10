@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const {registerUser} = require('../Controllers/registerUser')
-const {ownVerify} = require('../Controllers/ownVerify');
-const { adminVerify } = require('../Controllers/adminVerify');
-const { loginUser } = require('../Controllers/loginUser');
-const { authController } = require('../Controllers/userController');
+const { registerUser } = require('../Controllers/userControllers/registerUser')
+const { ownVerify } = require('../Controllers/userControllers/ownVerify');
+const { adminVerify } = require('../Controllers/adminController/adminVerify');
+const { loginUser } = require('../Controllers/userControllers/loginUser');
+const { authController } = require('../Controllers/userControllers/userController');
 const authMiddlewar = require('../middlerwares/authMiddlewar');
-const {editDepartment} = require('../Controllers/editDepartment')
-const {getDepartment} = require('../Controllers/getDepartment')
+const { editDepartment } = require('../Controllers/departmentController/editDepartment')
+const { getDepartment } = require('../Controllers/departmentController/getDepartment')
 
-router.post('/register',registerUser);
+router.post('/register', registerUser);
 
-router.post('/login',loginUser);
+router.post('/login', loginUser);
 
-router.get('/:id/verify/:token/',ownVerify)
+router.get('/:id/verify/:token/', ownVerify)
 
-router.get('/:id/adminverify/:token/',adminVerify);
+router.get('/:id/adminverify/:token/', adminVerify);
 
-router.get('/getUserData',authMiddlewar,authController)
+router.get('/getUserData', authMiddlewar, authController)
 
-router.post('/editdepartment',editDepartment);
+router.post('/editdepartment', editDepartment);
 
-router.post('/getdepartment',getDepartment);
+router.post('/getdepartment', getDepartment);
 
 module.exports = router;

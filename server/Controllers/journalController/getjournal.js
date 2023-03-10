@@ -1,5 +1,5 @@
 const express = require("express");
-const {JournalDataModel} = require("../models/journal");
+const { JournalDataModel } = require("../../models/journal");
 
 exports.getjournal = async (req, res) => {
   let jou = [];

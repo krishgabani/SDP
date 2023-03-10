@@ -1,4 +1,4 @@
-const  {UserModel} = require('../models/UserModel');
+const  {UserModel} = require('../../models/UserModel');
 
 exports.getAllfacultyById = async (req,res) =>  {
     console.log(req.body.coordinatId);

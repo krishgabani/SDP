@@ -1,5 +1,5 @@
 const express = require("express");
-const {ConferenceDataModel} = require("../models/conference");
+const { ConferenceDataModel } = require("../../models/conference");
 
 exports.editconference = async (req, res) => {
   console.log("edit");

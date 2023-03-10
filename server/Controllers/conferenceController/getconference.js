@@ -1,5 +1,5 @@
 const express = require("express");
-const {ConferenceDataModel} = require("../models/conference");
+const { ConferenceDataModel } = require("../../models/conference");
 
 exports.getconference = async (req, res) => {
   let con = [];
@@ -24,7 +24,7 @@ exports.getconference = async (req, res) => {
       Publication_Type: req.body.currentPage,
       Names_of_Other_Author_From_DDU: new RegExp(
         ".*" + req.body.name + ".*",
-        ),
+      ),
     });
 
     con = [].concat(asFirstAuthor, asOtherAuthor);
