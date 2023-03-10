@@ -81,16 +81,20 @@ const Home = ({ cookies, removeCookies }) => {
       <Layout removeCookies={removeCookies}>
         <>
         <div className="container coordinator-container">
-        <h2 className="text-center">All Coordinators</h2>
-          Add Department{" "}
-          <input
-            type="text"
-            name="department"
-            value={depart.department}
-            onChange={sethandler}
-            required
-          />
-          <input type="submit" onClick={editdepartment} />
+          <div>
+            <h2 className="text-center">All Coordinators</h2>
+            Add Department
+            <input
+              className="search-departement"
+              type="text"
+              name="department"
+              value={depart.department}
+              onChange={sethandler}
+              required
+            />
+            <input className="department-head" type="submit" onClick={editdepartment} />
+          </div>
+
           <Row>
             {coordinatorList &&
               coordinatorList.map((coordinator) => (

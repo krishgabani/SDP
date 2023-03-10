@@ -25,8 +25,8 @@ exports.getAllCoordinates = async (req, res) => {
         }
     }));
 
-    console.log(coordinatList);
     //console.log(coordinatList);
+    
     return res.status(200).send({
         message: "sending all the Coordinates",
         data: coordinatList
