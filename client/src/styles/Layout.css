@@ -53,16 +53,16 @@
 .menu-item a {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .menu-item i {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0 15px;
   color: aliceblue;
 }
 .active {
   background-color: white;
-  padding: 10px;
+  padding: 10px 0px;
 }
 .active a,
 .active i {

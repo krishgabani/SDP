@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-const JournalDataModel = require("../../models/journal.js");
+const {JournalDataModel} = require("../../models/journal.js");
+const {DOIModel} = require("../../models/doi.js");
 
 const sendjournal = (req, res) => {
   let vect = req.body;
@@ -43,12 +44,17 @@ const sendjournal = (req, res) => {
       Impact_Factor_Agency: data["Impact_Factor_Agency"],
     };
 
+    // console.log("data[DOI]");
+    // console.log(data["DOI"]);
+
+    data["DOI"] && DOIModel.create({doi : data["DOI"] , documentType : "journal"});
+
     JournalDataModel.create(journalData, (err, data) => {
       if (err) {
         console.log("Failed");
       } else {
         console.log("Saved Successful");
-        console.log(data);
+        // console.log(data);
       }
     });
   }

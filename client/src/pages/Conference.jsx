@@ -16,6 +16,7 @@ function Conference({ cookies, removeCookies }) {
   const [viewModalShow, setViewModalShow] = React.useState(false);
   const [editModalShow, setEditModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
+  const [DOIList,setDOIList] = useState([]);
   let { user } = useSelector((state) => state.user);
   user = {...user, currentPage:"Conference"}
   const downloadData = jsontableData;
@@ -71,8 +72,23 @@ function Conference({ cookies, removeCookies }) {
       alert("Please select a valid excel file.");
     }
   };
+  const messageOnDuplicate = (doi,title) => {
+    toast.info(`Research pepar having doi ${doi} is already in database.`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  const deleteDuplicate = () => {
+    for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
+      if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
+        messageOnDuplicate(jsonData.Sheet1[i].DOI,jsonData.Sheet1[i].Title_of_Research_Paper);
+        jsonData.Sheet1.splice(i, 1);
+      }
+    }
+  }
   const sendDataToServer = () => {
     // console.log(jsonData.Sheet1);
+    deleteDuplicate();
+    if(jsonData == []) return;
     axios
       .post("http://localhost:5000/info/sendconference", jsonData)
       .then((res) => {
@@ -89,6 +105,18 @@ function Conference({ cookies, removeCookies }) {
     xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     xlsx.writeFile(workbook, filename);
   };
+
+  useEffect(() => {
+    const getDOIList = async () => {
+      const res = await axios.post(
+        "http://localhost:5000/info/getdoilist",
+        user
+      );
+      let doilist = res.data.data.map(item => item.doi)
+      setDOIList(doilist);
+    };
+    getDOIList();
+  }, []);
 
   useEffect(() => {
     const getdataconference = async () => {

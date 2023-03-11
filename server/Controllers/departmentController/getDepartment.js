@@ -1,11 +1,9 @@
 const { departmentModel } = require('../../models/department');
 
 exports.getDepartment = async (req, res) => {
-    // console.log("hioehir");
-    const tem = await departmentModel.find({}, { 'department': true });
-    // console.log(tem);
+    const ans = await departmentModel.find({}, { 'department': true });
     return res.status(200).send({
-        message: "hi this is get request",
-        data: tem
+        message: "Response contains list of Department",
+        data: ans
     })
 }

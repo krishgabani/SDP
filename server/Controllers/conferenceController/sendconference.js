@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const cors = require("cors");
 const { ConferenceDataModel } = require("../../models/conference.js");
+const {DOIModel} = require("../../models/doi.js");
 
 const sendconference = (req, res) => {
   let vect = req.body;
@@ -41,6 +42,8 @@ const sendconference = (req, res) => {
       Affiliating_Institute_at_the_time_of_publication:
         data["Affiliating_Institute_at_the_time_of_publication"],
     };
+
+    data["DOI"] && DOIModel.create({doi : data["DOI"] , documentType : data["Publication_Type"]});
 
     ConferenceDataModel.create(conferenceData, (err, data) => {
       if (err) {

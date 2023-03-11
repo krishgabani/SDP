@@ -1,9 +1,9 @@
 export const facultyMenu = [
-  {
-    name: "Home",
-    path: "/",
-    icon: "fa-solid fa-house",
-  },
+  // {
+  //   name: "Home",
+  //   path: "/",
+  //   icon: "fa-solid fa-house",
+  // },
 
   {
     name: "Journal",
@@ -32,11 +32,11 @@ export const facultyMenu = [
   },
 ];
 export const hodMenu = [
-  {
-    name: "Home",
-    path: "/",
-    icon: "fa-solid fa-house",
-  },
+  // {
+  //   name: "Home",
+  //   path: "/",
+  //   icon: "fa-solid fa-house",
+  // },
 
   {
     name: "Journal",
@@ -71,11 +71,11 @@ export const adminMenu = [
     path: "/",
     icon: "fa-solid fa-house",
   },
-  {
-    name: "Departments",
-    path: "/admin/departments",
-    icon: "",
-  },
+  // {
+  //   name: "Departments",
+  //   path: "/admin/departments",
+  //   icon: "",
+  // },
   {
     name: "Profile",
     path: "/profile",
@@ -84,11 +84,11 @@ export const adminMenu = [
 ];
 
 export const coordinatorMenu = [
-  {
-    name: "Home",
-    path: "/",
-    icon: "fa-solid fa-house",
-  },
+  // {
+  //   name: "Home",
+  //   path: "/",
+  //   icon: "fa-solid fa-house",
+  // },
   {
     name: "Journal",
     path: "/journal",

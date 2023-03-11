@@ -44,7 +44,7 @@ const CoordinatorList = ({coordinator}) => {
                     <p>
                         <b>Email :</b> {coordinator?.email}
                     </p>
-                    <button className='m-2'>View</button>
+                    {/* <button className='m-2'>View</button> */}
                     <button className='m-2' onClick={() => navigate(`/allfaculty/${coordinator?._id}`)}>View All Faculty</button>
                     <button className='m-2' onClick={deletecoordinator}>Delete</button>
                     </div>

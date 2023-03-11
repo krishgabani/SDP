@@ -21,6 +21,7 @@ function Journal({ cookies, removeCookies }) {
   const { user } = useSelector((state) => state.user);
   const [authorList,setAuthorList] = useState([]);
   const [yearList,setYearList] = useState([]);
+  const [DOIList,setDOIList] = useState([]);
   const downloadData = jsontableData;
   downloadData.forEach((it, index) => {
     delete it._id;
@@ -68,8 +69,25 @@ function Journal({ cookies, removeCookies }) {
       alert("Please select a valid excel file.");
     }
   };
+
+  const messageOnDuplicate = (doi,title) => {
+    toast.info(`Research pepar having doi ${doi} is already in database.`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+
+  const deleteDuplicate = () => {
+    for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
+      if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
+        messageOnDuplicate(jsonData.Sheet1[i].DOI,jsonData.Sheet1[i].Title_of_Research_Paper);
+        jsonData.Sheet1.splice(i, 1);
+      }
+    }
+  }
   const sendDataToServer = () => {
     // console.log(jsonData.Sheet1);
+    deleteDuplicate();
+    if(jsonData.Sheet1.length === 0) return;
     axios
       .post("http://localhost:5000/info/sendjournal", jsonData)
       .then((res) => {
@@ -87,7 +105,17 @@ function Journal({ cookies, removeCookies }) {
     xlsx.writeFile(workbook, filename);
   };
 
-  // console.log(user);
+  useEffect(() => {
+    const getDOIList = async () => {
+      const res = await axios.post(
+        "http://localhost:5000/info/getdoilist",
+        user
+      );
+      let doilist = res.data.data.map(item => item.doi)
+      setDOIList(doilist);
+    };
+    getDOIList();
+  }, []);
 
   useEffect(() => {
     const getdatajournal = async () => {
@@ -118,7 +146,7 @@ function Journal({ cookies, removeCookies }) {
         "http://localhost:5000/info/getyearslist"
       );
       setYearList(res.data.data);
-      console.log(yearList);
+      // console.log(yearList);
     };
     getyearslist();
   },[])
@@ -164,13 +192,14 @@ function Journal({ cookies, removeCookies }) {
   const yearListOptions = yearList.map(year => <option value={year}>{year}</option>)
 
   const listItems = jsontableData.map((item) => (
-    <tr>
+    <tr className="font-size-12">
       <th scope="row">{item.Sr_No}</th>
       <td>{item.Academic_Year}</td>
       <td>{item.First_Author_name}</td>
       <td>{item.Title_of_Research_Paper}</td>
-      <th scope="col" style={{ cursor: "pointer" }} onClick={() => { setViewModalShow(true); setCurrentItem(item); }} > VIEW </th>
-      <th scope="col" onClick={() => { setEditModalShow(true); setCurrentItem(item); }} style={{ cursor: "pointer" }} > EDIT </th>
+      <td>{item.DOI}</td>
+      <th scope="col" style={{ cursor: "pointer" }} onClick={() => { setViewModalShow(true); setCurrentItem(item); }} > <i class="fa fa-eye" aria-hidden="true"></i> </th>
+      <th scope="col" onClick={() => { setEditModalShow(true); setCurrentItem(item); }} style={{ cursor: "pointer" }} > <i class="fas fa-edit"></i> </th>
     </tr>
   ));
   if (!user) return <></>;
@@ -191,39 +220,25 @@ function Journal({ cookies, removeCookies }) {
           />
         </div>
 
-        {/* <div className="filter-group">
-          <div className="filter-group-label">First Author:</div>
-          <div className="filter-group-select">
-            <select
-              className="form-select shadow-none"
-              value={selectedAuthor}
-              onChange={e => setSelectedAuthor(e.target.value)}
-            >
-              <option value="All">All</option>
-              {authorListOptions}
-              <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
-              <option value="Nikita P. Desai">Nikita P. Desai</option>
-              <option value="Ragini V. Oza">Ragini V. Oza</option>
-            </select>
-          </div>
-        </div> */}
-
         <div className="scrollit">
           <table class="table table-hover table-bordered table-mymodify">
             <thead>
-              <tr>
+              <tr className="font-size-14">
                 <th scope="col">Sr No.</th>
                 <th scope="col">Academic Year</th>
                 <th scope="col">First Author</th>
                 <th scope="col">Title of Research Paper</th>
+                <th scope="col">DOI</th>
+                {/* <th scope="col">VIEW</th>
+                <th scope="col">EDIT</th> */}
               </tr>
-              <tr>
+              <tr className="font-size-12">
                 <th scope="col"></th>
                 <th scope="col">
                   <div className="filter-group">
                     <div className="filter-group-select">
                       <select
-                        className="form-select shadow-none"
+                        className="form-select shadow-none font-size-12"
                         value={selectedYear}
                         onChange={e => setSelectedYear(e.target.value)}
                       >
@@ -237,7 +252,7 @@ function Journal({ cookies, removeCookies }) {
                   <div className="filter-group">
                     <div className="filter-group-select">
                       <select
-                        className="form-select shadow-none"
+                        className="form-select shadow-none font-size-12"
                         value={selectedAuthor}
                         onChange={e => setSelectedAuthor(e.target.value)}
                       >
@@ -257,6 +272,8 @@ function Journal({ cookies, removeCookies }) {
             <tbody>
               {listItems
                 .filter((item) => {
+                  const srNo =
+                    item.props.children[0].props.children.toLowerCase();
                   const academicYear =
                     item.props.children[1].props.children.toLowerCase();
                   const firstAuthor =
@@ -264,6 +281,7 @@ function Journal({ cookies, removeCookies }) {
                   const title =
                     item.props.children[3].props.children.toLowerCase();
                   return (
+                    srNo.includes(searchQuery.toLowerCase()) ||
                     academicYear.includes(searchQuery.toLowerCase()) ||
                     firstAuthor.includes(searchQuery.toLowerCase()) ||
                     title.includes(searchQuery.toLowerCase())

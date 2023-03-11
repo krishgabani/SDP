@@ -9,6 +9,7 @@ const { editjournal } = require('../Controllers/journalController/editjournal')
 const { editconference } = require('../Controllers/conferenceController/editconference')
 const { getfacultynames } = require('../Controllers/userControllers/getfacultynames')
 const { getyearslist } = require('../Controllers/journalController/getyearslist')
+const { getdoilist } = require('../Controllers/journalController/getdoilist')
 
 router.post("/sendjournal", sendjournal);
 router.post("/getjournal", getjournal);
@@ -20,6 +21,7 @@ router.post("/editconference", editconference);
 
 router.post("/getfacultynames", getfacultynames);
 router.post("/getyearslist", getyearslist);
+router.post("/getdoilist", getdoilist);
 
 router.post("/senddata", sendtodb);
 

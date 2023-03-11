@@ -6,7 +6,7 @@ exports.getyearslist = async (req, res) => {
     const years = ["2016-2017", "2017-2018", "2018-2019", "2019-2020"];
     console.log(years);
     return res.status(200).send({
-        message: "sending faculty names",
+        message: "Response contains list of Academic years",
         data: years
     })
 }
