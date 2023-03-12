@@ -19,8 +19,9 @@ import Spinner from "./components/Spinner";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Department from "./pages/Department";
+
 import Allfaculty from "./pages/Allfaculty"
+import Years from "./pages/Years";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -125,13 +126,13 @@ function App() {
               }
             />
             <Route
-              path="/admin/departments"
+              path="/admin/Allyears"
               element={
                 <ProtectedRoute
                   cookies={cookies}
                   removeCookies={handleRemoveCookies}
                 >
-                  <Department cookies={cookies} removeCookies={handleRemoveCookies} />
+                  <Years cookies={cookies} removeCookies={handleRemoveCookies} />
                 </ProtectedRoute>
               }
             />

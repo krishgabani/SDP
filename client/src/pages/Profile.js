@@ -9,21 +9,9 @@ const Profile = ({ cookies, removeCookies }) => {
 
   const { user } = useSelector((state) => state.user);
 
-  //   useEffect(() => {
-  //     setprofile(user);
-  //   })
-
   console.log(user);
   return (
     <Layout removeCookies={removeCookies}>
-      {/* <h3 className="text-center">Profile</h3>
-    <div className="text-center mycard">
-      <h4>Name : {user?.name}</h4>
-      <h4>Email : {user?.email}</h4>
-      <h4>Designation : {user?.Designation}</h4>
-      <h4>Department : {user?.Department}</h4>
-      <button>Edit</button>
-    </div> */}
       <h3 class="text-center">Profile</h3>
       <div class="text-center mycard">
         <div class="row">
@@ -58,7 +46,7 @@ const Profile = ({ cookies, removeCookies }) => {
             <h4 class="value">{user?.Department}</h4>
           </div>
         </div>
-        <button>Edit</button>
+        <button >Edit</button>
       </div>
     </Layout>
   );

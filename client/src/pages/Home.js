@@ -62,9 +62,10 @@ const Home = ({ cookies, removeCookies }) => {
     }
   }, []);
 
-  const editdepartment = async () => {
+  const editdepartment = async (e) => {
+    e.preventDefault();
     try{
-      window. location. reload()
+      //window. location. reload()
       const res = await axios.post(
         "http://localhost:5000/api/user/editdepartment",
         depart

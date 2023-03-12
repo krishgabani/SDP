@@ -71,11 +71,11 @@ export const adminMenu = [
     path: "/",
     icon: "fa-solid fa-house",
   },
-  // {
-  //   name: "Departments",
-  //   path: "/admin/departments",
-  //   icon: "",
-  // },
+  {
+    name: "Years",
+    path: "/admin/Allyears",
+    icon: "",
+  },
   {
     name: "Profile",
     path: "/profile",

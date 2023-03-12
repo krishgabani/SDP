@@ -58,7 +58,20 @@ exports.registerUser = async (req, res) => {
   const url = `http://localhost:3000/user/${user.id}/verify/${token.token}`;
   console.log(url);
   // console.log(role.email);
-  await sendEmail(user.email, "Verify Email", url);
+  try{
+    const emailurl = await sendEmail(user.email, "Verify Email", url);
+    console.log(emailurl);
+    return res.status(200).send({
+      message: "Email sent Succefully",
+      status: true,
+    });
+  }catch(error){
+    console.log(error);
+    return res.status(200).send({
+      message: "Email not sent Succefully",
+      status: true,
+    });
+  }
 
   //res.status(201).send({ message: "An Email sent to your account please verify" });
   return res.status(200).send({

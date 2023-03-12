@@ -39,7 +39,7 @@ function Register() {
         position: toast.POSITION.TOP_RIGHT,
       });
     } catch (error) {
-      toast.success("error", {
+      toast.error("error", {
         position: toast.POSITION.TOP_RIGHT,
       });
       console.log("error is occur");

@@ -4,6 +4,8 @@ const { getAllfacultyById } = require('../Controllers/userControllers/getAllfacu
 const {deleteDepartment } = require('../Controllers/departmentController/deleteDepartment');
 const {deleteCoordinator} = require('../Controllers/adminController/deleteCoordinator');
 const {deleteFaculty} = require('../Controllers/adminController/deleteFaculty');
+const {getAllyears} = require('../Controllers/adminController/getAllyears')
+const {addYears} = require('../Controllers/adminController/addYears')
 const router = express.Router();
 
 router.post("/getAllfacultyById", getAllfacultyById);
@@ -15,5 +17,9 @@ router.put("/deletedepartment",deleteDepartment);
 router.put("/deleteCoordinator",deleteCoordinator);
 
 router.put("/deleteFaculty",deleteFaculty);
+
+router.get("/years",getAllyears);
+
+router.post("/addnewyear",addYears);
 
 module.exports = router;
