@@ -7,7 +7,8 @@ const { loginUser } = require('../Controllers/userControllers/loginUser');
 const { authController } = require('../Controllers/userControllers/userController');
 const authMiddlewar = require('../middlerwares/authMiddlewar');
 const { editDepartment } = require('../Controllers/departmentController/editDepartment')
-const { getDepartment } = require('../Controllers/departmentController/getDepartment')
+const { getDepartment } = require('../Controllers/departmentController/getDepartment');
+const { updateProfile } = require('../Controllers/userControllers/updateProfile');
 
 router.post('/register', registerUser);
 
@@ -22,5 +23,9 @@ router.get('/getUserData', authMiddlewar, authController)
 router.post('/editdepartment', editDepartment);
 
 router.post('/getdepartment', getDepartment);
+
+router.put('/updateprofile',updateProfile);
+
+
 
 module.exports = router;

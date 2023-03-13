@@ -10,6 +10,7 @@ const { editconference } = require('../Controllers/conferenceController/editconf
 const { getfacultynames } = require('../Controllers/userControllers/getfacultynames')
 const { getyearslist } = require('../Controllers/journalController/getyearslist')
 const { getdoilist } = require('../Controllers/journalController/getdoilist')
+const {getApiData} = require('../Controllers/journalController/getApiData')
 
 router.post("/sendjournal", sendjournal);
 router.post("/getjournal", getjournal);
@@ -24,6 +25,8 @@ router.post("/getyearslist", getyearslist);
 router.post("/getdoilist", getdoilist);
 
 router.post("/senddata", sendtodb);
+
+router.get("/getapiData",getApiData);
 
 
 
