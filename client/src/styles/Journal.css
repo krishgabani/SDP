@@ -1,6 +1,14 @@
 body {
   /* overflow: hidden; */
 }
+.journal-addbtn-parent{
+  /* margin-right: 10px;
+  margin-bottom: 70px; */
+  text-align: right;
+}
+.journal-addbtn{
+  float: right;
+}
 .filter-group{
   display: flex;
   justify-content: space-between;

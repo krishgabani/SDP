@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { sendjournal } = require('../Controllers/journalController/sendJournal')
+const { addjournal } = require('../Controllers/journalController/addjournal')
 const { sendconference } = require('../Controllers/conferenceController/sendconference')
 const { getjournal } = require('../Controllers/journalController/getjournal.js')
 const { getconference } = require('../Controllers/conferenceController/getconference.js')
@@ -13,6 +14,7 @@ const { getdoilist } = require('../Controllers/journalController/getdoilist')
 const {getApiData} = require('../Controllers/journalController/getApiData')
 
 router.post("/sendjournal", sendjournal);
+router.post("/addjournal", addjournal);
 router.post("/getjournal", getjournal);
 router.post("/editjournal", editjournal);
 
@@ -26,7 +28,7 @@ router.post("/getdoilist", getdoilist);
 
 router.post("/senddata", sendtodb);
 
-router.get("/getapiData",getApiData);
+router.post("/getapiData",getApiData);
 
 
 

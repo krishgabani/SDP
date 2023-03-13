@@ -9,12 +9,14 @@ import { journalData } from "../components/Layout/data";
 import Layout from "../components/Layout/Layout";
 import ViewModal from "../components/ViewModal";
 import EditModal from "../components/EditModal";
+import AddModal from "../components/AddModal";
 
 function Journal({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
   const [jsontableData, setJsontableData] = useState([]);
   const [viewModalShow, setViewModalShow] = React.useState(false);
   const [editModalShow, setEditModalShow] = React.useState(false);
+  const [addModalShow, setAddModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
@@ -185,6 +187,20 @@ function Journal({ cookies, removeCookies }) {
     );
     // console.log(res.data);
   };
+  const addJournal = async (newItem) => {
+    console.log(newItem);
+    // if(DOIList.includes(newItem.DOI)) {
+    //   messageOnDuplicate(newItem.DOI,newItem.Title_of_Research_Paper);
+    //   return;
+    // }
+
+    try { 
+        const res = await axios.post(
+        "http://localhost:5000/info/addjournal",
+        newItem
+      );
+    } catch(err){console.log(err);}
+  }
 
   // console.log(jsontableData);
 
@@ -218,6 +234,10 @@ function Journal({ cookies, removeCookies }) {
             onChange={e => setSearchQuery(e.target.value)}
             className="form-control bg-none border-0 shadow-none"
           />
+        </div>
+
+        <div className="journal-addbtn-parent">
+          <button className="btn btn-primary journal-addbtn" onClick={() => setAddModalShow(true)} > ADD </button>
         </div>
 
         <div className="scrollit">
@@ -293,7 +313,8 @@ function Journal({ cookies, removeCookies }) {
         </div>
 
         <ViewModal show={viewModalShow} onHide={() => setViewModalShow(false)} data={currentItem} />
-        <EditModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges={savechanges} data={currentItem} />
+        <EditModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges = {savechanges} data={currentItem} />
+        <AddModal show={addModalShow} onHide={() => setAddModalShow(false)} addJournal = {addJournal} />
 
         {user.Designation === "coordinator" && (
           <div className="btns">
