@@ -61,22 +61,58 @@ const EditModal = (props) => {
   }, []);
 
   useEffect(() => {
-    //console.log(newData);
+    console.log(newData);
   }, [newData]);
 
   const handleChange = async (e) => {
     let name = e.target.name;
     let value = e.target.value;
-
+    let res = "";
+    let resMsg = {
+      "DOI":"",
+      "Title_of_Research_Paper": "",
+      "Number": "",
+      "Pages_xx_yy": "",
+      "Volume": "",
+      "ISSN_Print": "",
+      "First_Author_name" : "",
+      // "Names_of_Other_Author_From_DDU" : otherAuthorsFromDDU,
+      // "Names_of_Other_Author_From_other_Organization" : otherAuthors,
+      "Year" : "",
+      "month": "",
+      // "affiliation" : data?.author[0]?.affiliation[0]?.name,
+      "Journal_publisher" : "",
+      "Publication_Level" : ""
+    }
     if(name === "DOI")  {
-        const res = await axios.post("http://localhost:5000/info/getapiData",value);
-        console.log(res.data);
-    };
-    
-    setNewData({
-      ...newData,
-      [name]: value,
-    });
+        res = await axios.post("http://localhost:5000/info/getapiData",{DOI:value});
+        console.log(res.data?.data);
+        if(res.data.success) {
+          
+          setNewData(res.data.data);
+          
+        }else{
+          console.log('hi')
+          setNewData({
+            ...resMsg,
+            [name]: name==="DOI" ? value : "",
+          }); 
+        }
+    }else{
+      setNewData({
+        ...newData,
+        [name]:value
+      })
+    }
+    // if(!res.data.success) {
+    //   console.log("success");
+    //   setNewData({
+    //     ...resMsg,
+    //     [name]: name==="DOI" ? value : "",
+    //   }); 
+    // }
+    // resMsg.DOI = value;
+    // setNewData(resMsg);
   };
 
   if(!user)  return(<></>);

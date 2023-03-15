@@ -181,6 +181,7 @@ function Journal({ cookies, removeCookies }) {
   },[selectedAuthor,selectedYear])
 
   const savechanges = async (newItem) => {
+
     const res = await axios.post(
       "http://localhost:5000/info/editjournal",
       newItem
@@ -195,11 +196,12 @@ function Journal({ cookies, removeCookies }) {
     // }
 
     try { 
-        const res = await axios.post(
-        "http://localhost:5000/info/addjournal",
-        newItem
-      );
-    } catch(err){console.log(err);}
+        const res = await axios.post("http://localhost:5000/info/addjournal",newItem);
+        console.log(res.data);
+    } catch(err){
+        console.log("succefully updated");
+        console.log(err);
+      }
   }
 
   // console.log(jsontableData);
@@ -237,7 +239,7 @@ function Journal({ cookies, removeCookies }) {
         </div>
 
         <div className="journal-addbtn-parent">
-          <button className="btn btn-primary journal-addbtn" onClick={() => setAddModalShow(true)} > ADD </button>
+          <button className="btn btn-primary journal-addbtn" onClick={() => setAddModalShow(true)}> ADD </button>
         </div>
 
         <div className="scrollit">

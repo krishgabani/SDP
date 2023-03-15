@@ -1,41 +1,52 @@
 const request = require('request');
 
 exports.getApiData = async (req, res) => { 
-    const doi = "10.1109/IPACT.2017.8245062";
+    const doi = req.body.DOI;
     const url = `https://api.crossref.org/works/${doi}`;
-    console.log(req.body);
+    console.log(req.body.DOI);
 
     request(url, (error, response, body) => {
         if (!error && response.statusCode === 200) {
-          const data = JSON.parse(body);
-          data = data.message;
-
+          let data = JSON.parse(body);
+          data = data?.message;
           let otherAuthorsFromDDU, otherAuthors;
-          date.author.map((item,index) => {
+          data?.author?.map((item,index) => {
             if(index!=0){
-              if(item.affiliation[0].name.contains("Dharmsinh Desai University"))
-                otherAuthorsFromDDU += item.given + " " + item.family + "; ";
+              if(item?.affiliation[0]?.name.contains("Dharmsinh Desai University"))
+                otherAuthorsFromDDU += item?.given + " " + item?.family + "; ";
               else
-              otherAuthors += item.given + " " + item.family + "; ";
+              otherAuthors += item?.given + " " + item?.family + "; ";
             }
           })
-
           const resMsg = {
-            "title": data.title,
-            "pages": data.pages,
-            "volume": data.volume,
-            "ISSN": data.ISSN,
-            "firstAuthorName" : data.author[0].given + " " + data.author[0].family,
-            "otherAuthorsFromDDU" : otherAuthorsFromDDU,
-            "otherAuthors" : otherAuthors,
-            "year" : data.published-print.date-parts[0],
-            "month": data.published-print.date-parts[1],
-            "affiliation" : data.author[0].affiliation[0].name,
+            "DOI":doi,
+            "Title_of_Research_Paper": data?.title[0],
+            "Number": data["journal-issue"]?.issue,
+            "Pages_xx_yy": data.page,
+            "Volume": data.volume,
+            "ISSN_Print": data.ISSN[0],
+            "First_Author_name" : data.author[0].given + " " + data.author[0].family,
+            // "Names_of_Other_Author_From_DDU" : otherAuthorsFromDDU,
+            // "Names_of_Other_Author_From_other_Organization" : otherAuthors,
+            "Year" : data["published-online"]["date-parts"][0][0],
+            "month": data?.indexed?.["date-parts"][0][1],
+            // "affiliation" : data?.author[0]?.affiliation[0]?.name,
+            "Journal_publisher" : data.publisher,
+            "Publication_Level" : data["container-title"][0]
           }
-          console.log(data.message.title);
+          console.log(data.title[0]);
+          console.log(resMsg);
+          return res.status(200).send({
+            success: 1,
+            message:"fetch succefuly",
+            data:resMsg
+          })
           res.json(data.message);
         } else {
-          res.status(response.statusCode).send(error);
+          res.status(200).send({
+            success:0,
+            message:"Error is occure while fetching something"
+          });
         }
       });
     console.log("hii");
