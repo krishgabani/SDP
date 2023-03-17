@@ -22,6 +22,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Allfaculty from "./pages/Allfaculty"
 import Years from "./pages/Years";
+import Departments from "./pages/Departments";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -133,6 +134,17 @@ function App() {
                   removeCookies={handleRemoveCookies}
                 >
                   <Years cookies={cookies} removeCookies={handleRemoveCookies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/departments"
+              element={
+                <ProtectedRoute
+                  cookies={cookies}
+                  removeCookies={handleRemoveCookies}
+                >
+                  <Departments cookies={cookies} removeCookies={handleRemoveCookies} />
                 </ProtectedRoute>
               }
             />

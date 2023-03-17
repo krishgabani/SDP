@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import "../styles/ViewModal.css";
 
 const EditModal = (props) => {
   const { user } = useSelector((state) => state.user);
@@ -15,40 +16,6 @@ const EditModal = (props) => {
   const yearListHtml = yearList.map((value) => <option>{value}</option>)
   const departmentListHtml = departmentList.map((value) => <option>{value}</option>)
   const monthsListHtml = monthsList.map((value) => <option>{value}</option>)
-
-//   useEffect(() => {
-//     setNewData({
-//       Sr_No: props.data.Sr_No,
-//       Academic_Year: props.data.Academic_Year,
-//       Data_Submitting_Author_department:
-//         props.data.Data_Submitting_Author_department,
-//       Data_Submitting_Author_name: props.data.Data_Submitting_Author_name,
-//       First_Author_name: props.data.First_Author_name,
-//       First_Author_department: props.data.First_Author_department,
-//       First_Author_organization: props.data.First_Author_organization,
-//       Names_of_Other_Author_From_DDU: props.data.Names_of_Other_Author_From_DDU,
-//       Names_of_Other_Author_From_other_Organization:
-//         props.data.Names_of_Other_Author_From_other_Organization,
-//       Title_of_Research_Paper: props.data.Title_of_Research_Paper,
-//       Publication_Level: props.data.Publication_Level,
-//       Journal_title: props.data.Journal_title,
-//       Journal_publisher: props.data.Journal_publisher,
-//       Link: props.data.Link,
-//       Publication_Date_DD_MM_YYYY: props.data.Publication_Date_DD_MM_YYYY,
-//       Month_Number: props.data.Month_Number,
-//       Year: props.data.Year,
-//       Volume: props.data.Volume,
-//       Number: props.data.Number,
-//       Pages_xx_yy: props.data.Pages_xx_yy,
-//       DOI: props.data.DOI,
-//       ISSN_Print: props.data.ISSN_Print,
-//       ISSN_Online: props.data.ISSN_Online,
-//       Impact_Factor_Value: props.data.Impact_Factor_Value,
-//       Impact_Factor_Year: props.data.Impact_Factor_Year,
-//       Impact_Factor_Agency: props.data.Impact_Factor_Agency,
-//     });
-//     // console.log("djksnbankujfd");
-//   }, [props]);
 
   useEffect(() => {
     const getdepartmentlist = async () => {
@@ -104,15 +71,6 @@ const EditModal = (props) => {
         [name]:value
       })
     }
-    // if(!res.data.success) {
-    //   console.log("success");
-    //   setNewData({
-    //     ...resMsg,
-    //     [name]: name==="DOI" ? value : "",
-    //   }); 
-    // }
-    // resMsg.DOI = value;
-    // setNewData(resMsg);
   };
 
   if(!user)  return(<></>);
@@ -120,6 +78,7 @@ const EditModal = (props) => {
   return (
     <>
       <Modal
+        dialogClassName="modal-width"
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"

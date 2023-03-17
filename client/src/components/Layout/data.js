@@ -72,6 +72,11 @@ export const adminMenu = [
     icon: "fa-solid fa-house",
   },
   {
+    name: "Departments",
+    path: "/admin/departments",
+    icon: "",
+  },
+  {
     name: "Years",
     path: "/admin/Allyears",
     icon: "",

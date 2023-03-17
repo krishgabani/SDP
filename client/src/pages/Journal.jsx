@@ -240,7 +240,7 @@ function Journal({ cookies, removeCookies }) {
   return (
     <Layout removeCookies={removeCookies}>
       <div className="main-container">
-        <div className="input-group mb-4 border rounded-pill p-1">
+        <div className="input-group mt-1 mb-1 border rounded-pill p-1">
           <button type="button" className="btn btn-link">
             <i className="fa fa-search"></i>
           </button>
@@ -254,8 +254,8 @@ function Journal({ cookies, removeCookies }) {
           />
         </div>
 
-        <div className="journal-addbtn-parent">
-          <button className="btn btn-primary journal-addbtn" onClick={() => setAddModalShow(true)}> ADD </button>
+        <div className="journal-addbtn-parent main-container">
+          <button className="btn btn-primary journal-addbtn  mt-1 mb-2" onClick={() => setAddModalShow(true)}> Add </button>
         </div>
 
         <div className="scrollit">

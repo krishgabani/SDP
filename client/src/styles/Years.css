@@ -1,53 +1,50 @@
 .add-year-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .add-year-form input[type="text"] {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .add-year-form button[type="submit"] {
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .years-list-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-    align-items: center;
-  }
-  
-  .years-list-container h4 {
-    margin-top: 0;
-    font-size: 20px;
-  }
-  
-  .years-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    
-  }
-  
-  .years-list li {
-    font-size: 16px;
-    margin-bottom: 5px;
-    padding: 5px;
-    border-radius: 4px;
-    background-color: #f2f2f2;
-    
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-year-form input[type="text"] {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.add-year-form button[type="submit"] {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.years-list-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  align-items: center;
+}
+
+.years-list-container h4 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.years-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.years-list li {
+  font-size: 16px;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+}

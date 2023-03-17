@@ -1,4 +1,5 @@
 import { React, useEffect,useState } from "react";
+import { useSelector } from "react-redux";
 import Layout from '../components/Layout/Layout'
 import axios from "axios";
 import "../styles/Years.css"
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 const Years = ({ cookies, removeCookies }) => {
   const [year, setYear] = useState('');
   const [allyears, allsetYears] = useState([]);
+  const { user } = useSelector((state) => state.user);
 
   const getYears = async ()=> {
     try{
@@ -48,29 +50,31 @@ const Years = ({ cookies, removeCookies }) => {
       console.log("Error Occurs in Years");
     }
   }
-  return (
-    <Layout removeCookies={removeCookies}>
-        <form className="add-year-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter a new year"
-            value={year}
-            onChange={e => setYear(e.target.value)}
-            required
-          />
-        <button type="submit">Add Year</button>
-        </form>
+  if (user?.Designation === "Admin") {
+    return (
+      <Layout removeCookies={removeCookies}>
+          <form className="add-year-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter a new year"
+              value={year}
+              onChange={e => setYear(e.target.value)}
+              required
+            />
+          <button type="submit">Add Year</button>
+          </form>
 
-        <div className="years-list-container"> {/* add class name */}
-          <h4>List of years {allyears.lenght}</h4>
-            <ul className="years-list"> {/* add class name */}
-              {allyears && allyears.map((year) => (
-                <li key={year?._id}>{year?.year}</li>
-              ))}
-            </ul>
-        </div>
-    </Layout>
-  )
+          <div className="years-list-container"> {/* add class name */}
+            <h4>List of years {allyears.length}</h4>
+              <ul className="years-list"> {/* add class name */}
+                {allyears && allyears.map((year) => (
+                  <li key={year?._id}>{year?.year}</li>
+                ))}
+              </ul>
+          </div>
+      </Layout>
+    )
+  }
 }
 
 export default Years

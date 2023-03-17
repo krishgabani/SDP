@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import "../styles/ViewModal.css";
 
 const EditModal = (props) => {
   const { user } = useSelector((state) => state.user);
@@ -98,6 +99,7 @@ const EditModal = (props) => {
     <>
       {(props.data.First_Author_name === user.name || user.Designation === "coordinator") ? 
       <Modal
+        dialogClassName="modal-width"
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
