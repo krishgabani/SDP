@@ -68,49 +68,44 @@ const Home = ({ cookies, removeCookies }) => {
     return (
       <Layout removeCookies={removeCookies}>
         <>
-          <Row>
-            <Col className="d-flex">
-              <Card style={{ width: "20vw", margin: "10px"}}>
-                <Card.Img variant="top" src="https://gcdnb.pbrd.co/images/DQ7Jfyr1IQNj.png?o=1" />
-                <Card.Body>
-                  <Card.Title>Departments</Card.Title>
-                  <Card.Text>
-                    List of the Various Departments at Dharmsinh Desai University in Nadiad.
-                  </Card.Text>
-                  <Button onClick={() => navigate("admin/departments")} variant="primary">Explore</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col className="d-flex">
-              <Card style={{ width: "20vw", margin: "10px"}}>
-                <Card.Body>
-                  <Card.Title>Start of a new academic year?</Card.Title>
-                  <Card.Text>
-                    <form className="add-year-form" onSubmit={handleSubmit}>
-                      <input
-                        type="text"
-                        placeholder="Enter"
-                        value={year}
-                        onChange={e => setYear(e.target.value)}
-                        required
-                        style={{ display: 'inline-block', marginRight: '10px' }}
-                      />
-                      <button type="submit" style={{ display: 'inline-block' }}>Add</button>
-                    </form>
-                    <div className="years-list-container">
-                      <h4>List of years {allyears.length}</h4>
-                        <ul style={{height:"200px",overflow: "hidden", overflowY: "scroll"}} className="years-list">
-                          {allyears && allyears.map((year) => (
-                            <li key={year?._id}>{year?.year}</li>
-                          ))}
-                        </ul>
-                    </div>
-                  </Card.Text>
-                  {/* <Button onClick={() => navigate("admin/AllYears")} variant="primary">Add</Button> */}
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+          <div className="home-card-list">
+            <Card className="home-card">
+              <Card.Img variant="top" src="https://gcdnb.pbrd.co/images/DQ7Jfyr1IQNj.png?o=1" />
+              <Card.Body>
+                <Card.Title>Departments</Card.Title>
+                <Card.Text>
+                  List of the Various Departments at Dharmsinh Desai University in Nadiad.
+                </Card.Text>
+                <Button onClick={() => navigate("admin/departments")} variant="primary">Explore</Button>
+              </Card.Body>
+            </Card>
+            <Card className="home-card" >
+              <Card.Body>
+                <Card.Title>Start of a new academic year?</Card.Title>
+                <Card.Text>
+                  <form className="add-year-form" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Enter"
+                      value={year}
+                      onChange={e => setYear(e.target.value)}
+                      required
+                    />
+                    <Button type="submit" variant="primary">Add</Button>
+                    {/* <button type="submit" className="submit_btn">Add</button> */}
+                  </form>
+                  <div className="years-list-container">
+                    <h4>List of years</h4>  {/* {allyears.length} */}
+                      <ul style={{height:"200px",overflow: "hidden", overflowY: "scroll"}} className="years-list">
+                        {allyears && allyears.map((year) => (
+                          <li key={year?._id}>{year?.year}</li>
+                        ))}
+                      </ul>
+                  </div>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
         </>
       </Layout>
     );

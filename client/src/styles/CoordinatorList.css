@@ -1,55 +1,55 @@
 /* Style for the card */
 .card {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Style for the card header */
-  .card-header {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  /* Style for the department label */
-  .department-label {
-    color: #777;
-  }
-  
-  /* Style for the name and email */
-  .name-email {
-    margin-bottom: 10px;
-  }
-  
-  .name-email b {
-    font-weight: bold;
-  }
-  
-  /* Style for the view button */
-  .view-button {
-    display: block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .view-button:hover {
-    background-color: #3e8e41;
-  }
-  
-  /* .card-size {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the card header */
+.card-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the department label */
+.department-label {
+  color: #777;
+}
+
+/* Style for the name and email */
+.name-email {
+  margin-bottom: 10px;
+}
+
+.name-email b {
+  font-weight: bold;
+}
+
+/* Style for the view button */
+.view-button {
+  display: block;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background-color: #3e8e41;
+}
+
+/* .card-size {
     width:20rem;
     height: 18rem;
     size:2orem

@@ -1,8 +1,9 @@
 .add-year-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin: 20px 0px;
 }
 
 .add-year-form input[type="text"] {
@@ -10,18 +11,17 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-right: 10px;
 }
 
-.add-year-form button[type="submit"] {
+/* .add-year-form button[type="submit"] {
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #0275d8;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
+} */
 
 .years-list-container {
   border: 1px solid #ccc;

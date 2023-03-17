@@ -36,7 +36,7 @@
     margin-right: 20px;
   }
   
-  button {
+  .profile-edit-button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -47,7 +47,7 @@
     margin-top: 20px;
   }
   
-  button:hover {
+  .profile-edit-button:hover {
     background-color: #0062cc;
   }
   

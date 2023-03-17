@@ -81,6 +81,7 @@ const Departments = ({ cookies, removeCookies }) => {
   useEffect(() => {
 
   },[coordinatorList])
+
   const editdepartment = async (e) => {
     e.preventDefault();
     try{
@@ -100,10 +101,10 @@ const Departments = ({ cookies, removeCookies }) => {
     return (
       <Layout removeCookies={removeCookies}>
         <>
-        <div className="container coordinator-container">
+        <div className="container">
           <div>
             <h2 className="text-center">Departments & Coordinators</h2>
-            Add Department
+            <b>Department Name: </b>
             <input
               className="search-departement"
               type="text"
@@ -112,7 +113,7 @@ const Departments = ({ cookies, removeCookies }) => {
               onChange={e => setdepart(e.target.value)}
               required
             />
-            <input className="department-head" type="submit" onClick={editdepartment} />
+            <input className="department-head" type="submit" onClick={editdepartment} value="ADD" />
           </div>
 
           <Row>

@@ -64,9 +64,9 @@ const Years = ({ cookies, removeCookies }) => {
           <button type="submit">Add Year</button>
           </form>
 
-          <div className="years-list-container"> {/* add class name */}
-            <h4>List of years {allyears.length}</h4>
-              <ul className="years-list"> {/* add class name */}
+          <div className="years-list-container">
+            <h4>List of years</h4>  {/* {allyears.length} */}
+              <ul className="years-list">
                 {allyears && allyears.map((year) => (
                   <li key={year?._id}>{year?.year}</li>
                 ))}

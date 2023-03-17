@@ -67,7 +67,7 @@ const Profile = ({ cookies, removeCookies }) => {
             <h4 class="value">{user?.Department}</h4>
           </div>
         </div>
-        <button onClick={() => { setEditModalShow(true); }}>Edit</button>
+        <button  className="profile-edit-button" onClick={() => { setEditModalShow(true); }}>Edit</button>
       </div>
       <EditProfileModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges={savechanges} data={user}/>
     </Layout>
