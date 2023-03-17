@@ -16,6 +16,7 @@ const ViewModal = (props) => {
   });
   return (
     <Modal
+      dialogClassName="modal-width"
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"

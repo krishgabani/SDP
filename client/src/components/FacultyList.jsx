@@ -6,8 +6,8 @@ const FacultyList = ({faculty}) => {
     const navigate  = useNavigate();
     const deleteFaculty = async () => {
       try{
-        const tem = await axios.put("http://localhost:5000/api/admin/deleteFaculty",{fact: faculty?._id});
-        console.log(tem.data);
+        // const tem = await axios.put("http://localhost:5000/api/admin/deleteFaculty",{fact: faculty?._id});
+        // console.log(tem.data);
       }catch(error){
         console.log(error);
       }
@@ -23,7 +23,7 @@ const FacultyList = ({faculty}) => {
                 <p>
                     <b>Email :</b> {faculty?.email}
                 </p>
-                <button className='m-2'>View</button>
+                {/* <button className='m-2'>View</button> */}
                 <button className='m-2' onClick={deleteFaculty}>Delete</button>
                 </div>
                 </div>

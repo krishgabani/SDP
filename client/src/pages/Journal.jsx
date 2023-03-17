@@ -24,14 +24,55 @@ function Journal({ cookies, removeCookies }) {
   const [authorList,setAuthorList] = useState([]);
   const [yearList,setYearList] = useState([]);
   const [DOIList,setDOIList] = useState([]);
+  const [sortConfig, setSortConfig] = useState({key: null, direction: null});
+  const [searchQuery, setSearchQuery] = useState("");
+
   const downloadData = jsontableData;
   downloadData.forEach((it, index) => {
     delete it._id;
     delete it.__v;
   });
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const authorListOptions = authorList.map(name => <option value={name}>{name}</option>)
+  const yearListOptions = yearList.map(year => <option value={year}>{year}</option>)
+  const listItems = jsontableData.map((item) => (
+    <tr className="font-size-12">
+      <th scope="row">{item.Sr_No}</th>
+      <td>{item.Academic_Year}</td>
+      <td>{item.Data_Submitting_Author_name}</td>
+      <td>{item.Title_of_Research_Paper}</td>
+      <td>{item.First_Author_name}</td>
+      <td>{item.DOI}</td>
+      <td>{item.Journal_title}</td>
+      <td>{item.Journal_publisher}</td>
+      <td>{item.ISSN_Print}</td>
+      <th scope="col" style={{ cursor: "pointer", padding: "10px" }} onClick={() => { setViewModalShow(true); setCurrentItem(item); }} > <i style={{fontSize: "13px", color: "#0077b6"}} class="fa fa-eye" aria-hidden="true"></i> </th>
+      <th scope="col" style={{ cursor: "pointer", padding: "10px" }} onClick={() => { setEditModalShow(true); setCurrentItem(item); }} > <i style={{fontSize: "13px", color: "#0077b6"}} class="fas fa-edit"></i> </th>
+      <th scope="col" style={{ cursor: "pointer", padding: "10px" }} > <i style={{fontSize: "13px", color: "#0077b6"}} class="fas fa-trash"></i> </th>
+    </tr>
+  ));
 
+  const handleSort = (key) => {
+    let direction = 'ascending';
+  
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    console.log(jsontableData);
+    const sortedData = [...jsontableData].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  
+    setJsontableData(sortedData);
+    setSortConfig({key, direction});
+    console.log(jsontableData);
+  };
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();
@@ -71,13 +112,11 @@ function Journal({ cookies, removeCookies }) {
       alert("Please select a valid excel file.");
     }
   };
-
   const messageOnDuplicate = (doi,title) => {
     toast.info(`Research pepar having doi ${doi} is already in database.`, {
       position: toast.POSITION.TOP_RIGHT,
     });
-  }
-
+  };
   const deleteDuplicate = () => {
     for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
       if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
@@ -85,7 +124,7 @@ function Journal({ cookies, removeCookies }) {
         jsonData.Sheet1.splice(i, 1);
       }
     }
-  }
+  };
   const sendDataToServer = () => {
     // console.log(jsonData.Sheet1);
     deleteDuplicate();
@@ -105,6 +144,22 @@ function Journal({ cookies, removeCookies }) {
     const workbook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     xlsx.writeFile(workbook, filename);
+  };
+  const savechanges = async (newItem) => {
+    const res = await axios.post(
+      "http://localhost:5000/info/editjournal",
+      newItem
+    );
+    // console.log(res.data);
+  };
+  const addJournal = async (newItem) => {
+    try { 
+      const res = await axios.post("http://localhost:5000/info/addjournal",newItem);
+      console.log(res.data);
+    } catch(err){
+      console.log("succefully updated");
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -180,46 +235,7 @@ function Journal({ cookies, removeCookies }) {
     filterJournal("First_Author_name",selectedAuthor,"Academic_Year",selectedYear);
   },[selectedAuthor,selectedYear])
 
-  const savechanges = async (newItem) => {
-
-    const res = await axios.post(
-      "http://localhost:5000/info/editjournal",
-      newItem
-    );
-    // console.log(res.data);
-  };
-  const addJournal = async (newItem) => {
-    console.log(newItem);
-    // if(DOIList.includes(newItem.DOI)) {
-    //   messageOnDuplicate(newItem.DOI,newItem.Title_of_Research_Paper);
-    //   return;
-    // }
-
-    try { 
-        const res = await axios.post("http://localhost:5000/info/addjournal",newItem);
-        console.log(res.data);
-    } catch(err){
-        console.log("succefully updated");
-        console.log(err);
-      }
-  }
-
-  // console.log(jsontableData);
-
-  const authorListOptions = authorList.map(name => <option value={name}>{name}</option>)
-  const yearListOptions = yearList.map(year => <option value={year}>{year}</option>)
-
-  const listItems = jsontableData.map((item) => (
-    <tr className="font-size-12">
-      <th scope="row">{item.Sr_No}</th>
-      <td>{item.Academic_Year}</td>
-      <td>{item.First_Author_name}</td>
-      <td>{item.Title_of_Research_Paper}</td>
-      <td>{item.DOI}</td>
-      <th scope="col" style={{ cursor: "pointer" }} onClick={() => { setViewModalShow(true); setCurrentItem(item); }} > <i class="fa fa-eye" aria-hidden="true"></i> </th>
-      <th scope="col" onClick={() => { setEditModalShow(true); setCurrentItem(item); }} style={{ cursor: "pointer" }} > <i class="fas fa-edit"></i> </th>
-    </tr>
-  ));
+  
   if (!user) return <></>;
   return (
     <Layout removeCookies={removeCookies}>
@@ -243,14 +259,18 @@ function Journal({ cookies, removeCookies }) {
         </div>
 
         <div className="scrollit">
-          <table class="table table-hover table-bordered table-mymodify">
+          <table id="journalTable" class="table table-hover table-bordered table-striped table-mymodify">
             <thead>
               <tr className="font-size-14">
-                <th scope="col">Sr No.</th>
-                <th scope="col">Academic Year</th>
-                <th scope="col">First Author</th>
-                <th scope="col">Title of Research Paper</th>
-                <th scope="col">DOI</th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Sr_No')} scope="col">Sr No. <i className={`fas fa-angle${sortConfig.key === 'Sr_No' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Academic_Year')} scope="col">Academic Year <i className={`fas fa-angle${sortConfig.key === 'Academic_Year' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Data_Submitting_Author_name')} scope="col">Submitting Author <i className={`fas fa-angle${sortConfig.key === 'Data_Submitting_Author_name' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Title_of_Research_Paper')} scope="col">Title of Research Paper <i className={`fas fa-angle${sortConfig.key === 'Title_of_Research_Paper' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('First_Author_name')} scope="col">First Author <i className={`fas fa-angle${sortConfig.key === 'First_Author_name' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('DOI')} scope="col">DOI <i className={`fas fa-angle${sortConfig.key === 'DOI' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Journal_title')} scope="col">Journal Title <i className={`fas fa-angle${sortConfig.key === 'Journal_title' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('Journal_publisher')} scope="col">Journal Publisher <i className={`fas fa-angle${sortConfig.key === 'Journal_publisher' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{cursor: "pointer"}} onClick={() => handleSort('ISSN_Print')} scope="col">ISSN (Print) <i className={`fas fa-angle${sortConfig.key === 'ISSN_Print' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">VIEW</th>
                 <th scope="col">EDIT</th> */}
               </tr>
@@ -280,6 +300,21 @@ function Journal({ cookies, removeCookies }) {
                       >
                         <option value="">All</option>
                         {authorListOptions}
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col"></th>
+                <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none font-size-12"
+                        value={selectedAuthor}
+                        onChange={e => setSelectedAuthor(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {authorListOptions}
                         <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
                         <option value="Nikita P. Desai">Nikita P. Desai</option>
                         <option value="Ragini V. Oza">Ragini V. Oza</option>
@@ -288,6 +323,9 @@ function Journal({ cookies, removeCookies }) {
                   </div>
                 </th>
                 <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             {/* <tbody>{listItems}</tbody> */}
@@ -295,18 +333,34 @@ function Journal({ cookies, removeCookies }) {
               {listItems
                 .filter((item) => {
                   const srNo =
-                    item.props.children[0].props.children.toLowerCase();
+                    item.props.children[0].props.children?.toLowerCase();
                   const academicYear =
-                    item.props.children[1].props.children.toLowerCase();
-                  const firstAuthor =
-                    item.props.children[2].props.children.toLowerCase();
+                    item.props.children[1].props.children?.toLowerCase();
+                  const submitingAuthor =
+                    item.props.children[2].props.children?.toLowerCase();
                   const title =
-                    item.props.children[3].props.children.toLowerCase();
+                    item.props.children[3].props.children?.toLowerCase();
+                  const firstAuthor =
+                    item.props.children[4].props.children?.toLowerCase();
+                  const doi =
+                    item.props.children[5].props.children?.toLowerCase();
+                  const journaltitle =
+                    item.props.children[6].props.children?.toLowerCase();
+                  const journalpublisher =
+                    item.props.children[7].props.children?.toLowerCase();
+                  const issnprint =
+                    item.props.children[8].props.children?.toLowerCase();
+                  
                   return (
-                    srNo.includes(searchQuery.toLowerCase()) ||
-                    academicYear.includes(searchQuery.toLowerCase()) ||
-                    firstAuthor.includes(searchQuery.toLowerCase()) ||
-                    title.includes(searchQuery.toLowerCase())
+                    (srNo && srNo.includes(searchQuery.toLowerCase())) ||
+                    (academicYear && academicYear.includes(searchQuery.toLowerCase())) ||
+                    (firstAuthor && firstAuthor.includes(searchQuery.toLowerCase())) ||
+                    (title && title.includes(searchQuery.toLowerCase())) ||
+                    (submitingAuthor && submitingAuthor.includes(searchQuery.toLowerCase())) ||
+                    (journalpublisher && journalpublisher.includes(searchQuery.toLowerCase())) ||
+                    (journaltitle && journaltitle.includes(searchQuery.toLowerCase())) ||         
+                    (issnprint && issnprint.includes(searchQuery.toLowerCase())) ||
+                    (doi && doi.includes(searchQuery?.toLowerCase()))
                   );
                 })
                 .map((item, index) => React.cloneElement(item, { key: index }))}

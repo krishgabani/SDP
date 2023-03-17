@@ -17,10 +17,16 @@ const Allfaculty = ({ cookies, removeCookies }) => {
 
   useEffect(() => {
     const Allfacultydata = async () => {
-      const tem = await axios.post("http://localhost:5000/api/admin/getAllfacultyById", { coordinatId: params.coordinatId });
-      console.log(tem.data.data);
-      setAllfacultyList(tem.data.data);
-      //console.log(allfacultylist[0].Department);
+      try{
+        const tem = await axios.post("http://localhost:5000/api/admin/getAllfacultyById", { coordinatId: params.coordinatId });
+        console.log(tem.data.data);
+        setAllfacultyList(tem.data.data);
+        //console.log(allfacultylist[0].Department);
+      }catch(error) {
+        console.log(error);
+        console.log("Error while getting allfaculty")
+      }
+
     }
     Allfacultydata();
   }, [])
@@ -30,7 +36,7 @@ const Allfaculty = ({ cookies, removeCookies }) => {
       <>
       <h1 className="text-center">{allfacultylist && allfacultylist[0]?.Department}</h1>
         <Row>
-          {allfacultylist && allfacultylist.map((faculty) => <FacultyList faculty={faculty} />)}
+          {allfacultylist && allfacultylist.map((faculty) => <FacultyList faculty={faculty} onsavechange={setAllfacultyList}/>)}
         </Row>
       </>
     </Layout>
