@@ -1,7 +1,9 @@
 const {Year} = require("../../models/year");
 
 exports.addYears = async (req,res) => {
-    console.log(req.body);
+    //console.log(req.body);
+    console.log('from add year')
+    
     var dateobj = new Date();
 
     var dateObject = dateobj.getFullYear();

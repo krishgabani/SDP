@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { React, useState } from "react";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import { useDispatch } from "react-redux";
+import { userVerify } from "../Action/verification/userVerification";
 
 function Register() {
   const [user, setUser] = useState({
@@ -24,21 +25,47 @@ function Register() {
     //console.log(user);
   };
 
-  const myregister = async () => {
+  const myregister = async (e) => {
+    e.preventDefault();
     try {
       console.log(user);
+
       dispatch(showLoading());
-      const res = await axios.post(
-        "http://localhost:5000/api/user/register",
-        user
-      );
-      console.log("connect");
+
+      const response = await userVerify(user);
+      console.log(response)
+      if(response.status === '0') {
+        console.log("resp");
+        toast.error("" + response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }else if(response.status === '1') {
+        
+         const res = await axios.post("http://localhost:5000/api/user/register",user);
+        
+        //console.log(res.data.message);
+        if(res.data.status === '0') {
+          toast.error("" + res.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }else if(res.data.status === '1') {
+          toast.success("" + res.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }else{
+          toast.error("Server Error", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      }else{
+        toast.error("" + response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
       dispatch(hideLoading());
-      console.log(res.data.message);
-      toast.success("" + res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
     } catch (error) {
+      
+      dispatch(hideLoading());
       toast.error("error", {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -74,6 +101,7 @@ function Register() {
                         className="form-control"
                         name="name"
                         id="name"
+                        value={user.name}
                         onChange={handleChange}
                         // placeholder="Your professional name here"
                         required
@@ -182,17 +210,19 @@ function Register() {
                     </div>
 
                     <div>
-                      <input
+                      <button
                         type="submit"
                         name="submit"
                         value="SIGNUP"
-                        onClick={myregister}
+                        // onClick={myregister}
                         className="btn btn-primary"
                         style={{
                           width: "100%",
                           backgroundColor: "rgb(84, 105, 212)",
                         }}
-                      />
+                        >
+                        Sig Up
+                        </button>
                     </div>
                   </form>
                 </div>

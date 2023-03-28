@@ -2,6 +2,7 @@ const Token = require('../../models/token')
 const express = require('express');
 const { UserModel } = require('../../models/UserModel')
 const sendEmail = require('../../utils/sendEmail')
+const sendAdmin = require('../../utils/sendAdmin')
 
 
 
@@ -39,13 +40,15 @@ exports.ownVerify = async (req, res) => {
                     message: 'coordinate is not found',
                 })
             }
+            console.log(role);
+            if (role) {
+                await sendEmail(role.email, "Verify Email", url);
+            }
         } else if (user.Designation === 'coordinator') {
-            await sendEmail("flys21634@gmail.com", "Verify Email", url);
+            console.log("send to coordiatro");
+            await sendAdmin("meetgami34345@gmail.com", "Verify Email", url,user);
         }
-        console.log(role);
-        if (role) {
-            await sendEmail(role.email, "Verify Email", url);
-        }
+
         return res.json({
             message: 'dontrt4rge',
             status: 'res',

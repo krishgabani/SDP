@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import "../styles/ViewModal.css";
+// import "../styles/ViewModal.css";
 
-const EditModal = (props) => {
+const EditJournal = (props) => {
   const { user } = useSelector((state) => state.user);
   const [newData, setNewData] = useState({});
   const [departmentList,setDepartmentList] = useState([]);
@@ -175,5 +175,5 @@ const EditModal = (props) => {
     </>
   );
 };
-export default EditModal;
+export default EditJournal;
 

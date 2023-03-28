@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout/Layout";
+import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { userAll } from "../redux/features/userSlice";
+import { userAll } from "../../redux/features/userSlice";
 import axios from "axios"
-import "../styles/Profile.css";
+import "./Profile.css";
 
-import EditProfileModal from "../components/EditProfileModal";
+import EditProfileModal from "../../components/profileModal/EditProfileModal";
 
 const Profile = ({ cookies, removeCookies }) => {
   //  const [profile,setprofile] = useState([]);
@@ -15,11 +15,11 @@ const Profile = ({ cookies, removeCookies }) => {
 
   const savechanges = async (newItem) => {
     console.log(newItem);
-    try{
-      const res = await axios.put("http://localhost:5000/api/user/updateprofile",newItem);
-      console.log(res.data.profile);      
+    try {
+      const res = await axios.put("http://localhost:5000/api/user/updateprofile", newItem);
+      console.log(res.data.profile);
       userAll(res.data.profile);
-    }catch(error){
+    } catch (error) {
       console.log(error);
       console.log("error occre in Update Profile");
     }
@@ -67,9 +67,9 @@ const Profile = ({ cookies, removeCookies }) => {
             <h4 class="value">{user?.Department}</h4>
           </div>
         </div>
-        <button  className="profile-edit-button" onClick={() => { setEditModalShow(true); }}>Edit</button>
+        <button className="profile-edit-button" onClick={() => { setEditModalShow(true); }}>Edit</button>
       </div>
-      <EditProfileModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges={savechanges} data={user}/>
+      <EditProfileModal show={editModalShow} onHide={() => setEditModalShow(false)} savechanges={savechanges} data={user} />
     </Layout>
   );
 };

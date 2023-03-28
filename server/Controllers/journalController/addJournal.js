@@ -6,6 +6,8 @@ const {JournalDataModel} = require("../../models/journal.js");
 const {DOIModel} = require("../../models/doi.js");
 
 const addjournal = (req, res) => {
+
+  try{
     let data = req.body;
     console.log(data);
 
@@ -49,14 +51,27 @@ const addjournal = (req, res) => {
     JournalDataModel.create(journalData, (err, data) => {
       if (err) {
         console.log(err);
-        console.log("Failed");
+        return res.status(200).send({
+          status:'0',
+          message: "some error occure",
+        });
+        
       } else {
-        console.log("Saved Successful");
-        // console.log(data);
+        return res.status(200).send({
+          status:'1',
+          message: "Saved Succefully",
+        });
+        
       }
     });
 
-  res.send("Data is Received");
+  }catch(error) {
+    return res.status(200).send({
+      status:'0',
+      message: "Some Error Occure",
+    });
+  }
+
 };
 
 module.exports = { addjournal };

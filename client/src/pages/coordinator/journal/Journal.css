@@ -1,0 +1,115 @@
+body {
+  /* overflow: hidden; */
+}
+.journal-addbtn-parent{
+  /* margin-right: 10px;
+  margin-bottom: 70px; */
+  text-align: right;
+}
+.journal-addbtn{
+  float: right;
+}
+.filter-group{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  /* margin-bottom: 10px; */
+  /* padding-left: 5px;
+  padding-right: 5px; */
+}
+.filter-group-label{
+  font-weight: 500;
+}
+.filter-group-select{
+  width: 90% ;
+}
+.main-container {
+  padding: 5px;
+  /* border: 1px solid black; */
+}
+.btn {
+  margin-top: 0;
+}
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 5px;
+  /* border: 1px solid black; */
+}
+.download {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.template {
+  padding: 5px;
+}
+.upload{
+  padding: 5px;
+}
+
+
+
+/* .btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 15px;
+} */
+
+/* .upload {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+} */
+
+/* .template {
+  margin: 10px;
+  padding: 10px;
+  height : 3rem;
+  border: 1px solid black;
+} */
+
+/* CSS Code */
+.alert-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  padding: 10px 20px;
+  background-color: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.confirm-btn:hover {
+  background-color: #1a237e;
+}
+

@@ -4,7 +4,7 @@ const { JournalDataModel } = require("../../models/journal");
 exports.getjournal = async (req, res) => {
   let jou = [];
   console.log("req.query");
-  console.log(req.query);
+  console.log(req.body);
   // console.log(req.body);
   if (
     req.body.Designation === "coordinator" ||

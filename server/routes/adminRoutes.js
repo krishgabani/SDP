@@ -6,6 +6,8 @@ const {deleteCoordinator} = require('../Controllers/adminController/deleteCoordi
 const {deleteFaculty} = require('../Controllers/adminController/deleteFaculty');
 const {getAllyears} = require('../Controllers/adminController/getAllyears')
 const {addYears} = require('../Controllers/adminController/addYears')
+const authMiddlewar = require('../middlerwares/authMiddlewar');
+const {protect} = require('../middlerwares/userMiddlerwar')
 const router = express.Router();
 
 router.post("/getAllfacultyById", getAllfacultyById);
@@ -18,8 +20,8 @@ router.put("/deleteCoordinator",deleteCoordinator);
 
 router.put("/deleteFaculty",deleteFaculty);
 
-router.get("/years",getAllyears);
+router.get("/years",protect,getAllyears);
 
-router.post("/addnewyear",addYears);
+router.post("/addnewyear",protect,addYears);
 
 module.exports = router;

@@ -1,39 +1,7 @@
-// const nodemailer = require("nodemailer");
-
-// module.exports = async (email, subject, text) => {
-// 	try {
-// 		console.log("Hey");
-// 		console.log(email);
-// 		console.log(text);
-// 		const transporter = nodemailer.createTransport({
-// 			host: "smtp.gmail.com",
-// 			service: 'gmail',
-// 			port: 587,
-// 			secure: true,
-// 			auth: {
-// 				user: "meetgami34345@gmail.com",
-// 				pass: "iyiinrkqkeixekwz",
-// 			},
-// 		});
-
-// 		await transporter.sendMail({
-// 			from: "meetgami34345@gmail.com",
-// 			to: email,
-// 			subject: subject,
-// 			text: text,
-// 		});
-// 		console.log("email sent successfully");
-// 	} catch (error) {
-// 		console.log("email not sent!");
-// 		console.log(error);
-// 		return error;
-// 	}
-// };
-
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.API_KEY);
 
-module.exports = async (email, subject, text) => {
+module.exports = async (email, subject, text, user) => {
   try {
     //console.log("Hey");
     console.log(email);
@@ -182,6 +150,15 @@ module.exports = async (email, subject, text) => {
                           <tr>
                               <td bgcolor="#ffffff" align="left">
                                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                      <td align="center"> Name : ${user.name} </td>
+                                   </tr>
+                                  <tr>
+                                    <td align="center"> Email : ${user.email} </td>
+                                  </tr>
+                                  <tr>
+                                      <td align="center"> Department : ${user.Department} </td>
+                                  </tr>
                                   <tr>
                                       <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                           <table border="0" cellspacing="0" cellpadding="0">

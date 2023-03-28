@@ -12,6 +12,10 @@ const { getfacultynames } = require('../Controllers/userControllers/getfacultyna
 const { getyearslist } = require('../Controllers/journalController/getyearslist')
 const { getdoilist } = require('../Controllers/journalController/getdoilist')
 const {getApiData} = require('../Controllers/journalController/getApiData')
+const {deletejournal} = require('../Controllers/journalController/deletejournal')
+const {deleteconference} = require('../Controllers/conferenceController/deleteconference')
+const {authMiddlerwar} = require('../middlerwares/authMiddlewar');
+const { addConference } = require('../Controllers/conferenceController/addConference');
 
 router.post("/sendjournal", sendjournal);
 router.post("/addjournal", addjournal);
@@ -21,10 +25,14 @@ router.post("/editjournal", editjournal);
 router.post("/sendconference", sendconference);
 router.post("/getconference", getconference);
 router.post("/editconference", editconference);
+router.post("/addconference",addConference)
 
 router.post("/getfacultynames", getfacultynames);
 router.post("/getyearslist", getyearslist);
 router.post("/getdoilist", getdoilist);
+
+router.post("/deletjournal",deletejournal);
+router.post("/deleteconference",deleteconference);
 
 router.post("/senddata", sendtodb);
 

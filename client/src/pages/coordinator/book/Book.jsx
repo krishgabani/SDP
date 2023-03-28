@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import * as xlsx from "xlsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/Journal.css";
-import { conferenceData } from "../components/Layout/data";
-import Layout from "../components/Layout/Layout";
-import ViewModal from "../components/ViewModal";
-import EditModalConference from "../components/EditModalConference";
+import { conferenceData } from "../../../components/Layout/data";
+import Layout from "../../../components/Layout/Layout";
+import ViewModal from "../../../components/viewModal/ViewModal";
+import EditModalConference from "../../../components/EditModalConference";
 
 function Conference({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
@@ -16,14 +15,8 @@ function Conference({ cookies, removeCookies }) {
   const [viewModalShow, setViewModalShow] = React.useState(false);
   const [editModalShow, setEditModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
-  const [DOIList,setDOIList] = useState([]);
   let { user } = useSelector((state) => state.user);
-  user = {...user, currentPage:"Conference"}
-  const downloadData = jsontableData;
-  downloadData.forEach((it,index) => {
-    delete it._id;
-    delete it.__v;
-  })
+  user = { ...user, currentPage: "Book" }
 
   const excelFileToJSON = (file) => {
     try {
@@ -72,23 +65,8 @@ function Conference({ cookies, removeCookies }) {
       alert("Please select a valid excel file.");
     }
   };
-  const messageOnDuplicate = (doi,title) => {
-    toast.info(`Research pepar having doi ${doi} is already in database.`, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-  const deleteDuplicate = () => {
-    for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
-      if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
-        messageOnDuplicate(jsonData.Sheet1[i].DOI,jsonData.Sheet1[i].Title_of_Research_Paper);
-        jsonData.Sheet1.splice(i, 1);
-      }
-    }
-  }
   const sendDataToServer = () => {
     // console.log(jsonData.Sheet1);
-    deleteDuplicate();
-    if(jsonData == []) return;
     axios
       .post("http://localhost:5000/info/sendconference", jsonData)
       .then((res) => {
@@ -105,18 +83,6 @@ function Conference({ cookies, removeCookies }) {
     xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     xlsx.writeFile(workbook, filename);
   };
-
-  useEffect(() => {
-    const getDOIList = async () => {
-      const res = await axios.post(
-        "http://localhost:5000/info/getdoilist",
-        user
-      );
-      let doilist = res.data.data.map(item => item.doi)
-      setDOIList(doilist);
-    };
-    getDOIList();
-  }, []);
 
   useEffect(() => {
     const getdataconference = async () => {
@@ -146,31 +112,9 @@ function Conference({ cookies, removeCookies }) {
       <td>{item.Academic_Year}</td>
       <td>{item.First_Author_name}</td>
       <td>{item.Title_of_Research_Paper}</td>
-      <td>{item.Data_Submitting_Author_name}</td>
-      <td>{item.Data_Submitting_Author_department}</td>
-      <td>{item.Publication_Level}</td>
-      <td>{item.First_Author_organization}</td>
-      <td>{item.Names_of_Other_Author_From_DDU}</td>
-      <td>{item.Names_of_Other_Author_From_other_Organization}</td>
-      <td>{item.Publication_Type}</td>
-      <td>{item.Publication_Level}</td>
-      <td>{item.Title_of_the_conference}</td>
-      <td>{item.Start_Date_DD_MM_YYYY}</td>
-      <td>{item.End_Date_DD_MM_YYYY}</td>
-      <td>{item.Conference_Name}</td>
-      <td>{item.Conference_Organizer}</td>
-      <td>{item.Conference_City}</td>
-      <td>{item.Conference_State}</td>
-      <td>{item.Conference_Country}</td>
-      <td>{item.Name_of_the_Publisher}</td>
-      <td>{item.Publication_Date_DD_MM_YYYY}</td>
-      <td>{item.Pages_xx_yy}</td>
-      <td>{item.DOI}</td>
-      <td>{item.ISBN_or_ISSN}</td>
-      <td>{item.Affiliating_Institute_at_the_time_of_publication}</td>
       <th
-        className="myb fixed-right-view"
         scope="col"
+        // onClick={() => alert(JSON.stringify(item, null, 4))}
         onClick={() => {
           setViewModalShow(true);
           setCurrentItem(item);
@@ -180,7 +124,6 @@ function Conference({ cookies, removeCookies }) {
         VIEW
       </th>
       <th
-        className="myb fixed-right-edit"
         scope="col"
         onClick={() => {
           setEditModalShow(true);
@@ -190,43 +133,23 @@ function Conference({ cookies, removeCookies }) {
       >
         EDIT
       </th>
+      {/* <th scope="col">EDIT</th> */}
     </tr>
   ));
 
   return (
     <Layout removeCookies={removeCookies}>
+      {/* <h2 className="text-center">Upload File</h2> */}
       <>
-        <h3 className="text-center">Conference</h3>
-        <div class="scrollit">
-          <table class="table table-hover table-bordered table-mymodify-confo">
+        <h3 className="text-center">Book</h3>
+        <div className="scrollit">
+          <table class="table table-hover table-bordered table-mymodify">
             <thead>
               <tr>
                 <th scope="col">Sr No.</th>
                 <th scope="col">Academic Year</th>
                 <th scope="col">First Author</th>
                 <th scope="col">Title of Research Paper</th>
-                <th scope="col">Data Submitting Author name</th>
-                <th scope="col">Data Submitting Author department</th>
-                <th scope="col">Publication Level</th>
-                <th scope="col">First Author organization</th>
-                <th scope="col">Names of Other Author From DDU</th>
-                <th scope="col">Names of Other Author From other Organization</th>
-                <th scope="col">Publication Type</th>
-                <th scope="col">Publication Level</th>
-                <th scope="col">Title of the conference</th>
-                <th scope="col">Start Date (DD-MM-YYYY)</th>
-                <th scope="col">End Date (DD-MM-YYYY)</th>
-                <th scope="col">Conference Name</th>
-                <th scope="col">Conference Organizer</th>
-                <th scope="col">Conference City</th>
-                <th scope="col">Conference State</th>
-                <th scope="col">Conference Country</th>
-                <th scope="col">Name of the Publisher</th>
-                <th scope="col">Publication Date (DD-MM-YYYY)</th>
-                <th scope="col">Pages xx yy</th>
-                <th scope="col">DOI</th>
-                <th scope="col">ISBN or ISSN</th>
-                <th scope="col">Affiliating Institute </th>
               </tr>
             </thead>
             <tbody>{listItems}</tbody>
@@ -245,56 +168,33 @@ function Conference({ cookies, removeCookies }) {
         />
       </>
       {user.Designation === "coordinator" && (
-        <div className="btns">
-        <div className="download">
-          <div className="template">
-            <span style={{ fontSize: "18px", fontWeight: "600" }}>
-              Download Template : &nbsp;
-            </span>
+        <div>
+          <div className="mychange">
+            Download Template :
             <button
-              className="btn btn-primary"
-              onClick={() =>
-                downloadExcel(conferenceData, "Conference-Template.xlsx")
-              }
+              onClick={() => downloadExcel(conferenceData, "Conference.xlsx")}
             >
               Download
             </button>
           </div>
-          <div className="template">
-            <span style={{ fontSize: "18px", fontWeight: "600" }}>
-              {" "}
-              Download Data : &nbsp;{" "}
-            </span>
-            <button
-              className="btn btn-primary"
-              onClick={() => downloadExcel(jsontableData, "Conference.xlsx")}
-            >
-              Download
-            </button>
-          </div>
-        </div>
 
-        <div className="upload">
-          <span style={{ fontSize: "18px", fontWeight: "600" }}>
-            {" "}
-            Files Supported (xls or xlsx) : &nbsp;
-          </span>
-          <input
-            type="file"
-            accept=".xls, .xlsx"
-            id="upload"
-            name="upload"
-            onChange={readUploadFile}
-          />
-          <input
-            className="btn btn-primary"
-            type="button"
-            name="submit"
-            value="Upload"
-            onClick={sendDataToServer}
-          />
+          <div className="upload">
+            Files Supported: XLS or XLSX :
+            <input
+              type="file"
+              accept=".xls, .xlsx"
+              id="upload"
+              name="upload"
+              onChange={readUploadFile}
+            />
+            <input
+              type="button"
+              name="submit"
+              value="Submit"
+              onClick={sendDataToServer}
+            />
+          </div>
         </div>
-      </div>
       )}
 
       {/* 

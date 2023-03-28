@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import "../styles/ViewModal.css";
+// import "../styles/ViewModal.css";
 
 const EditModal = (props) => {
   const { user } = useSelector((state) => state.user);
-  const [newData, setNewData] = useState({});
+  const [newData, setNewData] = useState([]);
   const [departmentList,setDepartmentList] = useState([]);
   const [yearList,setYearList] = useState(["2016-2017","2017-2018","2018-2019","2019-2020"]);
   const monthsList = ["1","2","3","4","5","6","7","8","9","10","11","12"]
@@ -53,11 +53,10 @@ const EditModal = (props) => {
     }
     if(name === "DOI")  {
         res = await axios.post("http://localhost:5000/info/getapiData",{DOI:value});
+        const temp = res.data?.data
         console.log(res.data?.data);
         if(res.data.success) {
-          
-          setNewData(res.data.data);
-          
+          setNewData(temp);
         }else{
           console.log('hi')
           setNewData({
@@ -95,6 +94,7 @@ const EditModal = (props) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Year</Form.Label><Form.Select type="text" name="Academic_Year" value={newData.Academic_Year} onChange={handleChange} >{yearListHtml}</Form.Select></Form.Group>
             {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Academic Year</Form.Label><Form.Control type="text" name="Academic_Year" value={newData.Academic_Year} onChange={handleChange} /></Form.Group> */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Data Submitting Author department</Form.Label><Form.Select type="text" name="Data_Submitting_Author_department" value={newData.Data_Submitting_Author_department} onChange={handleChange}> {departmentListHtml}</Form.Select></Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>DOI</Form.Label><Form.Control type="text" name="DOI" value={newData.DOI} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Data Submitting Author name</Form.Label><Form.Control type="text" name="Data_Submitting_Author_name" value={newData.Data_Submitting_Author_name} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>First Author name</Form.Label><Form.Control type="text" name="First_Author_name" value={newData.First_Author_name} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>First Author department</Form.Label><Form.Control type="text" name="First_Author_department" value={newData.First_Author_department} onChange={handleChange} /></Form.Group>
@@ -112,7 +112,6 @@ const EditModal = (props) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Volume</Form.Label><Form.Control type="text" name="Volume" value={newData.Volume} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Number</Form.Label><Form.Control type="text" name="Number" value={newData.Number} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Pages (xx-yy)</Form.Label><Form.Control type="text" name="Pages_xx_yy" value={newData.Pages_xx_yy} onChange={handleChange} /></Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>DOI</Form.Label><Form.Control type="text" name="DOI" value={newData.DOI} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>ISSN (Print)</Form.Label><Form.Control type="text" name="ISSN_Print" value={newData.ISSN_Print} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>ISSN (Online)</Form.Label><Form.Control type="text" name="ISSN_Online" value={newData.ISSN_Online} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Impact Factor Value</Form.Label><Form.Control type="text" name="Impact_Factor_Value" value={newData.Impact_Factor_Value} onChange={handleChange} /></Form.Group>

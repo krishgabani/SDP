@@ -4,6 +4,7 @@ import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import { useNavigate } from "react-router-dom";
 import "../styles/CoordinatorList.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const CoordinatorList = (props) => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const CoordinatorList = (props) => {
   const deletecoordinator = async () => {
     // console.log(props.coordinator);
     try {
-      console.log(props.mystate);
+      // console.log(props.mystate);
       let respdata = props.mystate;
       //console.log(respdata)
       const newData = respdata.filter(
@@ -30,19 +31,46 @@ const CoordinatorList = (props) => {
 
   const deletedepartment = async () => {
     try {
-      // console.log(props.mystate);
-
-      // Need to update the Parent componets state.
+      
       let respdata = props.mystate;
       const newData = respdata.filter(
         (item) => item.department !== props.coordinator?.department
       );
-      //console.log(newData);
 
-      const tem = await axios.put(
-        "http://localhost:5000/api/admin/deletedepartment",
-        { deprt: props.coordinator?._id }
-      );
+      // Create and style the alert box
+      const alertBox = document.createElement('div');
+      alertBox.classList.add('alert-box');
+      alertBox.innerHTML = `
+        <span class="close-btn">&times;</span>
+        <p>Are you sure you want to delete?</p>
+        <button class="confirm-btn">Confirm</button>
+      `;
+
+    // Append the alert box to the document body
+    document.body.appendChild(alertBox);
+  
+    // Add event listener to the confirm button
+    const confirmBtn = alertBox.querySelector('.confirm-btn');
+    confirmBtn.addEventListener('click', async () => {
+      const tem = await axios.put("http://localhost:5000/api/admin/deletedepartment",{ deprt: props.coordinator?._id });
+      console.log(tem.data);
+      if (tem.data.status === '1') {
+        alertBox.remove();
+      } else {
+        toast.error('error occure in due to server', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    });
+  
+    // Add event listener to the close button
+    const closeBtn = alertBox.querySelector('.close-btn');
+    closeBtn.addEventListener('click', () => {
+      // Remove the alert box
+      alertBox.remove();
+    });
+
+      
       //window.location.reload();
       props.savechage(newData);
     } catch (error) {
@@ -50,10 +78,12 @@ const CoordinatorList = (props) => {
       console.log(error);
     }
   };
-  if (props.coordinator?.email) {
+  if (props.coordinatorList) {
+    console.log("hiii")
+    console.log(props.departmentList)
     return (
       <>
-        <div className="card m-2 card-style card-size">
+        {/* <div className="card m-2 card-style card-size">
           <div className="card-header">
             <b>{props.coordinator?.Department}</b>
           </div>
@@ -64,7 +94,7 @@ const CoordinatorList = (props) => {
             <p>
               <b>Email :</b> {props.coordinator?.email}
             </p>
-            {/* <button className='m-2'>View</button> */}
+            
             <button
               className="btn btn-primary m-2"
               onClick={() => navigate(`/allfaculty/${props.coordinator?._id}`)}
@@ -75,20 +105,57 @@ const CoordinatorList = (props) => {
               Delete
             </button>
           </div>
-        </div>
+        </div> */}
+
+        <table class="table table-hover ">
+          <thead>
+            <tr>
+              <th scope="col" >Department</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.coordinatorList &&
+              props.coordinatorList.map((coordinator) => (
+                <tr key={coordinator?._id}>
+                  <td scope="row">{coordinator?.Department || coordinator?.department}</td>
+                  <td scope="row">{coordinator?.name}</td>
+                  <td scope="row">{coordinator?.email}</td>
+                  <td scope="row">
+                    <button
+                      className="btn btn-primary btn-style mr-2"
+                      onClick={() => navigate(`/allfaculty/${coordinator?._id}`)}
+                    >
+                      View All Faculty
+                    </button>
+                    <button
+                      className="btn btn-danger btn-style"
+                      onClick={() => props.savechange(props.coordinatorList.filter(c => c._id !== coordinator._id))}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+
+
       </>
     );
   } else {
     return (
       <>
-        <div className="card m-2">
+        {/* <div className="card m-2">
           <div className="card-header">
             <b>{props.coordinator?.department}</b>
           </div>
           <button className="btn btn-primary m-2" onClick={deletedepartment}>
             Delete
           </button>
-        </div>
+        </div> */}
       </>
     );
   }

@@ -6,15 +6,15 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-import { userAll } from "../redux/features/userSlice";
+import { userAll } from "../../redux/features/userSlice";
 
 const EditProfileModal = (props) => {
   const { user } = useSelector((state) => state.user);
   const [newData, setNewData] = useState({});
-  //console.log(user);
-  //console.log(newData);
+  
   const designationList = ["Profecser","Assistents-professor","hod","coordinator"]
   const designationListHtml = designationList.map((value) => <option>{value}</option>)
+
   useEffect(() => {
     setNewData({
       Id:props.data?._id,
@@ -59,7 +59,6 @@ const EditProfileModal = (props) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Name</Form.Label><Form.Control type="text" name="Name" value={newData.name} defaultValue={props.data.name} onChange={handleChange}/></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Email</Form.Label><Form.Control type="text" name="Email" value={newData.email} defaultValue={props.data.email} onChange={handleChange}></Form.Control></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Designation</Form.Label><Form.Select type="text" name="Designation" value={newData.Designation} defaultValue={props.data.Designation} onChange={handleChange}> {designationListHtml}</Form.Select></Form.Group>
-
           </Form>
         </Modal.Body>
         <Modal.Footer>

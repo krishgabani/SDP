@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import * as xlsx from "xlsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { conferenceData } from "../components/Layout/data";
-import Layout from "../components/Layout/Layout";
-import ViewModal from "../components/ViewModal";
-import EditModalConference from "../components/EditModalConference";
+import { conferenceData } from "../../../components/Layout/data";
+import Layout from "../../../components/Layout/Layout";
+import ViewModal from "../../../components/viewModal/ViewModal";
+import EditModalConference from "../../../components/EditModalConference";
 
 function Conference({ cookies, removeCookies }) {
   const [jsonData, setJsonData] = useState([]);
@@ -16,8 +16,8 @@ function Conference({ cookies, removeCookies }) {
   const [editModalShow, setEditModalShow] = React.useState(false);
   const [currentItem, setCurrentItem] = React.useState([]);
   let { user } = useSelector((state) => state.user);
-  user = {...user, currentPage:"Book Chapter"}
-  
+  user = { ...user, currentPage: "Book Chapter" }
+
   const excelFileToJSON = (file) => {
     try {
       const reader = new FileReader();

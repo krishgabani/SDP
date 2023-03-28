@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout/Layout";
+import Layout from "../../components/Layout/Layout";
 import { useSelector } from "react-redux";
-import "../styles/Home.css";
+import "../../styles/Home.css";
 import axios from "axios";
-import CoordinatorList from "../components/CoordinatorList";
+import CoordinatorList from "../../components/CoordinatorList";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
 const Home = ({ cookies, removeCookies }) => {
+  const { token } = cookies;
+  console.log(token);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [coordinatorList, setcoordinatorList] = useState([]);
@@ -22,41 +24,64 @@ const Home = ({ cookies, removeCookies }) => {
   const [allyears, allsetYears] = useState([]);
   // const { user } = useSelector((state) => state.user);
 
-  const getYears = async ()=> {
-    try{
-      const tem = await axios.get("http://localhost:5000/api/admin/years");
-       console.log(tem.data?.allyear);
+  const getYears = async () => {
+    try {
+      const tem = await axios.get("http://localhost:5000/api/admin/years", {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
+        }
+      });
+      console.log(tem.data?.allyear);
       return tem.data?.allyear;
-    }catch(error){
+    } catch (error) {
       console.log(error);
       console.log("Error Occurs in Years");
     }
   }
-
-  const setYears = async (year)=> {
-    const tem = await axios.post("http://localhost:5000/api/admin/addnewyear",{Year:year});
-      if(tem.data.success === 0) {
+  console.log(token)
+  const setYears = async (year) => {
+    try {
+      const tem = await axios.post("http://localhost:5000/api/admin/addnewyear",{
+         Year: year ,
+      },{
+        headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`
+            }
+      })
+      
+      console.log(tem)
+      if (tem.data.success === 0) {
         toast.error("" + tem.data.message, {
           position: toast.POSITION.TOP_RIGHT,
-        });        
+        });
       }
-      const tem2 = await axios.get("http://localhost:5000/api/admin/years");
-      return tem2.data?.allyear;
+    } catch (err) {
+      console.log(err)
+    }
+    const tem2 = await axios.get("http://localhost:5000/api/admin/years", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`
+      }
+    });
+    return tem2.data?.allyear;
   }
 
-  useEffect(()=>{
-    getYears().then(data=>allsetYears(data));
-  },[])
+  useEffect(() => {
+    getYears().then(data => allsetYears(data));
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       setYears(year).then(data => {
         allsetYears([...data])
         setYear('')
-        return data;        
+        return data;
       })
-    }catch(error){
+    } catch (error) {
       console.log(error);
       console.log("Error Occurs in Years");
     }
@@ -96,11 +121,11 @@ const Home = ({ cookies, removeCookies }) => {
                   </form>
                   <div className="years-list-container">
                     <h4>List of years</h4>  {/* {allyears.length} */}
-                      <ul style={{height:"200px",overflow: "hidden", overflowY: "scroll"}} className="years-list">
-                        {allyears && allyears.map((year) => (
-                          <li key={year?._id}>{year?.year}</li>
-                        ))}
-                      </ul>
+                    <ul style={{ height: "200px", overflow: "hidden", overflowY: "scroll" }} className="years-list">
+                      {allyears && allyears.map((year) => (
+                        <li key={year?._id}>{year?.year}</li>
+                      ))}
+                    </ul>
                   </div>
                 </Card.Text>
               </Card.Body>
@@ -109,8 +134,8 @@ const Home = ({ cookies, removeCookies }) => {
         </>
       </Layout>
     );
-  }else{
-    return(
+  } else {
+    return (
       <Layout removeCookies={removeCookies}>
         <h1>Home</h1>
       </Layout>
