@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 
 const ConferenceModal = (props) => {
   const { user } = useSelector((state) => state.user);
+  // console.log(props.myuser);
   const [newData, setNewData] = useState({});
   const [departmentList,setDepartmentList] = useState([]);
   const [yearList,setYearList] = useState(["2016-2017","2017-2018","2018-2019","2019-2020"]);
@@ -123,7 +124,7 @@ const ConferenceModal = (props) => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>First Author organization</Form.Label><Form.Control type="text" name="First_Author_organization" value={newData.First_Author_organization} defaultValue={newData.First_Author_organization} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Names of Other Author From DDU (separated by "; ")</Form.Label><Form.Control type="text" name="Names_of_Other_Author_From_DDU" value={newData.Names_of_Other_Author_From_DDU} defaultValue={newData.Names_of_Other_Author_From_DDU} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Names of Other Author From other Organization (separated by "; ")</Form.Label><Form.Control type="text" name="Names_of_Other_Author_From_other_Organization" value={newData.Names_of_Other_Author_From_other_Organization} defaultValue={   newData.Names_of_Other_Author_From_other_Organization} onChange={handleChange} /></Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Publication Type</Form.Label><Form.Control type="text" name="Publication_Type" value={newData.Publication_Type} defaultValue={"Conference"} onChange={handleChange} disabled/></Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Publication Type</Form.Label><Form.Control type="text" name="Publication_Type" value={newData.Publication_Type} defaultValue={props.myuser.currentPage} onChange={handleChange} disabled/></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Title of Research Paper</Form.Label><Form.Control type="text" name="Title_of_Research_Paper" value={newData.Title_of_Research_Paper} defaultValue={newData.Title_of_Research_Paper} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Publication Level</Form.Label><Form.Control type="text" name="Publication_Level" value={newData.Publication_Level} defaultValue={newData.Publication_Level} onChange={handleChange} /></Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1"><Form.Label>Title of the conference</Form.Label><Form.Control type="text" name="Title_of_the_conference" value={newData.Title_of_the_conference} defaultValue={newData.Title_of_the_conference} onChange={handleChange} /></Form.Group>

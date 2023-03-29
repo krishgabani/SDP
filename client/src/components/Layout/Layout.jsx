@@ -6,17 +6,20 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Badge } from "antd";
 import { adminMenu, coordinatorMenu, hodMenu, facultyMenu } from "./data";
-
+import { userAll } from '../../redux/features/userSlice'
 import { message } from "antd";
 
 function Layout({ children, removeCookies }) {
   const { user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch()
   //console.log(user);
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogout = () => {
     console.log("hellow");
     removeCookies("token");
+    dispatch(userAll(null));
     message.success("logout successfully");
     navigate("/login");
   };

@@ -77,11 +77,6 @@ export const adminMenu = [
     icon: "",
   },
   {
-    name: "Years",
-    path: "/admin/Allyears",
-    icon: "",
-  },
-  {
     name: "Profile",
     path: "/profile",
     icon: "",

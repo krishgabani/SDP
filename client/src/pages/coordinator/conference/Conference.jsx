@@ -448,7 +448,7 @@ function Conference({ cookies, removeCookies }) {
           savechanges={savechanges}
           data={currentItem}
         />
-       <ConferenceModal show={addModalShow} onHide={() => setAddModalShow(false)} addConference={addConference} />
+       <ConferenceModal show={addModalShow} myuser={user} onHide={() => setAddModalShow(false)} addConference={addConference} />
       {user.Designation === "coordinator" && (
         <div className="btns">
           <div className="download">

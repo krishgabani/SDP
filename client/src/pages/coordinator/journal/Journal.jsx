@@ -42,13 +42,13 @@ function Journal({ cookies, removeCookies }) {
 
   const deleteJournal = async (item) => {
     console.log(item);
-
+    
     // Create and style the alert box
     const alertBox = document.createElement('div');
     alertBox.classList.add('alert-box');
     alertBox.innerHTML = `
       <span class="close-btn">&times;</span>
-      <p>Are you sure you want to delete ${item}?</p>
+      <p>Are you sure you want to delete <br> ${item?.DOI}?</p>
       <button class="confirm-btn">Confirm</button>
     `;
   

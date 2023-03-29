@@ -13,7 +13,7 @@ function UploadDownload({ designation, journalData, jsontableData, downloadExcel
                         </div>
                         <div className="template">
                             <button className="btn btn-primary" onClick={() => downloadExcel(jsontableData, "Journal.xlsx")}>
-                                Download
+                                Download Records
                             </button>
                         </div>
                     </div>

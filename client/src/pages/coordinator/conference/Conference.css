@@ -28,7 +28,7 @@ body {
   padding: 5px;
   /* border: 1px solid black; */
 }
-.btn {
+/* .btn {
   margin-top: 0;
 }
 .btns{
@@ -37,7 +37,7 @@ body {
   justify-content: space-around;
   position: absolute;
   bottom: 5px;
-  /* border: 1px solid black; */
+  
 }
 .download {
   display: flex;
@@ -49,7 +49,7 @@ body {
 }
 .upload{
   padding: 5px;
-}
+} */
 
 
 

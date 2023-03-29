@@ -1,0 +1,77 @@
+body {
+    /* overflow: hidden; */
+  }
+  .journal-addbtn-parent{
+    /* margin-right: 10px;
+    margin-bottom: 70px; */
+    text-align: right;
+  }
+  .journal-addbtn{
+    float: right;
+  }
+  .filter-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    /* margin-bottom: 10px; */
+    /* padding-left: 5px;
+    padding-right: 5px; */
+  }
+  .filter-group-label{
+    font-weight: 500;
+  }
+  .filter-group-select{
+    width: 90% ;
+  }
+  .main-container {
+    padding: 5px;
+    /* border: 1px solid black; */
+  }
+  /* .btn {
+    margin-top: 0;
+  }
+  .btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 5px;
+    
+  }
+  .download {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .template {
+    padding: 5px;
+  }
+  .upload{
+    padding: 5px;
+  } */
+  
+  
+  
+  /* .btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+  } */
+  
+  /* .upload {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+  } */
+  
+  /* .template {
+    margin: 10px;
+    padding: 10px;
+    height : 3rem;
+    border: 1px solid black;
+  } */
+  
