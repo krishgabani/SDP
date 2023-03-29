@@ -94,6 +94,7 @@ const EditModalConference = (props) => {
     <>
       {(props.data.First_Author_name === user.name || user.Designation === "coordinator") ? 
       <Modal
+        dialogClassName="modal-width"
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"

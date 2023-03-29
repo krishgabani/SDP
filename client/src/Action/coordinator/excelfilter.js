@@ -8,21 +8,23 @@ const messageOnDuplicate = (doi, title) => {
     });
   };
   const deleteDuplicate = (jsonData,DOIList) => {
-    for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
-      if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
-        messageOnDuplicate(jsonData.Sheet1[i].DOI, jsonData.Sheet1[i].Title_of_Research_Paper);
-        jsonData.Sheet1.splice(i, 1);
-      }
-    }
+    console.log("hellow");
+    // for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
+    //   if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
+    //     messageOnDuplicate(jsonData.Sheet1[i].DOI, jsonData.Sheet1[i].Title_of_Research_Paper);
+    //     jsonData.Sheet1.splice(i, 1);
+    //   }
+    // }
   };
   const sendDataToServer = async (jsonData,DOIList) => {
 
     try{
+      console.log("sendServer");
         deleteDuplicate(jsonData,DOIList);
         if (jsonData.Sheet1.length === 0) return;
         await axios.post("http://localhost:5000/info/sendjournal", jsonData).then((res) => {
             console.log("Server response for /sendjournal is " + res.data);
-    
+            console.log(res.data);
             toast.success("Journal is uploaded successfuly", {
               position: toast.POSITION.TOP_RIGHT,
             });
@@ -40,8 +42,11 @@ const messageOnDuplicate = (doi, title) => {
   const sendDataconference = async (jsonData,DOIList) => {
 
     try{
+        console.log(jsonData)
         deleteDuplicate(jsonData,DOIList);
+        console.log(jsonData.Sheet1);
         if (jsonData.Sheet1.length === 0) return;
+        console.log("data goes")
         await axios.post("http://localhost:5000/info/sendconference", jsonData).then((res) => {
             console.log("Server response for /sendjournal is " + res.data);
     

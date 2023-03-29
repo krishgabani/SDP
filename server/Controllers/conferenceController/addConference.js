@@ -10,7 +10,7 @@ const addConference = (req,res) => {
         let data = req.body;
         console.log(data);
     
-        const ConferenceData = {
+        const Conferencedata = {
             Sr_No:data?.Sr_No,
             Academic_Year:data?.Academic_Year,
             Data_Submitting_Author_department:data?.Data_Submitting_Author_department,
@@ -39,7 +39,7 @@ const addConference = (req,res) => {
             Affiliating_Institute_at_the_time_of_publication:data?.Affiliating_Institute_at_the_time_of_publication,
         }
     
-        JournalDataModel.create(journalData, (err, data) => {
+        ConferenceDataModel.create(Conferencedata, (err, data) => {
             if (err) {
               console.log(err);
               return res.status(200).send({

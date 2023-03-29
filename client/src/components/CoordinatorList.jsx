@@ -15,14 +15,16 @@ const CoordinatorList = (props) => {
       // console.log(props.mystate);
       let respdata = props.mystate;
       //console.log(respdata)
-      const newData = respdata.filter(
-        (item) => item.Department !== props.coordinator?.Department
-      );
-      props.savechage(newData);
+      // const newData = respdata.filter(
+      //   (item) => item.Department !== props.coordinator?.Department
+      // );
+      // props.savechage(newData);
       const tem = await axios.put(
         "http://localhost:5000/api/admin/deleteCoordinator",
         { deprt: props.coordinator?._id }
       );
+
+      props.updatechange(true);
       //console.log(tem.data);
     } catch (error) {
       console.log(error);
@@ -33,9 +35,9 @@ const CoordinatorList = (props) => {
     try {
       
       let respdata = props.mystate;
-      const newData = respdata.filter(
-        (item) => item.department !== props.coordinator?.department
-      );
+      // const newData = respdata.filter(
+      //   (item) => item.department !== props.coordinator?.department
+      // );
 
       // Create and style the alert box
       const alertBox = document.createElement('div');
@@ -52,9 +54,11 @@ const CoordinatorList = (props) => {
     // Add event listener to the confirm button
     const confirmBtn = alertBox.querySelector('.confirm-btn');
     confirmBtn.addEventListener('click', async () => {
+      console.log("delte Department")
       const tem = await axios.put("http://localhost:5000/api/admin/deletedepartment",{ deprt: props.coordinator?._id });
       console.log(tem.data);
       if (tem.data.status === '1') {
+        props.updatechange(true);
         alertBox.remove();
       } else {
         toast.error('error occure in due to server', {
@@ -72,7 +76,7 @@ const CoordinatorList = (props) => {
 
       
       //window.location.reload();
-      props.savechage(newData);
+      
     } catch (error) {
       dispatch(hideLoading());
       console.log(error);
@@ -132,7 +136,7 @@ const CoordinatorList = (props) => {
                     </button>
                     <button
                       className="btn btn-danger btn-style"
-                      onClick={() => props.savechange(props.coordinatorList.filter(c => c._id !== coordinator._id))}
+                      onClick={deletedepartment}
                     >
                       Delete
                     </button>

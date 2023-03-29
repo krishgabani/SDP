@@ -10,20 +10,20 @@ exports.getAllCoordinates = async (req, res) => {
         temp = await UserModel.findOne({ Designation: "coordinator", Department: val.department });
 
         if (temp) {
-            //coordinatList.push(temp);
+            coordinatList.push(temp);
         } else {
             if (val.department) {
                 coordinatList.push(val);
             }
         }
     }));
-    await Promise.all(tem.map(async (val) => {
-        let temp = null;
-        temp = await UserModel.findOne({ Designation: "coordinator", Department: val.department });
-        if (temp) {
-            coordinatList.push(temp);
-        }
-    }));
+    // await Promise.all(tem.map(async (val) => {
+    //     let temp = null;
+    //     temp = await UserModel.findOne({ Designation: "coordinator", Department: val.department });
+    //     if (temp) {
+    //         coordinatList.push(temp);
+    //     }
+    // }));
 
     //console.log(coordinatList);
     

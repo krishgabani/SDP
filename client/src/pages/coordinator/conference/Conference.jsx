@@ -13,7 +13,7 @@ import ConferenceModal from "../../../components/ConferenceModal"
 import { readUploadFile } from "../../../Action/coordinator/excelUpload"
 import { sendDataconference, downloadExcel } from "../../../Action/coordinator/excelfilter"
 import {getconference,getDOIList} from "../../../Action/coordinator/getdataconference"
-
+import { getyearslist,getauthorlist} from "../../../Action/coordinator/getdatajournal";
 
 function Conference({ cookies, removeCookies }) {
   
@@ -28,8 +28,13 @@ function Conference({ cookies, removeCookies }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
   const [updatechange,setUpdatechange] = useState(false);
+  const [yearList, setYearList] = useState([]);
+  const [selectedAuthor, setSelectedAuthor] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [authorList, setAuthorList] = useState([]);
 
   let { user } = useSelector((state) => state.user);
+
   user = { ...user, currentPage: "Conference" }
   const downloadData = jsontableData;
   downloadData.forEach((it, index) => {
@@ -85,14 +90,20 @@ function Conference({ cookies, removeCookies }) {
   //   }
   // };
 
-  const UploadFile = (e) => {
+  const authorListOptions = authorList.map(name => <option value={name}>{name}</option>)
+  const yearListOptions = yearList.map(year => <option value={year}>{year}</option>)
+
+
+  const UploadFile = async  (e) => {
     e.preventDefault();
     var files = document.getElementById("upload").files;
-
-    const response = readUploadFile(files);
+    console.log(files);
+    const response = await readUploadFile(files);
+    console.log(response)
     if (response.type === 'error') {
       alert(response.message);
     } else {
+      console.log(response);
       setJsonData(response.exceldata)
     }
   };
@@ -122,6 +133,7 @@ function Conference({ cookies, removeCookies }) {
     //       position: toast.POSITION.TOP_RIGHT,
     //     });
     //   });
+    console.log("upload");
     sendDataconference(jsonData,DOIList);
   };
   // const downloadExcel = (data, filename) => {
@@ -142,17 +154,42 @@ function Conference({ cookies, removeCookies }) {
 
   useEffect(() => {
     const fetchdata = async () => {
+      const response = await getyearslist();
+      if (response.type === 'error') {
+
+      } else {
+        setYearList(response.yeardata);
+      }
+
+    };
+    fetchdata();
+  }, [])
+
+  useEffect(() => {
+    const fetchdata = async () => {
       const response = await getconference(user);
       setJsontableData(response.conferencedata);
     };
     fetchdata();
   }, [updatechange]);
 
+  useEffect(() => {
+    const fetchdata = async () => {
+      const response = await getauthorlist();
+      if (response.type === 'error') {
+
+      } else {
+        setAuthorList(response.authdata);
+      }
+
+      console.log(authorList);
+    };
+    fetchdata();
+  }, [])
+
   const savechanges = async (newItem) => {
-    const res = await axios.post(
-      "http://localhost:5000/info/editconference",
-      newItem
-    );
+    const res = await axios.post("http://localhost:5000/info/editconference",newItem);
+    setUpdatechange(true);
     // console.log(res.data);
   };
 
@@ -253,13 +290,23 @@ function Conference({ cookies, removeCookies }) {
   ));
 
   const addConference = async (newItem) => {
-    try{
-      console.log(newItem);
-    }catch(error){
-      console.log(error);
-      // toast.error("" + res.data.message, {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });    
+    try {
+      const res = await axios.post("http://localhost:5000/info/addconference", newItem);
+      
+      console.log(res.data);
+      if(res.data.status === '1') {
+        setUpdatechange(true);
+        toast.success("" + res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }else{
+        toast.error("" + res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (err) {
+      console.log("succefully updated");
+      console.log(err);
     }
   }
   if (!user) return <></>;
@@ -284,9 +331,9 @@ function Conference({ cookies, removeCookies }) {
             <thead>
               <tr>
                 <th style={{ cursor: "pointer" }} onClick={() => handleSort('Sr_No')} scope="col">Sr No. <i className={`fas fa-angle${sortConfig.key === 'Sr_No' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
-                <th scope="col">Academic Year</th>
-                <th scope="col">First Author</th>
-                <th scope="col">Title of Research Paper</th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('Academic_Year')} scope="col">Academic Year<i className={`fas fa-angle${sortConfig.key === 'Academic_Year' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('First_Author_name')} scope="col">First Author<i className={`fas fa-angle${sortConfig.key === 'First_Author_name' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('Title_of_Research_Paper')} scope="col">Title of Research Paper<i className={`fas fa-angle${sortConfig.key === 'Title_of_Research_Paper' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">Data Submitting Author name</th> */}
                 {/* <th scope="col">Data Submitting Author department</th>
                 <th scope="col">Publication Level</th>
@@ -295,10 +342,10 @@ function Conference({ cookies, removeCookies }) {
                 <th scope="col">Names of Other Author From other Organization</th>
                 <th scope="col">Publication Type</th>
                 <th scope="col">Publication Level</th> */}
-                <th scope="col">Title of the conference</th>
-                <th scope="col">Conference Name</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('Title_of_the_conference')} scope="col">Title of the conference<i className={`fas fa-angle${sortConfig.key === 'Title_of_the_conference' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('Conference_Name')} scope="col">Conference Name<i className={`fas fa-angle${sortConfig.key === 'Conference_Name' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('Start_Date_DD_MM_YYYY')} scope="col">Start Date<i className={`fas fa-angle${sortConfig.key === 'Start_Date_DD_MM_YYYY' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('End_Date_DD_MM_YYYY')} scope="col">End Date<i className={`fas fa-angle${sortConfig.key === 'End_Date_DD_MM_YYYY' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">Conference Organizer</th>
                 <th scope="col">Conference City</th>
                 <th scope="col">Conference State</th>
@@ -306,7 +353,7 @@ function Conference({ cookies, removeCookies }) {
                 {/* <th scope="col">Name of the Publisher</th> */}
                 {/* <th scope="col">Publication Date (DD-MM-YYYY)</th>
                 <th scope="col">Pages xx yy</th> */}
-                <th scope="col">DOI</th>
+                <th style={{ cursor: "pointer" }} onClick={() => handleSort('DOI')} scope="col">DOI<i className={`fas fa-angle${sortConfig.key === 'DOI' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">ISBN or ISSN</th> */}
                 {/* <th scope="col">Affiliating Institute </th> */}
                 <th >
@@ -315,7 +362,60 @@ function Conference({ cookies, removeCookies }) {
                   </div>
                 </th>
               </tr>
-
+              <tr className="font-size-12">
+                <th scope="col"></th>
+                <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none font-size-12"
+                        value={selectedYear}
+                        onChange={e => setSelectedYear(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {yearListOptions}
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none font-size-12"
+                        value={selectedAuthor}
+                        onChange={e => setSelectedAuthor(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {authorListOptions}
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col"></th>
+                {/* <th scope="col">
+                  <div className="filter-group">
+                    <div className="filter-group-select">
+                      <select
+                        className="form-select shadow-none font-size-12"
+                        value={selectedAuthor}
+                        onChange={e => setSelectedAuthor(e.target.value)}
+                      >
+                        <option value="">All</option>
+                        {authorListOptions}
+                        <option value="Jyoti V. Gautam">Jyoti V. Gautam</option>
+                        <option value="Nikita P. Desai">Nikita P. Desai</option>
+                        <option value="Ragini V. Oza">Ragini V. Oza</option>
+                      </select>
+                    </div>
+                  </div>
+                </th> */}
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
             </thead>
             <tbody>{listItems}</tbody>
           </table>

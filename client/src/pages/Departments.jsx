@@ -11,6 +11,8 @@ const Departments = ({ cookies, removeCookies }) => {
 
   const [coordinatorList, setcoordinatorList] = useState([]);
   const [departmentList, setDepartmentList] = useState([]);
+  const [updateList,setupdateList] = useState(false);
+
   const [depart, setdepart] = useState('');
   console.log(coordinatorList);
 
@@ -51,7 +53,7 @@ const Departments = ({ cookies, removeCookies }) => {
         };
         // if(!coordinatorList) {
         getAllCoordinates();
-        // }
+        // }  
 
       }
     } catch (error) {
@@ -120,7 +122,7 @@ const Departments = ({ cookies, removeCookies }) => {
             <Row>
               {coordinatorList && (
                 <CoordinatorList coordinatorList={coordinatorList} savechange={setcoordinatorList} departmentList={departmentList}
-                  deptchange={setDepartmentList}
+                  deptchange={setDepartmentList} updatechange={setupdateList}
                 />
               )}
             </Row>
