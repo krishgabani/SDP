@@ -107,11 +107,22 @@ function Journal({ cookies, removeCookies }) {
       direction = 'descending';
     }
     console.log(jsontableData);
+    
     const sortedData = [...jsontableData].sort((a, b) => {
-      if (a[key] < b[key]) {
+      let valueA, valueB;
+      if(key === "Sr_No"){
+        console.log("1");
+        valueA = parseInt(a[key], 10);
+        valueB = parseInt(b[key], 10);
+      } else {
+        console.log("2");
+        valueA = a[key];
+        valueB = b[key];
+      }
+      if (valueA < valueB) {
         return direction === 'ascending' ? -1 : 1;
       }
-      if (a[key] > b[key]) {
+      if (valueA > valueB) {
         return direction === 'ascending' ? 1 : -1;
       }
       return 0;
@@ -122,15 +133,18 @@ function Journal({ cookies, removeCookies }) {
     console.log(jsontableData);
   };
 
-  const UploadFile = (e) => {
+  const UploadFile = async (e) => {
     e.preventDefault();
     var files = document.getElementById("upload").files;
 
-    const response = readUploadFile(files);
+    const response = await readUploadFile(files);
+    //console.log(response);
     if (response.type === 'error') {
       alert(response.message);
     } else {
-      setJsonData(response.exceldata)
+      //console.log("hiii");
+      //console.log(response.exceldata);
+      setJsonData(response.exceldata);
     }
   };
 
@@ -144,6 +158,9 @@ function Journal({ cookies, removeCookies }) {
   };
   
   const addJournal = async (newItem) => {
+    
+    if(newItem.Data_Submitting_Author_department == null) 
+        newItem.Data_Submitting_Author_department = "Information Technology";
     try {
       const res = await axios.post("http://localhost:5000/info/addjournal", newItem);
       
@@ -244,7 +261,7 @@ function Journal({ cookies, removeCookies }) {
     <Layout removeCookies={removeCookies}>
       <div className="main-container">
         <div className="input-group mt-1 mb-1 border rounded-pill p-1">
-          <button type="button" className="btn btn-link">
+          <button style={{border:"0px"}} className="btn">
             <i className="fa fa-search"></i>
           </button>
           <input
@@ -276,11 +293,11 @@ function Journal({ cookies, removeCookies }) {
                 <th style={{ cursor: "pointer" }} onClick={() => handleSort('ISSN_Print')} scope="col">ISSN (Print) <i className={`fas fa-angle${sortConfig.key === 'ISSN_Print' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">VIEW</th>
                 <th scope="col">EDIT</th> */}
-                <th scope="col">
+                {/* <th scope="col">
                   <div className="journal-addbtn-parent main-container">
                     <button className="btn btn-primary journal-addbtn  mt-1 mb-2" onClick={() => setAddModalShow(true)}> Add </button>
                   </div>
-                </th>
+                </th> */}
               </tr>
               <tr className="font-size-12">
                 <th scope="col"></th>
@@ -379,6 +396,10 @@ function Journal({ cookies, removeCookies }) {
           UploadFile={UploadFile}
           uploadData={uploadData}
         />
+        <button className="circle-btn" onClick={() => setAddModalShow(true)}>
+          <i className="fas fa-plus"></i>
+        </button>
+
       </div>
     </Layout>
   );

@@ -10,6 +10,7 @@ import FacultyList from '../components/FacultyList';
 const Allfaculty = ({ cookies, removeCookies }) => {
 
   const [allfacultylist, setAllfacultyList] = useState([]);
+  const [updateList,setupdateList] = useState(false);
 
   const { user } = useSelector((state) => state.user);
 
@@ -29,14 +30,14 @@ const Allfaculty = ({ cookies, removeCookies }) => {
 
     }
     Allfacultydata();
-  }, [])
+  }, [updateList])
 
   return (
     <Layout removeCookies={removeCookies}>
       <>
       <h1 className="text-center">{allfacultylist && allfacultylist[0]?.Department}</h1>
         <Row>
-          {allfacultylist && allfacultylist.map((faculty) => <FacultyList faculty={faculty} onsavechange={setAllfacultyList}/>)}
+          {allfacultylist && <FacultyList  allfacultylist={allfacultylist} onsavechange={setAllfacultyList} updatechange={setupdateList}/>}
         </Row>
       </>
     </Layout>

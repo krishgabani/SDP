@@ -111,9 +111,9 @@ const CoordinatorList = (props) => {
           </div>
         </div> */}
 
-        <table class="table table-hover ">
+        <table class="table table-hover table-bordered table-striped">
           <thead>
-            <tr>
+            <tr className="font-size-14">
               <th scope="col" >Department</th>
               <th scope="col">Name</th>
               <th scope="col">Email</th>
@@ -123,7 +123,7 @@ const CoordinatorList = (props) => {
           <tbody>
             {props.coordinatorList &&
               props.coordinatorList.map((coordinator) => (
-                <tr key={coordinator?._id}>
+                <tr key={coordinator?._id} className="font-size-12">
                   <td scope="row">{coordinator?.Department || coordinator?.department}</td>
                   <td scope="row">{coordinator?.name}</td>
                   <td scope="row">{coordinator?.email}</td>
@@ -132,7 +132,7 @@ const CoordinatorList = (props) => {
                       className="btn btn-primary btn-style mr-2"
                       onClick={() => navigate(`/allfaculty/${coordinator?._id}`)}
                     >
-                      View All Faculty
+                      Faculties
                     </button>
                     <button
                       className="btn btn-danger btn-style"

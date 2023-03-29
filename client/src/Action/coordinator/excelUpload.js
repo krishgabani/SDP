@@ -34,57 +34,103 @@ import * as xlsx from "xlsx";
 //     }
 //   };
 
-const excelFileToJSON = (file) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const reader = new FileReader();
-      reader.readAsBinaryString(file);
-      reader.onload = (e) => {
-        const data = e.target.result;
-        const workbook = xlsx.read(data, { type: "binary" });
-        var result = {};
+// const excelFileToJSON = (file) => {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const reader = new FileReader();
+//       reader.readAsBinaryString(file);
+//       reader.onload = (e) => {
+//         const data = e.target.result;
+//         const workbook = xlsx.read(data, { type: "binary" });
+//         var result = {};
 
-        workbook.SheetNames.forEach(function (sheetName) {
-          var roa = xlsx.utils.sheet_to_row_object_array(
-            workbook.Sheets[sheetName]
-          );
-          if (roa.length > 0) {
-            result[sheetName] = roa;
-          }
-        });
-        console.log(result);
-        resolve({
-          type:"data",
-          exceldata: result
-        });
-      };
-    } catch (error) {
-      console.log(error);
-      reject({
-        type: "error",
-        error: error[0]
-      });
-    }
+//         workbook.SheetNames.forEach(function (sheetName) {
+//           var roa = xlsx.utils.sheet_to_row_object_array(
+//             workbook.Sheets[sheetName]
+//           );
+//           if (roa.length > 0) {
+//             result[sheetName] = roa;
+//           }
+//         });
+//         console.log(result);
+//         resolve({
+//           type:"data",
+//           exceldata: result
+//         });
+//       };
+//     } catch (error) {
+//       console.log(error);
+//       reject({
+//         type: "error",
+//         error: error[0]
+//       });
+//     }
+//   });
+// };
+
+const readFile = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (e) => {
+      const data = e.target.result;
+      resolve(data);
+    };
+    reader.onerror = (e) => {
+      reject(e);
+    };
   });
 };
 
-  const readUploadFile = async (files) => {
-    console.log(files)
-    if (files.length === 0) {
-      alert("Please choose any file...");
-      return;
+const parseWorkbook = (data) => {
+  const workbook = xlsx.read(data, { type: "binary" });
+  const result = {};
+  workbook.SheetNames.forEach(function (sheetName) {
+    const roa = xlsx.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+    if (roa.length > 0) {
+      result[sheetName] = roa;
     }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension === ".XLS" || extension === ".XLSX") {
-      // console.log(files[0]);
-      return excelFileToJSON(files[0]);
-    } else {
-            return {
-            type: "error",
-            message:"Please select a valid excel file."
-        }
-    }
-  };
+  });
+  return result;
+};
 
-  export {readUploadFile}
+const excelFileToJSON = async (file) => {
+  try {
+    const data = await readFile(file);
+    const result = parseWorkbook(data);
+    console.log(result);
+    return {
+      type: "data",
+      exceldata: result,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      type: "error",
+      error: error[0],
+    };
+  }
+};
+
+
+const readUploadFile = async (files) => {
+  console.log(files)
+  if (files.length === 0) {
+    alert("Please choose any file...");
+    return;
+  }
+  var filename = files[0].name;
+  var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+  if (extension === ".XLS" || extension === ".XLSX") {
+    // console.log(files[0]);
+    console.log("upload the file")
+    return await excelFileToJSON(files[0]);
+  } else {
+    return {
+      type: "error",
+      message: "Please select a valid excel file."
+    }
+  }
+};
+
+export { readUploadFile }

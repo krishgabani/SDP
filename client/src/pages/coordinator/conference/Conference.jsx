@@ -168,6 +168,7 @@ function Conference({ cookies, removeCookies }) {
   useEffect(() => {
     const fetchdata = async () => {
       const response = await getconference(user);
+      console.log(response.conferencedata);
       setJsontableData(response.conferencedata);
     };
     fetchdata();
@@ -200,11 +201,22 @@ function Conference({ cookies, removeCookies }) {
       direction = 'descending';
     }
     console.log(jsontableData);
+
     const sortedData = [...jsontableData].sort((a, b) => {
-      if (a[key] < b[key]) {
+      let valueA, valueB;
+      if(key === "Sr_No"){
+        console.log("1");
+        valueA = parseInt(a[key], 10);
+        valueB = parseInt(b[key], 10);
+      } else {
+        console.log("2");
+        valueA = a[key];
+        valueB = b[key];
+      }
+      if (valueA < valueB) {
         return direction === 'ascending' ? -1 : 1;
       }
-      if (a[key] > b[key]) {
+      if (valueA > valueB) {
         return direction === 'ascending' ? 1 : -1;
       }
       return 0;
@@ -216,14 +228,14 @@ function Conference({ cookies, removeCookies }) {
   };
 
   const deleteJournal = async (item) => {
-    console.log(item);
+    console.log(item.Title_of_Research_Paper);
 
     // Create and style the alert box
     const alertBox = document.createElement('div');
     alertBox.classList.add('alert-box');
     alertBox.innerHTML = `
       <span class="close-btn">&times;</span>
-      <p>Are you sure you want to delete ${item}?</p>
+      <p>Are you sure you want to delete <br> ${item.DOI}?</p>
       <button class="confirm-btn">Confirm</button>
     `;
   
@@ -291,6 +303,11 @@ function Conference({ cookies, removeCookies }) {
 
   const addConference = async (newItem) => {
     try {
+      newItem.Publication_Type = "Conference";
+      if(newItem.Data_Submitting_Author_department == null) 
+        newItem.Data_Submitting_Author_department = "Information Technology";
+      // console.log("newItem");
+      // console.log(newItem);
       const res = await axios.post("http://localhost:5000/info/addconference", newItem);
       
       console.log(res.data);
@@ -314,7 +331,7 @@ function Conference({ cookies, removeCookies }) {
     <Layout removeCookies={removeCookies}>
       <div className="main-container">
         <div className="input-group mt-1 mb-1 border rounded-pill p-1">
-          <button type="button" className="btn btn-link">
+          <button style={{border:"0px"}} className="btn btn-link">
             <i className="fa fa-search"></i>
           </button>
           <input
@@ -356,11 +373,11 @@ function Conference({ cookies, removeCookies }) {
                 <th style={{ cursor: "pointer" }} onClick={() => handleSort('DOI')} scope="col">DOI<i className={`fas fa-angle${sortConfig.key === 'DOI' && sortConfig.direction === 'ascending' ? '-up' : '-down'}`} ></i></th>
                 {/* <th scope="col">ISBN or ISSN</th> */}
                 {/* <th scope="col">Affiliating Institute </th> */}
-                <th >
+                {/* <th >
                   <div className="journal-addbtn-parent main-container">
                     <button className="btn btn-primary journal-addbtn  mt-1 mb-2" onClick={() => setAddModalShow(true)}> Add </button>
                   </div>
-                </th>
+                </th> */}
               </tr>
               <tr className="font-size-12">
                 <th scope="col"></th>
@@ -436,28 +453,28 @@ function Conference({ cookies, removeCookies }) {
         <div className="btns">
           <div className="download">
             <div className="template">
-              <span style={{ fontSize: "18px", fontWeight: "600" }}>
+              {/* <span style={{ fontSize: "18px", fontWeight: "600" }}>
                 Download Template : &nbsp;
-              </span>
+              </span> */}
               <button
                 className="btn btn-primary"
                 onClick={() =>
                   downloadExcel(conferenceData, "Conference-Template.xlsx")
                 }
               >
-                Download
+                Download Template
               </button>
             </div>
             <div className="template">
-              <span style={{ fontSize: "18px", fontWeight: "600" }}>
+              {/* <span style={{ fontSize: "18px", fontWeight: "600" }}>
                 {" "}
                 Download Data : &nbsp;{" "}
-              </span>
+              </span> */}
               <button
                 className="btn btn-primary"
                 onClick={() => downloadExcel(jsontableData, "Conference.xlsx")}
               >
-                Download
+                Download Records
               </button>
             </div>
           </div>
@@ -512,6 +529,9 @@ function Conference({ cookies, removeCookies }) {
           ))}
       </p> */}
       </div>
+      <button className="circle-btn" onClick={() => setAddModalShow(true)}>
+          <i className="fas fa-plus"></i>
+        </button>
     </Layout>
   );
 }

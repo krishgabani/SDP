@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const FacultyList = ({ faculty }) => {
+const FacultyList = (props) => {
   const navigate = useNavigate();
-  const deleteFaculty = async () => {
+  const deleteFaculty = async (fcultyid) => {
     try {
-      // const tem = await axios.put("http://localhost:5000/api/admin/deleteFaculty",{fact: faculty?._id});
+      // const tem = await axios.put("http://localhost:5000/api/admin/deleteFaculty",{fact: fcultyid});
       // console.log(tem.data);
     } catch (error) {
       console.log(error);
@@ -15,23 +15,34 @@ const FacultyList = ({ faculty }) => {
 
   return (
     <>
-      <div className="card m-4">
-        <div className="card-header">
-          Name : <b>{faculty?.name}</b>
-        </div>
-        <div className="card-body">
-          <p>
-            <b>Email :</b> {faculty?.email}
-          </p>
-          <p>
-            <b>Designation :</b> {faculty?.Designation}
-          </p>
-          {/* <button className='m-2'>View</button> */}
-          <button className="btn btn-primary m-2" onClick={deleteFaculty}>
-            Delete
-          </button>
-        </div>
-      </div>
+        <table class="table table-hover ">
+          <thead>
+            <tr>
+              <th scope="col" >Department</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.allfacultylist &&
+              props.allfacultylist.map((faculty) => (
+                <tr key={faculty?._id}>
+                  <td scope="row">{faculty?.Department || faculty?.department}</td>
+                  <td scope="row">{faculty?.name}</td>
+                  <td scope="row">{faculty?.email}</td>
+                  <td scope="row">
+                    <button
+                      className="btn btn-danger btn-style"
+                      onClick={() => deleteFaculty(faculty?._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
     </>
   );
 };

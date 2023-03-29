@@ -60,7 +60,7 @@ const Departments = ({ cookies, removeCookies }) => {
       console.log(error);
       console.log("In User Admin is something wrong");
     }
-  }, []);
+  }, [updateList]);
 
   useEffect(() => {
     try {
