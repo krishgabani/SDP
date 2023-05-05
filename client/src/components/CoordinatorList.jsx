@@ -19,10 +19,7 @@ const CoordinatorList = (props) => {
       //   (item) => item.Department !== props.coordinator?.Department
       // );
       // props.savechage(newData);
-      const tem = await axios.put(
-        "http://localhost:5000/api/admin/deleteCoordinator",
-        { deprt: props.coordinator?._id }
-      );
+      const tem = await axios.put("http://localhost:5000/api/admin/deleteCoordinator",{ deprt: props.coordinator?._id });
 
       props.updatechange(true);
       //console.log(tem.data);
@@ -31,9 +28,9 @@ const CoordinatorList = (props) => {
     }
   };
 
-  const deletedepartment = async () => {
+  const deletedepartment = async (depid) => {
     try {
-      
+      console.log(depid)
       let respdata = props.mystate;
       // const newData = respdata.filter(
       //   (item) => item.department !== props.coordinator?.department
@@ -50,12 +47,12 @@ const CoordinatorList = (props) => {
 
     // Append the alert box to the document body
     document.body.appendChild(alertBox);
-  
+      console.log(props.coordinatorList)
     // Add event listener to the confirm button
     const confirmBtn = alertBox.querySelector('.confirm-btn');
     confirmBtn.addEventListener('click', async () => {
       console.log("delte Department")
-      const tem = await axios.put("http://localhost:5000/api/admin/deletedepartment",{ deprt: props.coordinator?._id });
+      const tem = await axios.put("http://localhost:5000/api/admin/deletedepartment",{ deprt: depid });
       console.log(tem.data);
       if (tem.data.status === '1') {
         props.updatechange(true);
@@ -123,7 +120,7 @@ const CoordinatorList = (props) => {
           <tbody>
             {props.coordinatorList &&
               props.coordinatorList.map((coordinator) => (
-                <tr key={coordinator?._id} className="font-size-12">
+                <tr key={coordinator?._id} className="font-size-14">
                   <td scope="row">{coordinator?.Department || coordinator?.department}</td>
                   <td scope="row">{coordinator?.name}</td>
                   <td scope="row">{coordinator?.email}</td>
@@ -136,7 +133,7 @@ const CoordinatorList = (props) => {
                     </button>
                     <button
                       className="btn btn-danger btn-style"
-                      onClick={deletedepartment}
+                      onClick={() => deletedepartment(coordinator?._id)}
                     >
                       Delete
                     </button>

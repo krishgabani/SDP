@@ -9,12 +9,12 @@ const messageOnDuplicate = (doi, title) => {
   };
   const deleteDuplicate = (jsonData,DOIList) => {
     console.log("hellow");
-    // for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
-    //   if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
-    //     messageOnDuplicate(jsonData.Sheet1[i].DOI, jsonData.Sheet1[i].Title_of_Research_Paper);
-    //     jsonData.Sheet1.splice(i, 1);
-    //   }
-    // }
+    for (let i = jsonData.Sheet1.length - 1; i >= 0; i--) {
+      if (DOIList.includes(jsonData.Sheet1[i].DOI)) {
+        messageOnDuplicate(jsonData.Sheet1[i].DOI, jsonData.Sheet1[i].Title_of_Research_Paper);
+        jsonData.Sheet1.splice(i, 1);
+      }
+    }
   };
   const sendDataToServer = async (jsonData,DOIList) => {
 

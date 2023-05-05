@@ -30,16 +30,23 @@ exports.getjournal = async (req, res) => {
       First_Author_name: req.body.name,
     });
 
-    let asOtherAuthor = await JournalDataModel.find({
+    let asSubmittingAuthor = await JournalDataModel.find({
+      First_Author_name: {$ne : req.body.name},
       Data_Submitting_Author_department: req.body.Department,
+      Data_Submitting_Author_name: req.body.name,
+    });
+
+    let asOtherAuthor = await JournalDataModel.find({
+      First_Author_name: {$ne : req.body.name},
+      Data_Submitting_Author_name: {$ne : req.body.name},
       Names_of_Other_Author_From_DDU: new RegExp(".*" + req.body.name + ".*"),
     });
 
-    jou = [].concat(asFirstAuthor, asOtherAuthor);
+    jou = [].concat(asFirstAuthor, asOtherAuthor, asSubmittingAuthor);
   }
 
   res.send({
     message: "user is valid",
-    data: jou,
-  });
+    data: jou,
+  });
 };

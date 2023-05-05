@@ -38,6 +38,8 @@ function ProtectedRoute({ children, cookies, removeCookies }) {
                 if(res.data.success) {
 
                     dispatch(userAll(res.data.data));
+                    console.log(res.data.data);
+                    // navigate('/');
                 }else{
                     removeCookies('token')
                     navigate('/login');
@@ -52,6 +54,15 @@ function ProtectedRoute({ children, cookies, removeCookies }) {
         }
     },[])
 
+    // if(user.isAdmin) {
+    //     return (
+    //         children
+    //     )
+    // }else if(token) {
+    //     return <Navigate to='/Journal' />
+    // }else{
+    //     return <Navigate to='/login' />
+    // }
     if(token) {
         return (
             children

@@ -50,7 +50,15 @@ const Login = ({ setCookies }) => {
         toast.success("" + res.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
-        navigate("/");
+        // navigate("/Journal");
+        console.log(user);
+        // console.log(res.data);
+        if(user.email === 'admin@gmail.com') {
+          navigate("/");
+        }else{
+          navigate("/Journal");
+        }
+        
       } else {
         dispatch(hideLoading());
         toast.error("" + res.data.message, {

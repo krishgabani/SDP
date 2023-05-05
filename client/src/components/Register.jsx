@@ -221,7 +221,7 @@ function Register() {
                           backgroundColor: "rgb(84, 105, 212)",
                         }}
                         >
-                        Sig Up
+                        Sign Up
                         </button>
                     </div>
                   </form>
