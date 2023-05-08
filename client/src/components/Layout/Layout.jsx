@@ -3,11 +3,11 @@ import axios from "axios";
 import "../../styles/Layout.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
 import { Badge } from "antd";
 import { adminMenu, coordinatorMenu, hodMenu, facultyMenu } from "./data";
 import { userAll } from '../../redux/features/userSlice'
 import { message } from "antd";
+import logo from "../../images/logo.png";
 
 function Layout({ children, removeCookies }) {
   const { user } = useSelector((state) => state.user);
@@ -42,7 +42,8 @@ function Layout({ children, removeCookies }) {
       <div className="layout">
         <div className="sidebar">
           <div className="logo">
-            <h6>RPMS</h6>
+            {/* <h6>RPMS</h6> */}
+            <img src={logo} alt="logo" width={210} height={150} />
           </div>
           <hr />
           <div className="menu">

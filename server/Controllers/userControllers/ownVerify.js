@@ -42,7 +42,8 @@ exports.ownVerify = async (req, res) => {
             }
             console.log(role);
             if (role) {
-                await sendEmail(role.email, "Verify Email", url);
+                await sendAdmin(role.email, "Verify Email", url,user);
+                // await sendEmail(role.email, "Verify Email", url);
             }
         } else if (user.Designation === 'coordinator') {
             console.log("send to coordiatro");
